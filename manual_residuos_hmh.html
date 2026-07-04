@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HMH · Gestión de Residuos Hospitalarios</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0B2545;
+    --navy-dark:#081b33;
+    --ink:#1B2430;
+    --paper:#F3F4F6;
+    --card:#FFFFFF;
+    --line:#E3E5E9;
+    --muted:#6B7280;
+    --gold:#C9971F;
+
+    --c-rsu:#202124;         --c-rsu-bg:#ECECED;
+    --c-bio:#B50000;         --c-bio-bg:#FBEAEA;
+    --c-corto:#6E1E28;       --c-corto-bg:#F4E7E8;
+    --c-med:#C9971F;         --c-med-bg:#FBF3DC;
+    --c-y3:#DDA200;          --c-y3-bg:#FCF2D9;
+    --c-quim:#8A6D1F;        --c-quim-bg:#F3EFDF;
+    --c-plas:#1F7A34;        --c-plas-bg:#E9F4EA;
+    --c-papel:#1652A2;       --c-papel-bg:#E9F1FA;
+    --c-carton:#6B4226;      --c-carton-bg:#F3EAE2;
+    --c-compost:#4C6B1F;     --c-compost-bg:#EFF1E1;
+    --c-vidrio:#5B6572;      --c-vidrio-bg:#EDEEF0;
+    --c-regu:#5B4B8A;        --c-regu-bg:#EFEBF6;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Source Sans 3', system-ui, -apple-system, sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{font-family:'Space Grotesk', system-ui, sans-serif;}
+  .app{max-width:1080px;margin:0 auto;padding-bottom:80px;}
+
+  /* HEADER */
+  header.top{
+    background:linear-gradient(160deg, var(--navy) 0%, var(--navy-dark) 100%);
+    color:#fff;
+    padding:20px 20px 0 20px;
+    position:sticky; top:0; z-index:40;
+  }
+  .brandrow{display:flex; align-items:center; gap:12px; margin-bottom:14px;}
+  .logowrap{
+    background:#fff; border-radius:12px; padding:8px 14px;
+    display:flex; align-items:center; height:40px;
+  }
+  .logowrap img{height:100%; display:block;}
+  .brandtext .s{font-size:11.5px;color:#B9C6DE;letter-spacing:.02em; margin-top:2px;}
+  .pagetitle{font-size:20px;font-weight:600;margin:2px 0 16px 0;letter-spacing:-0.01em;}
+
+  nav.tabs{display:flex; gap:2px; overflow-x:auto; scrollbar-width:none;}
+  nav.tabs::-webkit-scrollbar{display:none;}
+  nav.tabs button{
+    appearance:none;border:none;background:transparent;color:#C6D2E6;
+    font-family:'Source Sans 3'; font-weight:600; font-size:13.5px;
+    padding:10px 14px; border-radius:10px 10px 0 0; cursor:pointer;
+    white-space:nowrap; position:relative; transition:color .15s;
+  }
+  nav.tabs button:hover{color:#fff;}
+  nav.tabs button.active{color:var(--ink); background:var(--paper);}
+
+  main{padding:22px 18px 10px;}
+  .view{display:none; animation:fade .25s ease;}
+  .view.active{display:block;}
+  @keyframes fade{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:translateY(0);}}
+
+  /* HOME */
+  .hero{
+    background:var(--card); border:1px solid var(--line); border-radius:18px;
+    padding:22px 22px; margin-bottom:20px; position:relative; overflow:hidden;
+  }
+  .hero .blob{position:absolute; top:-60px; right:-60px; width:200px;height:200px;border-radius:50%;
+    background:radial-gradient(circle at 30% 30%, #C9971F22, transparent 70%);}
+  .hero h2{font-size:19px; margin:0 0 8px; font-weight:700; position:relative;}
+  .hero p{margin:0; color:var(--muted); font-size:14.5px; line-height:1.55; position:relative;}
+  .quickrow{display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; position:relative;}
+  .quickbtn{
+    border:1px solid var(--line); background:var(--paper); border-radius:12px;
+    padding:12px 14px; font-weight:600; font-size:13.5px; cursor:pointer;
+    display:flex; align-items:center; gap:8px; color:var(--ink);
+  }
+  .quickbtn:hover{border-color:var(--navy); background:#eef1f6;}
+
+  .section-label{
+    font-size:11.5px; text-transform:uppercase; letter-spacing:.09em;
+    color:var(--muted); font-weight:700; margin:26px 0 12px 2px;
+  }
+
+  .grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(148px,1fr)); gap:10px;}
+  .catcard{
+    border-radius:14px; padding:14px 12px; cursor:pointer; border:1px solid var(--line);
+    background:var(--card); position:relative; overflow:hidden; transition:transform .12s, box-shadow .12s;
+    min-height:96px; display:flex; flex-direction:column; justify-content:space-between;
+  }
+  .catcard:hover{transform:translateY(-2px); box-shadow:0 6px 18px rgba(20,30,50,.10);}
+  .catcard .bar{position:absolute; left:0; top:0; bottom:0; width:5px;}
+  .catcard .icon{width:26px;height:26px;}
+  .catcard .name{font-weight:700; font-size:13.5px; line-height:1.2; margin-top:8px;}
+  .catcard .sub{font-size:11px; color:var(--muted); margin-top:2px;}
+  .ycode{
+    position:absolute; top:10px; right:10px; font-family:'Space Grotesk'; font-weight:700;
+    font-size:10.5px; padding:2px 6px; border-radius:6px; opacity:.85;
+  }
+
+  /* CATEGORY DETAIL */
+  .detailcard{background:var(--card); border:1px solid var(--line); border-radius:18px; overflow:hidden; margin-bottom:18px;}
+  .detailhead{padding:20px 22px; color:#fff; position:relative; overflow:hidden;}
+  .detailhead .blob{position:absolute; top:-50%; right:-10%; width:220px; height:220px; border-radius:50%;
+    background:rgba(255,255,255,.10);}
+  .detailhead .back{
+    background:rgba(255,255,255,.18); border:none; color:#fff; border-radius:8px;
+    padding:6px 10px; font-size:12.5px; font-weight:600; cursor:pointer; margin-bottom:12px; position:relative;
+  }
+  .detailhead h2{margin:0; font-size:22px; position:relative;}
+  .detailhead .container-tag{font-size:13px; margin-top:6px; opacity:.95; font-weight:600; position:relative;}
+  .detailbody{padding:20px 22px;}
+  .detailbody p.desc{color:var(--ink); font-size:14.5px; line-height:1.6; margin:0 0 18px;}
+  .twocol{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:18px;}
+  @media(max-width:640px){.twocol{grid-template-columns:1fr;}}
+  .box{border-radius:12px; padding:14px 16px; background:var(--paper); border:1px solid var(--line);}
+  .box.no{background:#FBEAEA; border-color:#f0cccd;}
+  .box h4{margin:0 0 8px; font-size:13px; text-transform:uppercase; letter-spacing:.05em;}
+  .box ul{margin:0; padding-left:18px; font-size:13.5px; line-height:1.65;}
+  .steps{counter-reset:step; margin-bottom:18px;}
+  .step{display:flex; gap:12px; margin-bottom:12px;}
+  .step .num{
+    counter-increment:step; flex-shrink:0; width:26px;height:26px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center; font-weight:700; font-size:12.5px; color:#fff;
+  }
+  .step .num::before{content:counter(step);}
+  .step .txt{font-size:13.8px; line-height:1.5; padding-top:2px;}
+  .important{border-radius:12px; padding:14px 16px; font-size:13.5px; line-height:1.6;}
+  .important h4{margin:0 0 8px; font-size:13px; text-transform:uppercase; letter-spacing:.05em;}
+  .important ul{margin:0;padding-left:18px;}
+  .note{
+    margin-top:16px; border-left:4px solid var(--gold); background:#FBF3DC; padding:12px 14px;
+    border-radius:0 10px 10px 0; font-size:13px; line-height:1.55;
+  }
+
+  /* SEARCH */
+  .searchbar{
+    display:flex; align-items:center; gap:8px; background:var(--card); border:1px solid var(--line);
+    border-radius:12px; padding:10px 14px; margin-bottom:16px;
+  }
+  .searchbar input{border:none; outline:none; font-size:14px; width:100%; font-family:inherit; background:transparent;}
+
+  /* CLASIFICADOR */
+  .qcard{background:var(--card); border:1px solid var(--line); border-radius:18px; padding:26px 24px; text-align:center;}
+  .qcard .qlabel{font-size:11.5px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); font-weight:700;}
+  .qcard h3{font-size:19px; margin:10px 0 22px; line-height:1.4;}
+  .qopts{display:flex; gap:12px; justify-content:center; flex-wrap:wrap;}
+  .qopt{
+    border:2px solid var(--line); background:var(--paper); border-radius:12px; padding:14px 26px;
+    font-weight:700; font-size:14.5px; cursor:pointer; min-width:120px; color:var(--ink);
+  }
+  .qopt:hover{border-color:var(--navy); background:#eef1f6;}
+  .trail{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:16px; justify-content:center;}
+  .crumb{font-size:11.5px; background:#eef1f6; border-radius:20px; padding:5px 12px; color:var(--muted);}
+  .restartbtn{
+    display:block; margin:20px auto 0; background:none; border:none; color:var(--navy); font-weight:700;
+    font-size:13px; cursor:pointer; text-decoration:underline;
+  }
+  .resulthead{border-radius:16px 16px 0 0; padding:24px; color:#fff; text-align:center;}
+  .resulthead .tag{font-size:12px; text-transform:uppercase; letter-spacing:.08em; opacity:.9; font-weight:700;}
+  .resulthead h2{margin:8px 0 0; font-size:24px;}
+
+  /* BUENAS PRACTICAS (antes checklist) */
+  .practItem{
+    display:flex; gap:14px; align-items:flex-start; background:var(--card); border:1px solid var(--line);
+    border-radius:14px; padding:14px 16px; margin-bottom:10px;
+  }
+  .practItem .num{
+    flex-shrink:0; width:28px;height:28px;border-radius:50%; background:var(--navy); color:#fff;
+    display:flex;align-items:center;justify-content:center; font-weight:700; font-size:12.5px;
+  }
+  .practText .t{font-weight:700; font-size:14px;}
+  .practText .d{font-size:12.8px; color:var(--muted); margin-top:2px; line-height:1.5;}
+  .prohibido{
+    margin-top:26px; background:#FBEAEA; border:1px solid #f0cccd; border-radius:14px; padding:16px 18px;
+  }
+  .prohibido h4{margin:0 0 10px; color:#8a1f24; font-size:13.5px; text-transform:uppercase; letter-spacing:.05em;}
+  .prohibido ul{margin:0; padding-left:18px; font-size:13.5px; line-height:1.7; color:#5c2427;}
+
+  /* TRIVIA */
+  .difwrap{display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:6px;}
+  .difcard{
+    border:2px solid var(--line); border-radius:14px; padding:20px 24px; cursor:pointer; text-align:center;
+    background:var(--card); min-width:140px; transition:transform .12s;
+  }
+  .difcard:hover{transform:translateY(-2px);}
+  .difcard .emoji{font-size:26px;}
+  .difcard .lbl{font-weight:700; margin-top:6px; font-size:14.5px;}
+  .difcard .cnt{font-size:12px; color:var(--muted); margin-top:2px;}
+  .quizhead{display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;}
+  .quizprog{font-size:12.5px; color:var(--muted); font-weight:600;}
+  .quizscore{font-size:12.5px; font-weight:700; color:var(--navy);}
+  .qz-opt{
+    display:block; width:100%; text-align:left; border:2px solid var(--line); background:var(--paper);
+    border-radius:12px; padding:13px 16px; font-size:14px; font-weight:600; cursor:pointer; margin-bottom:10px;
+    color:var(--ink);
+  }
+  .qz-opt:hover{border-color:var(--navy);}
+  .qz-opt.correct{border-color:#2E7D32; background:#E9F4EA; color:#1e5a24;}
+  .qz-opt.incorrect{border-color:#B50000; background:#FBEAEA; color:#8a1f24;}
+  .qz-opt:disabled{cursor:default;}
+  .justif{
+    margin-top:14px; padding:14px 16px; border-radius:12px; background:#eef1f6; font-size:13.3px; line-height:1.55;
+  }
+  .qz-next{
+    margin-top:16px; background:var(--navy); color:#fff; border:none; border-radius:10px; padding:11px 20px;
+    font-weight:700; font-size:13.5px; cursor:pointer;
+  }
+  .scorewrap{text-align:center; padding:10px;}
+  .scorewrap .big{font-family:'Space Grotesk'; font-size:44px; font-weight:700; color:var(--navy); margin:14px 0 4px;}
+
+  /* CONTACTO */
+  .formcard{background:var(--card); border:1px solid var(--line); border-radius:18px; padding:24px;}
+  .field{margin-bottom:16px;}
+  .field label{display:block; font-size:12.5px; font-weight:700; margin-bottom:6px; color:var(--ink);}
+  .field input, .field select, .field textarea{
+    width:100%; border:1.5px solid var(--line); border-radius:10px; padding:11px 13px;
+    font-family:inherit; font-size:14px; background:var(--paper); color:var(--ink);
+  }
+  .field textarea{resize:vertical; min-height:100px;}
+  .field input:focus, .field select:focus, .field textarea:focus{outline:none; border-color:var(--navy);}
+  .req{color:#B50000;}
+  .sendbtn{
+    background:var(--navy); color:#fff; border:none; border-radius:10px; padding:13px 22px;
+    font-weight:700; font-size:14px; cursor:pointer;
+  }
+  .sendbtn:hover{background:var(--navy-dark);}
+  .contactinfo{font-size:13px; color:var(--muted); margin-bottom:18px; line-height:1.6;}
+  .formmsg{margin-top:14px; font-size:13px; padding:10px 14px; border-radius:10px;}
+  .formmsg.ok{background:#E9F4EA; color:#1e5a24;}
+  .formmsg.err{background:#FBEAEA; color:#8a1f24;}
+
+  footer{
+    text-align:center; padding:26px 20px 10px; color:var(--muted); font-size:11.5px; line-height:1.6;
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="brandrow">
+      <div class="logowrap"><img src="data:image/png;base64,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" alt="HMH"></div>
+      <div class="brandtext"><div class="s">Higiene y Seguridad Laboral</div></div>
+    </div>
+    <div class="pagetitle">Manual de Gestión de Residuos</div>
+    <nav class="tabs" id="tabs">
+      <button data-view="inicio" class="active">Inicio</button>
+      <button data-view="categorias">Categorías</button>
+      <button data-view="clasificador">¿Qué hago con esto?</button>
+      <button data-view="practicas">Buenas prácticas</button>
+      <button data-view="trivia">Trivia</button>
+      <button data-view="contacto">Contacto HySL</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- INICIO -->
+    <section class="view active" id="view-inicio">
+      <div class="hero">
+        <div class="blob"></div>
+        <h2>Separar bien protege a todo el equipo</h2>
+        <p>Esta guía reúne las 12 corrientes de residuos del hospital, sus recipientes correspondientes y los pasos correctos de descarte, según el Manual de Gestión de Residuos Hospitalarios y la señalética oficial (Res. 1792/2014 y Res. 134/2016 GREAS).</p>
+        <div class="quickrow">
+          <button class="quickbtn" onclick="goView('clasificador')">🔎 No sé dónde tirar algo</button>
+          <button class="quickbtn" onclick="goView('categorias')">📖 Ver todas las categorías</button>
+          <button class="quickbtn" onclick="goView('trivia')">🧠 Poner a prueba lo que sé</button>
+        </div>
+      </div>
+
+      <div class="section-label">Acceso rápido por color</div>
+      <div class="grid" id="homeGrid"></div>
+
+      <div class="note" style="margin-top:22px;">
+        <strong>Regla de oro:</strong> la clasificación depende de la naturaleza del residuo, no del sector donde se genera. Un guante con sangre es biopatogénico tanto en quirófano como en un consultorio. No mezclar corrientes: una bolsa común contaminada con material biopatogénico se convierte íntegramente en residuo peligroso.
+      </div>
+    </section>
+
+    <!-- CATEGORIAS -->
+    <section class="view" id="view-categorias">
+      <div class="searchbar">
+        <span>🔎</span>
+        <input id="searchInput" placeholder="Buscar por nombre, ejemplo o color (ej: jeringa, papel, Y3)...">
+      </div>
+      <div id="categoriasList"></div>
+    </section>
+
+    <!-- DETALLE (subview) -->
+    <section class="view" id="view-detalle"></section>
+
+    <!-- CLASIFICADOR -->
+    <section class="view" id="view-clasificador">
+      <div id="clasificadorRoot"></div>
+    </section>
+
+    <!-- BUENAS PRACTICAS -->
+    <section class="view" id="view-practicas">
+      <div class="hero" style="margin-bottom:20px;">
+        <div class="blob"></div>
+        <h2>Circuito general de retiro y transporte</h2>
+        <p>Estos pasos aplican a cualquier corriente de residuo, del punto de generación al depósito interno.</p>
+      </div>
+      <div id="practicasItems"></div>
+      <div class="prohibido">
+        <h4>⛔ Prohibido durante el transporte interno</h4>
+        <ul>
+          <li>Trasladar bolsas abiertas, sin cierre o con exceso de carga.</li>
+          <li>Usar carros no exclusivos.</li>
+          <li>Circular por ascensores o pasillos destinados a pacientes o público.</li>
+          <li>Acopiar bolsas en lugares no habilitados.</li>
+          <li>Manipular residuos sin EPP, o reabrir bolsas ya cerradas para corregir un error.</li>
+          <li>Reencapuchar agujas.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TRIVIA -->
+    <section class="view" id="view-trivia">
+      <div id="triviaRoot"></div>
+    </section>
+
+    <!-- CONTACTO -->
+    <section class="view" id="view-contacto">
+      <div class="formcard">
+        <h2 style="margin:0 0 8px; font-size:19px;">Escribir a Higiene y Seguridad Laboral</h2>
+        <p class="contactinfo">El mensaje se envía automáticamente a <strong>hysl.hmh@gmail.com</strong>. Completá los cuatro campos para poder identificar tu consulta.</p>
+        <form id="contactForm" onsubmit="return sendContact(event)">
+          <div class="field">
+            <label>Nombre y apellido <span class="req">*</span></label>
+            <input type="text" id="cf-name" required placeholder="Ej: Ana Pérez">
+          </div>
+          <div class="field">
+            <label>Mail <span class="req">*</span></label>
+            <input type="email" id="cf-mail" required placeholder="ana.perez@ejemplo.com">
+          </div>
+          <div class="field">
+            <label>Servicio <span class="req">*</span></label>
+            <select id="cf-servicio" required>
+              <option value="">Seleccioná tu servicio...</option>
+              <option>Enfermería</option>
+              <option>Medicina / Guardia</option>
+              <option>Limpieza / Maestranza</option>
+              <option>Laboratorio</option>
+              <option>Farmacia</option>
+              <option>Administración / Oficinas</option>
+              <option>Cocina / Alimentación</option>
+              <option>Mantenimiento</option>
+              <option>Otro</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Mensaje <span class="req">*</span></label>
+            <textarea id="cf-msg" required placeholder="Contanos tu consulta, duda o sugerencia sobre gestión de residuos..."></textarea>
+          </div>
+          <button type="submit" class="sendbtn">Enviar por correo</button>
+          <div id="cf-feedback"></div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Basado en el Manual de Gestión de Residuos Hospitalarios (HMH) — Res. 134/2016 (GREAS), Res. 1792/2014, Ley 24.051, Código Ambiental de Chubut (Ley XI N.º 35).<br>
+    Ante cualquier duda, consultar al Servicio de Higiene y Seguridad antes de descartar.
+  </footer>
+</div>
+
+<script>
+/* ============ DATA ============ */
+const CATS = [
+  {
+    id:'rsu', name:'Residuos comunes (RSU)', ycode:null, color:'var(--c-rsu)', bg:'var(--c-rsu-bg)',
+    container:'Bolsa negra / recipiente identificado',
+    icon:'bag',
+    desc:'Residuos que no representan riesgo biológico, químico ni ambiental. Se generan en áreas administrativas, salas de espera, oficinas y en la actividad diaria de cocina y limpieza, siempre que no estén contaminados.',
+    incluir:['Restos de comida no compostables','Servilletas y pañuelos usados','Envoltorios y descartables sucios no reciclables','Residuos húmedos del sector','Vasos y platos descartables sucios'],
+    noIncluir:['Vidrios','Y1 / Y3','Compostables','Reciclables (papel, cartón, plástico limpios)','Biopatogénicos o cortopunzantes'],
+    pasos:['Colocar los residuos comunes en bolsa negra o recipiente identificado.','Cerrar la bolsa o retirar el recipiente según el circuito interno, sin mezclar con otros residuos.','Trasladar al punto o contenedor correspondiente del circuito interno.'],
+    importante:['Usar solo bolsa negra o recipiente identificado.','No mezclar con reciclables, compostables ni residuos especiales o peligrosos.','Retirar antes del desborde (no superar 3/4 de capacidad).'],
+    keywords:'basura comun restos de comida servilletas envoltorios sucios rsu negro'
+  },
+  {
+    id:'bio', name:'Biopatogénicos', ycode:'Y1', color:'var(--c-bio)', bg:'var(--c-bio-bg)',
+    container:'Bolsa roja dentro de contenedor rojo rotulado',
+    icon:'biohazard',
+    desc:'Material contaminado con sangre, secreciones o fluidos corporales, o con probabilidad de contener microorganismos patógenos. Incluye material de curaciones, guantes y barbijos contaminados, tubos de extracción y material de aislamiento.',
+    incluir:['Gasas, apósitos y algodones contaminados','Guantes y barbijos con sangre o fluidos','Material con sangre o fluidos (tubos, muestras)','Residuos de curaciones','Material de aislamiento de pacientes','Jeringas enteras (cuerpo plástico) usadas o contaminadas, sin la aguja'],
+    noIncluir:['Residuos comunes','Reciclables limpios','Medicamentos o residuos Y3','Restos de comida','Papel o cartón limpio','Agujas y objetos cortopunzantes (van en descartador rígido)'],
+    pasos:['Colocar los residuos biopatogénicos en bolsa roja dentro del contenedor rojo identificado.','Cuando la bolsa llegue al 80% de su capacidad, cerrarla con doble nudo. Nunca sobrepasar ese nivel.','Colocar la bolsa cerrada en el contenedor correspondiente del circuito interno.'],
+    importante:['Usar bolsa roja dentro del contenedor rojo identificado.','Cerrar con doble nudo al 80% de su capacidad como máximo.','No compactar las bolsas ni apoyarlas contra el cuerpo.','La frecuencia de retiro no debe superar las 24 horas.'],
+    keywords:'sangre fluidos gasas apositos guantes barbijos aislamiento curaciones jeringa cuerpo bolsa roja y1'
+  },
+  {
+    id:'corto', name:'Cortopunzantes', ycode:null, color:'var(--c-corto)', bg:'var(--c-corto-bg)',
+    container:'Descartador rígido resistente a la punción',
+    icon:'sharp',
+    desc:'Objetos afilados o punzantes que pueden causar lesiones. Su manipulación incorrecta es una de las causas más frecuentes de accidentes laborales con riesgo de transmisión de VIH, hepatitis B y C.',
+    incluir:['Agujas','Hojas de bisturí','Lancetas','Catéteres con punta cortante','Cables epicárdicos','Ampollas rotas'],
+    noIncluir:['El cuerpo de la jeringa sin aguja (va a biopatogénico)','Residuos comunes','Reciclables','Medicamentos'],
+    pasos:['Descartar el objeto cortopunzante directamente en el descartador rígido, sin recapuchar ni doblar la aguja.','Al llegar a 3/4 de su capacidad, cerrar la tapa de seguridad.','Depositar el descartador cerrado según el circuito interno de biopatogénicos.'],
+    importante:['Recipiente plástico rígido, resistente a la punción, con tapa de seguridad y símbolo de riesgo biológico.','Prohibido reencapuchar agujas.','Cerrar el descartador al alcanzar 3/4 de su capacidad, nunca más.','Si hay un cortopunzante fuera del descartador: no tocarlo con la mano, aislar el sector y avisar.'],
+    keywords:'aguja bisturi lanceta cable epicardico ampolla rota descartador rigido punzocortante'
+  },
+  {
+    id:'med', name:'Resto de medicamentos', ycode:'Y3', color:'var(--c-med)', bg:'var(--c-med-bg)',
+    container:'Bolsa o recipiente amarillo identificado (circuito Y3 — bolsa)',
+    icon:'pill',
+    desc:'Medicamentos no aptos para uso, vencidos, sobrantes o envases vinculados a medicamentos, según el circuito interno definido. Es residuo Y3 (Ley 24.051), igual que las ampollas y frascos ampolla de vidrio, pero se descarta en bolsa: no incluye ampollas ni frascos ampolla de vidrio, que van en el bidón.',
+    incluir:['Blísteres usados','Comprimidos o cápsulas','Frascos de medicamentos (no inyectables)','Jarabes o cremas','Envases vinculados a medicamentos','Medicamentos vencidos o sobrantes','Fármacos citotóxicos vencidos o sobrantes (tratamientos oncológicos)'],
+    noIncluir:['Ampollas y frascos ampolla de vidrio (van en el bidón)','Residuos comunes','Reciclables limpios','Biopatogénicos','Cortopunzantes','Restos de comida'],
+    pasos:['Colocar medicamentos y envases correspondientes en bolsa o recipiente amarillo identificado.','No mezclar con ampollas/frascos ampolla de vidrio, biopatogénicos, residuos comunes ni reciclables.','Cerrar la bolsa o recipiente según el circuito interno y trasladar al contenedor correspondiente.'],
+    importante:['Usar solo recipiente o bolsa amarilla identificada.','No mezclar con ampollas ni frascos ampolla de vidrio, aunque ambos sean residuo Y3.','Ante cualquier duda, consultar al circuito interno del sector.'],
+    note:'Y3 (Ley 24.051) tiene dos circuitos separados según el tipo de envase: esta bolsa amarilla para blísteres, comprimidos, frascos no inyectables y envases en general, y el bidón amarillo para ampollas y frascos ampolla de vidrio inyectables (ver categoría "Ampollas y frascos ampolla de vidrio"). Ambos son Y3, pero no se mezclan entre sí: cada uno en su propio recipiente.',
+    keywords:'medicamento vencido sobrante blister comprimido jarabe crema amarillo farmaco citotoxico oncologico y3'
+  },
+  {
+    id:'y3', name:'Ampollas y frascos ampolla de vidrio', ycode:'Y3', color:'var(--c-y3)', bg:'var(--c-y3-bg)',
+    container:'Bidón amarillo rígido (circuito Y3 — bidón)',
+    icon:'bidon',
+    desc:'Frascos y ampollas utilizados o vencidos, incluyendo frascos ampolla y ampollas de vidrio. Es residuo Y3 (Ley 24.051), igual que el resto de medicamentos, pero por ser vidrio inyectable se descarta directamente en bidón rígido, nunca en bolsa común, roja, reciclable ni en la bolsa de medicamentos.',
+    incluir:['Frascos ampolla utilizados o vencidos','Ampollas de vidrio usadas o vencidas','Frascos de medicamentos inyectables vacíos'],
+    noIncluir:['Blísteres y comprimidos sueltos (van en la bolsa de Resto de medicamentos)','Envases plásticos no inyectables','Restos de medicamentos no inyectables','Residuos comunes ni reciclables'],
+    pasos:['Colocar frascos y ampollas de vidrio utilizados o vencidos directamente en el bidón amarillo.','Una vez completo, cerrar correctamente el bidón, sin forzar la entrada de residuos.','Colocar el bidón cerrado en el contenedor correspondiente.'],
+    importante:['No sobrellenar el bidón.','No forzar la entrada de los residuos: evita cortes al manipular.','Cerrar siempre antes de trasladar.','Usar solo este bidón rígido. No usar bolsa común, roja, reciclable ni la bolsa de medicamentos.'],
+    note:'Este bidón y la bolsa de "Resto de medicamentos" son, ambos, residuo Y3 (Ley 24.051): se diferencian por el tipo de envase (vidrio inyectable vs. resto de medicamentos), no por la norma. Deben mantenerse siempre en recipientes separados.',
+    keywords:'ampolla vidrio frasco ampolla inyectable bidon y3 vencido'
+  },
+  {
+    id:'quim', name:'Residuos químicos peligrosos', ycode:null, color:'var(--c-quim)', bg:'var(--c-quim-bg)',
+    container:'Recipiente amarillo resistente a químicos, hermético y rotulado',
+    icon:'flask',
+    desc:'Sustancias químicas que representan riesgo para la salud o el ambiente: solventes, reactivos de laboratorio, líquidos de revelado radiográfico y materiales con mercurio.',
+    incluir:['Solventes y reactivos de laboratorio','Líquidos de revelado radiográfico','Termómetros y esfigmomanómetros con mercurio'],
+    noIncluir:['Fármacos citotóxicos (van a Resto de medicamentos)','Medicamentos comunes vencidos','Residuos comunes','Biopatogénicos','Reciclables'],
+    pasos:['Identificar el químico y verificar compatibilidad antes de mezclar cualquier residuo (ver tabla de incompatibilidades del Anexo II).','Envasar en recipiente rotulado, hermético y resistente a agentes químicos.','Entregar al circuito interno de residuos peligrosos para su retiro por gestor autorizado.'],
+    importante:['Recipiente amarillo, hermético, resistente a agentes químicos y con rotulado de advertencia.','Nunca mezclar sustancias químicamente incompatibles.','Requiere manifiesto de transporte y certificado de tratamiento (gestor autorizado, ej. IMPEESA S.A.).'],
+    keywords:'quimico peligroso solvente reactivo revelado radiografico mercurio'
+  },
+  {
+    id:'plas', name:'Plásticos limpios', ycode:null, color:'var(--c-plas)', bg:'var(--c-plas-bg)',
+    container:'Bolsa verde identificada',
+    icon:'recycle',
+    desc:'Solo plásticos limpios y secos, aptos para recuperación: botellas, envases, tapitas, bolsas y sachets, siempre que no hayan estado en contacto con fluidos, químicos ni medicación.',
+    incluir:['Botellas plásticas limpias','Envases plásticos limpios','Tapitas','Bolsas plásticas limpias','Sachets plásticos limpios','Otros plásticos limpios y secos'],
+    noIncluir:['Residuos comunes','Biopatogénicos','Y3 (medicamentos o ampollas)','Restos de comida','Vidrios','Papel o cartón'],
+    pasos:['Verificar que el plástico esté limpio y seco.','Colocarlo en bolsa verde identificada.','Cerrar la bolsa y trasladarla al circuito interno correspondiente.'],
+    importante:['Usar solo bolsa verde identificada.','No mezclar con residuos comunes, biopatogénicos, medicamentos/Y3 ni con material contaminado.','Si el plástico tuvo contacto con sangre, fluidos, químicos o medicación, sigue el circuito correspondiente (no va aquí).'],
+    keywords:'plastico botella envase tapita bolsa sachet verde reciclable limpio seco'
+  },
+  {
+    id:'papel', name:'Papel limpio', ycode:null, color:'var(--c-papel)', bg:'var(--c-papel-bg)',
+    container:'Caja identificada "Papel limpio"',
+    icon:'paper',
+    desc:'Papel tipo impresión limpio, seco y sin plastificar: hojas de oficina, folletos y cartulina, sin ganchitos, clips ni cinta adhesiva, y sin datos de pacientes.',
+    incluir:['Hojas impresas y de oficina','Papel de color','Cartulina limpia','Folletos no plastificados'],
+    noIncluir:['Papel plastificado, metalizado o con cinta/ganchitos/clips','Papel sucio, mojado o con restos de comida','Papel con datos de pacientes (triturar primero)','Biopatogénicos, Y1 o Y3','Plásticos o vidrios reciclables'],
+    pasos:['Verificar que esté limpio, seco y sin datos de pacientes.','Retirar ganchitos, clips y cinta adhesiva; mantener las hojas sin arrugar.','Colocar en caja limpia identificada y trasladar al circuito interno correspondiente.'],
+    importante:['Usar solo cajas limpias identificadas.','No incluir papel plastificado ni con datos de pacientes sin triturar antes (Ley 25.326).','Mantener el material limpio y seco.'],
+    keywords:'papel hoja oficina folleto cartulina impresion azul limpio'
+  },
+  {
+    id:'carton', name:'Cartón limpio', ycode:null, color:'var(--c-carton)', bg:'var(--c-carton-bg)',
+    container:'Caja armada limpia, usada como contenedor',
+    icon:'box',
+    desc:'Cajas y cartones limpios, secos y sin contaminación. Todas las cajas deben desarmarse y achatarse antes de colocarlas en el contenedor.',
+    incluir:['Cajas de cartón limpias','Cajas desarmadas y achatadas','Rollos de cartón limpios','Cajas de medicamentos vacías y limpias'],
+    noIncluir:['Cartón sucio, mojado o con grasa','Cartón con restos de comida, sangre o fluidos','Plásticos, biopatogénicos o Y3','Papel plastificado'],
+    pasos:['Verificar que el cartón esté limpio y seco.','Desarmar y achatar todas las cajas.','Colocar el cartón desarmado dentro de una caja armada limpia identificada y trasladar al circuito interno.'],
+    importante:['Usar caja armada limpia como contenedor.','No mezclar con residuos húmedos, contaminados, plásticos, medicamentos ni biopatogénicos.','Retirar antes del desborde.'],
+    keywords:'carton caja desarmada achatada rollo marron'
+  },
+  {
+    id:'compost', name:'Compostables', ycode:null, color:'var(--c-compost)', bg:'var(--c-compost-bg)',
+    container:'Recipiente o bolsa identificada para compostables',
+    icon:'leaf',
+    desc:'Residuos orgánicos aptos para compostaje: yerba usada, café, cáscaras de frutas y verduras, y restos vegetales.',
+    incluir:['Yerba usada','Restos de café','Cáscaras de frutas y verduras','Restos vegetales, hojas y pasto','Servilletas de papel sin químicos'],
+    noIncluir:['Carnes y lácteos','Aceite','Plásticos, vidrio y metal','Papel plastificado','Residuos hospitalarios o material contaminado'],
+    pasos:['Colocar solo residuos compostables en el recipiente o bolsa destinada.','Evitar mezclar con líquidos en exceso y con otros residuos.','Cerrar o retirar el recipiente según el circuito interno.'],
+    importante:['Usar solo el recipiente identificado.','No mezclar con residuos comunes, reciclables ni biopatogénicos.','Retirar antes del desborde.'],
+    keywords:'organico compostable yerba cafe cascara verdura fruta oliva'
+  },
+  {
+    id:'vidrio', name:'Vidrios rotos no contaminados', ycode:null, color:'var(--c-vidrio)', bg:'var(--c-vidrio-bg)',
+    container:'Caja rígida cerrada y rotulada',
+    icon:'glass',
+    desc:'Vidrios rotos limpios y no contaminados: ventanas, vasos, tazas o platos. Se manipulan con pala, cartón rígido o elemento de barrido, nunca con la mano.',
+    incluir:['Vidrios de ventanas','Vasos rotos','Tazas rotas','Platos de vidrio rotos'],
+    noIncluir:['Residuos comunes ni reciclables sucios','Biopatogénicos o Y3','Cortopunzantes en general','Vidrio con sangre o fluidos (sigue circuito biopatogénico y aviso al superior)'],
+    pasos:['Juntar los vidrios rotos con pala, cartón rígido o elemento de barrido. Nunca con la mano.','Colocarlos en caja rígida, cerrarla bien y rotularla: "PRECAUCIÓN — VIDRIOS ROTOS".','Colocar la caja rotulada en bolsa negra para su descarte correspondiente.'],
+    importante:['Manipular siempre con pala o cartón rígido, nunca con la mano.','Si el vidrio está contaminado con sangre o fluidos: sigue el circuito biopatogénico y avisar al superior.'],
+    keywords:'vidrio roto vaso taza plato ventana gris'
+  },
+  {
+    id:'regu', name:'Residuos especiales (REGU / RAEE)', ycode:null, color:'var(--c-regu)', bg:'var(--c-regu-bg)',
+    container:'Recipiente específico por tipo (pilas, lámparas, RAEE, aceites)',
+    icon:'battery',
+    desc:'Residuos Especiales de Generación Universal y Residuos de Aparatos Eléctricos y Electrónicos: pilas y baterías, lámparas fluorescentes o de mercurio, equipos eléctricos/electrónicos obsoletos, aceites y grasas de cocina.',
+    incluir:['Pilas y baterías','Lámparas fluorescentes o de mercurio','RAEE: computadoras, monitores, impresoras','Aceites usados y grasas de cocina','Escombros y restos de obra (gestión de contratistas)'],
+    noIncluir:['Residuos comunes','Biopatogénicos','Cortopunzantes'],
+    pasos:['Recolectar en contenedores rígidos específicos, con tapa y rotulado según el tipo (ej. "Pilas y baterías — Residuos peligrosos").','Verificar la compatibilidad antes de mezclar distintos tipos de REGU entre sí.','Mantener en lugar limpio, fresco y seco; entregar al servicio de maestranza o gestor autorizado para su disposición. Ante cualquier duda, consultar a HySL.'],
+    importante:['No mezclar distintos tipos de REGU entre sí sin verificar compatibilidad.','Programa Provincial de Reciclado de RAEE (Ley XI N.º 56 de Chubut) y Ordenanza Municipal N.º 11735/12 de Trelew.'],
+    note:'Importante: muchos RAEE son bienes inventariables (patrimonio del hospital). Antes de descartarlos, se debe tramitar la baja patrimonial correspondiente. Ante cualquier duda, consultar a Patrimonio del HMH.',
+    keywords:'pila bateria lampara raee electronico aceite grasa cocina escombro violeta baja patrimonial patrimonio'
+  },
+];
+
+const ICONS = {
+  bag:'<svg viewBox="0 0 24 24" fill="none"><path d="M6 8h12l-1 12a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L6 8Z" stroke="currentColor" stroke-width="1.8"/><path d="M9 8V6a3 3 0 0 1 6 0v2" stroke="currentColor" stroke-width="1.8"/></svg>',
+  biohazard:'<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="2.3" stroke="currentColor" stroke-width="1.6"/><circle cx="6" cy="17" r="3" stroke="currentColor" stroke-width="1.6"/><circle cx="18" cy="17" r="3" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="6" r="3" stroke="currentColor" stroke-width="1.6"/><path d="M12 8.3v3.4M10.3 13.6l-2.6 2M13.7 13.6l2.6 2" stroke="currentColor" stroke-width="1.6"/></svg>',
+  sharp:'<svg viewBox="0 0 24 24" fill="none"><rect x="5" y="4" width="14" height="16" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M9 14l3-8 3 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="17" r="1" fill="currentColor"/></svg>',
+  pill:'<svg viewBox="0 0 24 24" fill="none"><rect x="3" y="9" width="18" height="7" rx="3.5" stroke="currentColor" stroke-width="1.8"/><path d="M12 9v7" stroke="currentColor" stroke-width="1.8"/></svg>',
+  bidon:'<svg viewBox="0 0 24 24" fill="none"><path d="M7 9h10l1 11a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L7 9Z" stroke="currentColor" stroke-width="1.8"/><path d="M10 9V5h4v4" stroke="currentColor" stroke-width="1.8"/></svg>',
+  flask:'<svg viewBox="0 0 24 24" fill="none"><path d="M10 3h4M10 3v6l-5 9a2 2 0 0 0 1.8 3h10.4a2 2 0 0 0 1.8-3l-5-9V3" stroke="currentColor" stroke-width="1.8"/></svg>',
+  recycle:'<svg viewBox="0 0 24 24" fill="none"><path d="M7 19H4.5a1 1 0 0 1-.87-1.5L6 13M17 19h2.5a1 1 0 0 0 .87-1.5L18 13M9.5 5.3l-2.2 3.8m10-1.6l1.9 3.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 19h6M13 3.5l2 3-2 1M11 20.5l-2-3 2-1M18 12.8l1.7 3-2.2 1" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  paper:'<svg viewBox="0 0 24 24" fill="none"><path d="M6 3h9l3 3v15H6V3Z" stroke="currentColor" stroke-width="1.8"/><path d="M15 3v3h3" stroke="currentColor" stroke-width="1.8"/><path d="M9 12h6M9 15h6M9 9h3" stroke="currentColor" stroke-width="1.6"/></svg>',
+  box:'<svg viewBox="0 0 24 24" fill="none"><path d="M3 8l9-4 9 4-9 4-9-4Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M3 8v9l9 4 9-4V8" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 12v9" stroke="currentColor" stroke-width="1.8"/></svg>',
+  leaf:'<svg viewBox="0 0 24 24" fill="none"><path d="M20 4C10 4 4 10 4 18c0 0 12 2 16-6 2-2.5 2-5.5 0-8Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M5 19c3-5 7-8 13-11" stroke="currentColor" stroke-width="1.6"/></svg>',
+  glass:'<svg viewBox="0 0 24 24" fill="none"><path d="M7 3h10l-1 12a4 4 0 0 1-8 0L7 3Z" stroke="currentColor" stroke-width="1.8"/><path d="M9 21h6" stroke="currentColor" stroke-width="1.8"/></svg>',
+  battery:'<svg viewBox="0 0 24 24" fill="none"><rect x="3" y="8" width="16" height="9" rx="1.5" stroke="currentColor" stroke-width="1.8"/><path d="M19 11v3" stroke="currentColor" stroke-width="1.8"/><path d="M8 8V6a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v2" stroke="currentColor" stroke-width="1.6"/></svg>'
+};
+
+/* ============ NAV ============ */
+function goView(name){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('view-'+name).classList.add('active');
+  document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.toggle('active', b.dataset.view===name));
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+document.getElementById('tabs').addEventListener('click', e=>{
+  const btn = e.target.closest('button[data-view]');
+  if(!btn) return;
+  goView(btn.dataset.view);
+});
+
+/* ============ RENDER CAT CARD ============ */
+function catCardHTML(c){
+  return `<div class="catcard" style="background:${c.bg}" onclick="showDetail('${c.id}')">
+    <div class="bar" style="background:${c.color}"></div>
+    ${c.ycode?`<div class="ycode" style="background:${c.color};color:#fff">${c.ycode}</div>`:''}
+    <div class="icon" style="color:${c.color}">${ICONS[c.icon]}</div>
+    <div>
+      <div class="name" style="color:${c.color}">${c.name}</div>
+      <div class="sub">${c.container}</div>
+    </div>
+  </div>`;
+}
+function renderHomeGrid(){
+  document.getElementById('homeGrid').innerHTML = CATS.map(c=>catCardHTML(c)).join('');
+}
+function renderCategoriasList(filter){
+  const f = (filter||'').toLowerCase().trim();
+  const list = CATS.filter(c => !f || (c.name+' '+c.keywords+' '+c.container).toLowerCase().includes(f));
+  const el = document.getElementById('categoriasList');
+  if(list.length===0){
+    el.innerHTML = `<p style="color:var(--muted); text-align:center; padding:30px 0;">No encontramos ninguna categoría con "${filter}". Probá con otra palabra o usá el clasificador.</p>`;
+    return;
+  }
+  el.innerHTML = `<div class="grid">${list.map(c=>catCardHTML(c)).join('')}</div>`;
+}
+document.getElementById('searchInput').addEventListener('input', e=>renderCategoriasList(e.target.value));
+
+/* ============ DETAIL VIEW ============ */
+function showDetail(id){
+  const c = CATS.find(x=>x.id===id);
+  const html = `
+    <div class="detailcard">
+      <div class="detailhead" style="background:${c.color}">
+        <div class="blob"></div>
+        <button class="back" onclick="goView('categorias')">← Volver</button>
+        <h2>${c.name} ${c.ycode?`<span style="opacity:.85;font-size:15px;">(${c.ycode})</span>`:''}</h2>
+        <div class="container-tag">📦 ${c.container}</div>
+      </div>
+      <div class="detailbody">
+        <p class="desc">${c.desc}</p>
+        <div class="twocol">
+          <div class="box">
+            <h4 style="color:${c.color}">✔ Qué debe descartarse</h4>
+            <ul>${c.incluir.map(i=>`<li>${i}</li>`).join('')}</ul>
+          </div>
+          <div class="box no">
+            <h4 style="color:#8a1f24">✕ No incluir</h4>
+            <ul>${c.noIncluir.map(i=>`<li>${i}</li>`).join('')}</ul>
+          </div>
+        </div>
+        <h4 style="margin:0 0 12px; font-size:13px; text-transform:uppercase; letter-spacing:.05em; color:${c.color}">Cómo descartarlo</h4>
+        <div class="steps">
+          ${c.pasos.map((p)=>`<div class="step"><div class="num" style="background:${c.color}"></div><div class="txt">${p}</div></div>`).join('')}
+        </div>
+        <div class="important" style="background:${c.bg}; border:1px solid ${c.color}33">
+          <h4 style="color:${c.color}">⚠ Importante</h4>
+          <ul>${c.importante.map(i=>`<li>${i}</li>`).join('')}</ul>
+        </div>
+        ${c.note?`<div class="note">${c.note}</div>`:''}
+      </div>
+    </div>`;
+  document.getElementById('view-detalle').innerHTML = html;
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('view-detalle').classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* ============ CLASIFICADOR ============ */
+const TREE = {
+  q1: { text:'¿El residuo tuvo contacto con sangre, secreciones o fluidos corporales, o proviene de un paciente en aislamiento?', yes:'q1b', no:'q2' },
+  q1b: { text:'¿Es un objeto que corta o pincha: aguja, hoja de bisturí, lanceta, catéter o vidrio roto contaminado?', yes:'RESULT:corto', no:'RESULT:bio' },
+  q2: { text:'¿Es un medicamento, envase de medicamento, o resto farmacéutico?', yes:'q2b', no:'q3' },
+  q2b: { text:'¿Es una ampolla o frasco-ampolla de vidrio (inyectable), usado o vencido?', yes:'RESULT:y3', no:'RESULT:med' },
+  q3: { text:'¿Es un químico peligroso: reactivo de laboratorio, líquido de revelado, mercurio o solvente?', yes:'RESULT:quim', no:'q4' },
+  q4: { text:'¿Es una pila, batería, lámpara, aparato eléctrico/electrónico o aceite usado?', yes:'RESULT:regu', no:'q5' },
+  q5: { text:'¿Es vidrio roto y no está contaminado?', yes:'RESULT:vidrio', no:'q6' },
+  q6: { text:'¿Es un plástico limpio y seco: botella, envase, tapita, bolsa o sachet?', yes:'RESULT:plas', no:'q7' },
+  q7: { text:'¿Es papel limpio y seco, sin datos de pacientes ni plastificado?', yes:'RESULT:papel', no:'q8' },
+  q8: { text:'¿Es cartón limpio y seco?', yes:'RESULT:carton', no:'q9' },
+  q9: { text:'¿Es un residuo orgánico apto para compostaje (yerba, café, cáscaras, restos vegetales)?', yes:'RESULT:compost', no:'RESULT:rsu' }
+};
+let clasState = { node:'q1', trail:[] };
+function renderClasificador(){
+  const root = document.getElementById('clasificadorRoot');
+  const node = clasState.node;
+  if(node.startsWith('RESULT:')){
+    const id = node.split(':')[1];
+    const c = CATS.find(x=>x.id===id);
+    root.innerHTML = `
+      <div class="qcard" style="padding:0; overflow:hidden;">
+        <div class="resulthead" style="background:${c.color}">
+          <div class="tag">Corresponde a</div>
+          <h2>${c.name}${c.ycode?` (${c.ycode})`:''}</h2>
+        </div>
+        <div style="padding:24px;">
+          <p style="font-size:14.5px; color:var(--ink); margin:0 0 6px;"><strong>📦 ${c.container}</strong></p>
+          <p style="font-size:13.5px; color:var(--muted); margin:0 0 20px;">${c.desc}</p>
+          <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+            <button class="qopt" style="border-color:${c.color}; color:${c.color}" onclick="showDetail('${c.id}')">Ver ficha completa</button>
+            <button class="qopt" onclick="resetClasificador()">Volver a empezar</button>
+          </div>
+        </div>
+      </div>`;
+    return;
+  }
+  const q = TREE[node];
+  root.innerHTML = `
+    ${clasState.trail.length? `<div class="trail">${clasState.trail.map(t=>`<span class="crumb">${t}</span>`).join('')}</div>`:''}
+    <div class="qcard">
+      <div class="qlabel">Pregunta ${clasState.trail.length+1}</div>
+      <h3>${q.text}</h3>
+      <div class="qopts">
+        <button class="qopt" onclick="answerClas('yes')">Sí</button>
+        <button class="qopt" onclick="answerClas('no')">No</button>
+      </div>
+    </div>
+    ${clasState.trail.length? `<button class="restartbtn" onclick="resetClasificador()">Empezar de nuevo</button>`:''}
+  `;
+}
+function answerClas(ans){
+  const q = TREE[clasState.node];
+  clasState.trail.push(q.text.length>46? q.text.slice(0,44)+'…' : q.text);
+  clasState.node = q[ans];
+  renderClasificador();
+}
+function resetClasificador(){ clasState = { node:'q1', trail:[] }; renderClasificador(); }
+
+/* ============ BUENAS PRACTICAS ============ */
+const PRACTICAS = [
+  {t:'Separar en el punto de generación', d:'Cada trabajador descarta el residuo de inmediato, en el recipiente correcto, en el mismo lugar donde se genera.'},
+  {t:'Usar guantes y EPP indicado', d:'Guantes resistentes, uniforme y calzado cerrado como mínimo; protección ocular y mascarilla según el tipo de residuo.'},
+  {t:'No mezclar corrientes', d:'Una bolsa común contaminada con material biopatogénico se convierte íntegramente en residuo peligroso.'},
+  {t:'Cerrar en el lugar de generación', d:'Cerrar con nudo, precinto o mecanismo equivalente. No trasvasar residuos ni reabrir bolsas ya cerradas.'},
+  {t:'Respetar el límite de llenado', d:'No superar 3/4 de la capacidad del recipiente (80% en biopatogénicos), para permitir un cierre seguro.'},
+  {t:'Transportar en carro exclusivo y con tapa', d:'Carro de uso exclusivo para residuos, identificado, sin desborde ni arrastre. Nunca por pasillos o ascensores de público.'},
+  {t:'Seguir la ruta interna definida', d:'Trasladar por los recorridos predeterminados y señalizados hacia el depósito intermedio o final.'},
+  {t:'Lavarse las manos al finalizar', d:'Higiene de manos inmediatamente después de retirar los guantes.'}
+];
+function renderPracticas(){
+  document.getElementById('practicasItems').innerHTML = PRACTICAS.map((item,i)=>`
+    <div class="practItem">
+      <div class="num">${i+1}</div>
+      <div class="practText"><div class="t">${item.t}</div><div class="d">${item.d}</div></div>
+    </div>
+  `).join('');
+}
+
+/* ============ TRIVIA ============ */
+const TRIVIA = {
+  facil:[
+    {q:'¿De qué color es la bolsa para residuos biopatogénicos?', opts:['Roja','Verde','Negra','Azul'], correct:0, just:'La Res. 1792/2014 establece la bolsa roja para residuos con riesgo biológico, colocada dentro de un contenedor rojo rotulado.'},
+    {q:'¿Dónde se descartan las agujas usadas?', opts:['En bolsa roja común','En el descartador rígido de cortopunzantes','En bolsa negra','En el bidón Y3'], correct:1, just:'Las agujas y otros objetos punzocortantes van exclusivamente en un recipiente rígido, resistente a la punción y con tapa de seguridad.'},
+    {q:'¿En qué contenedor van las ampollas de vidrio vencidas?', opts:['Bidón amarillo Y3','Bolsa de plásticos limpios','Caja de vidrios rotos','Bolsa negra'], correct:0, just:'Los frascos y ampollas de vidrio utilizados o vencidos se descartan directamente en el bidón amarillo rotulado Y3.'},
+    {q:'¿Qué color de bolsa se usa para residuos comunes (RSU)?', opts:['Amarilla','Negra','Verde','Roja'], correct:1, just:'Los residuos comunes, no reciclables ni peligrosos, se disponen en bolsa negra o recipiente identificado.'},
+    {q:'¿Qué color de bolsa se usa para plásticos limpios?', opts:['Verde','Azul','Marrón','Gris'], correct:0, just:'Los plásticos limpios y secos aptos para recuperación se descartan en bolsa verde identificada.'},
+    {q:'¿Está permitido reencapuchar una aguja usada?', opts:['Sí, siempre','Sí, si se hace con cuidado','No, está prohibido','Solo en quirófano'], correct:2, just:'Reencapuchar agujas está expresamente prohibido: es una de las causas más frecuentes de accidentes cortopunzantes.'},
+    {q:'¿Qué elemento de protección personal es obligatorio como mínimo para manipular cualquier residuo?', opts:['Guantes resistentes','Antiparras','Mascarilla N95','Casco'], correct:0, just:'El EPP mínimo obligatorio incluye guantes resistentes, uniforme y calzado cerrado; según el riesgo, se suma protección ocular y respiratoria.'},
+    {q:'¿Hasta qué proporción de su capacidad se debe llenar como máximo un recipiente de residuos?', opts:['La mitad','3/4 partes','Totalmente','No hay límite'], correct:1, just:'El llenado no debe superar las 3/4 partes de la capacidad, para permitir un cierre seguro y evitar rupturas.'},
+    {q:'¿Qué color tiene el recipiente para medicamentos vencidos o sobrantes?', opts:['Amarillo','Verde','Gris','Negro'], correct:0, just:'El resto de medicamentos se descarta en bolsa o recipiente amarillo identificado. Es residuo Y3 (Ley 24.051), igual que las ampollas y frascos ampolla de vidrio, pero estos van en un bidón rígido aparte.'},
+    {q:'Si un vidrio roto tiene sangre, ¿a qué circuito pertenece?', opts:['Vidrios rotos comunes','Circuito biopatogénico','Reciclables','RSU'], correct:1, just:'Si el vidrio está contaminado con sangre o fluidos, debe seguir el circuito biopatogénico y avisarse al superior; no va a la caja de vidrios comunes.'}
+  ],
+  media:[
+    {q:'¿Qué resolución regula la señalética de residuos en establecimientos de salud?', opts:['Res. 134/2016','Res. 1792/2014','Ley 24.051','Ley 19.587'], correct:1, just:'La Res. Ministerial N.º 1792/2014 estableció las directrices sanitarias para la señalización de la gestión interna de residuos.'},
+    {q:'¿Qué norma nacional establece las Directrices Nacionales para la Gestión de Residuos en Establecimientos de Salud (GREAS)?', opts:['Res. 134/2016','Ley 25.916','Ley XI N.º 35','Res. 1792/2014'], correct:0, just:'La Resolución Ministerial N.º 134/2016 aprueba las Directrices Nacionales para la Gestión de Residuos en Establecimientos de Salud (GREAS).'},
+    {q:'¿Qué ley nacional regula los residuos peligrosos?', opts:['Ley 25.675','Ley 24.051','Ley 25.326','Ley 20.284'], correct:1, just:'La Ley 24.051 de Residuos Peligrosos refuerza la obligación de manejo diferenciado de residuos como los químicos peligrosos.'},
+    {q:'¿Cuál es el porcentaje máximo de llenado de una bolsa roja biopatogénica antes de cerrarla?', opts:['50%','65%','80%','100%'], correct:2, just:'La bolsa roja debe cerrarse con doble nudo al llegar al 80% de su capacidad, sin sobrepasar ese nivel.'},
+    {q:'Un guante contaminado con sangre en un consultorio externo, ¿qué tipo de residuo es?', opts:['Residuo común, porque no es quirófano','Biopatogénico, sin importar el sector','Reciclable si está seco por fuera','Cortopunzante'], correct:1, just:'La clasificación responde a la naturaleza del residuo y no al servicio de origen: un guante contaminado es biopatogénico en cualquier sector.'},
+    {q:'¿Qué ocurre si se mezcla una bolsa de residuo común con material biopatogénico?', opts:['No pasa nada si es poca cantidad','Todo el contenido se convierte en residuo peligroso','Se puede separar después','Se debe lavar la bolsa'], correct:1, just:'La mezcla de corrientes está prohibida: una bolsa común contaminada con material biopatogénico transforma automáticamente todo su contenido en residuo peligroso.'},
+    {q:'¿Cuál es la frecuencia máxima de retiro para residuos biopatogénicos?', opts:['12 horas','24 horas','48 horas','72 horas'], correct:1, just:'Para residuos biopatogénicos, la frecuencia de retiro no debe superar las 24 horas.'},
+    {q:'¿Qué documento garantiza la trazabilidad del traslado de residuos peligrosos hasta el operador externo?', opts:['El manifiesto de transporte','La factura de compra','El remito de insumos','El libro de guardia'], correct:0, just:'El manifiesto de transporte acompaña cada carga, documentando generador, transportista y destino final, garantizando trazabilidad legal.'},
+    {q:'¿Qué corriente incluye pilas, lámparas de mercurio y equipos electrónicos en desuso?', opts:['Residuos comunes','REGU / RAEE','Reciclables','Químicos peligrosos'], correct:1, just:'Los Residuos Especiales de Generación Universal (REGU) incluyen RAEE, pilas, baterías, lámparas, aceites y escombros.'},
+    {q:'¿Está permitido usar los carros de residuos para transportar también alimentos o ropa?', opts:['Sí, si están limpios','No, deben ser de uso exclusivo','Sí, fuera de horario','Solo los de residuos comunes'], correct:1, just:'Los carros de residuos deben ser de uso exclusivo; está prohibido utilizarlos para transportar alimentos, ropa o insumos.'}
+  ],
+  dificil:[
+    {q:'¿Qué ley provincial de Chubut regula la gestión de residuos peligrosos y fija presupuestos mínimos?', opts:['Ley XI N.º 35 (Código Ambiental)','Ley XI N.º 56','Ordenanza 4232/92','Ley 25.675'], correct:0, just:'El Código Ambiental de la Provincia del Chubut (Ley XI N.º 35) fija los presupuestos mínimos de protección y gestión de residuos peligrosos.'},
+    {q:'¿Qué documento certifica que los residuos peligrosos fueron efectivamente tratados y dispuestos por el operador autorizado?', opts:['El manifiesto de transporte','El Certificado de Tratamiento y Disposición Final','El remito interno','El registro de generación'], correct:1, just:'El Certificado de Tratamiento y Disposición Final, emitido por el operador habilitado, es la única prueba válida de que los residuos no fueron desviados a circuitos informales.'},
+    {q:'¿Cuántos años deben conservarse los registros de gestión de residuos según la normativa ambiental?', opts:['2 años','5 años','10 años','20 años'], correct:2, just:'Los registros, manifiestos y certificados deben conservarse por un período mínimo de 10 años, disponibles para auditorías o inspecciones.'},
+    {q:'¿Qué ley reconoce a los residuos especiales (como RAEE) y exige su tratamiento diferenciado?', opts:['Ley 25.916, art. 35','Ley 24.051','Ley 19.587','Ley 23.922'], correct:0, just:'La Ley 25.916 de Gestión de Residuos Domiciliarios, en su art. 35, reconoce los residuos especiales como RAEE y exige tratamiento diferenciado.'},
+    {q:'Según el manual, ¿qué operador es responsable del tratamiento y disposición final de los residuos peligrosos del hospital?', opts:['IMPEESA S.A.','GIRSU Virch Valdés','ARN','Consorcio Municipal Trelew'], correct:0, just:'El manual menciona a IMPEESA S.A. como el operador habilitado que emite el Certificado de Tratamiento y Disposición Final.'},
+    {q:'¿En qué sitio se disponen finalmente los residuos ya tratados, según el manual?', opts:['Relleno municipal de Trelew','Consorcio GIRSU Virch Valdés','Planta de IMPEESA','Basural a cielo abierto'], correct:1, just:'El manual indica que los residuos tratados se disponen en el sitio autorizado del Consorcio GIRSU Virch Valdés.'},
+    {q:'¿Qué ley resulta relevante al descartar papel que contiene datos de pacientes?', opts:['Ley 25.326 de Protección de Datos Personales','Ley 24.051','Ley 20.284','Ley XI N.º 56'], correct:0, just:'Por la Ley 25.326, el papel con datos personales de pacientes debe triturarse antes de descartarse como papel reciclable.'},
+    {q:'¿Qué ley provincial creó el Programa Provincial de Reciclado de RAEE en Chubut?', opts:['Ley XI N.º 35','Ley XI N.º 56','Ordenanza 11735/12','Ley 25.916'], correct:1, just:'La Ley XI N.º 56 de la Provincia de Chubut crea el Programa Provincial de Reciclado de RAEE.'},
+    {q:'¿Qué ordenanza municipal de Trelew se vincula con el reciclado y los RAEE?', opts:['Ordenanza N.º 4232/92','Ordenanza N.º 11735/12','Ordenanza N.º 185','Ordenanza N.º 1792'], correct:1, just:'La Ordenanza Municipal N.º 11735/12 de Trelew se articula con la gestión provincial de RAEE.'},
+    {q:'Un cuerpo de jeringa ya utilizado, sin la aguja, ¿a qué circuito corresponde en el hospital?', opts:['Cortopunzantes','Biopatogénico','Y3','Residuo común'], correct:1, just:'La aguja va al descartador rígido de cortopunzantes; el cuerpo de la jeringa, ya sin la aguja, se descarta como biopatogénico.'}
+  ]
+};
+let quizState = null;
+function renderTrivia(){
+  const root = document.getElementById('triviaRoot');
+  if(!quizState){
+    root.innerHTML = `
+      <div class="hero" style="margin-bottom:20px;">
+        <div class="blob"></div>
+        <h2>Trivia de gestión de residuos</h2>
+        <p>30 preguntas en tres niveles, con justificación normativa en cada respuesta. Elegí un nivel para empezar.</p>
+      </div>
+      <div class="difwrap">
+        <div class="difcard" onclick="startQuiz('facil')" style="border-color:#2E7D32">
+          <div class="emoji">🟢</div><div class="lbl">Fácil</div><div class="cnt">10 preguntas</div>
+        </div>
+        <div class="difcard" onclick="startQuiz('media')" style="border-color:#C9971F">
+          <div class="emoji">🟡</div><div class="lbl">Media</div><div class="cnt">10 preguntas</div>
+        </div>
+        <div class="difcard" onclick="startQuiz('dificil')" style="border-color:#B50000">
+          <div class="emoji">🔴</div><div class="lbl">Difícil</div><div class="cnt">10 preguntas</div>
+        </div>
+      </div>`;
+    return;
+  }
+  if(quizState.finished){
+    const pct = Math.round(quizState.score/quizState.qs.length*100);
+    root.innerHTML = `
+      <div class="qcard scorewrap">
+        <div class="qlabel">Resultado — Nivel ${quizState.level}</div>
+        <div class="big">${quizState.score} / ${quizState.qs.length}</div>
+        <p style="color:var(--muted); font-size:14px;">${pct}% de respuestas correctas</p>
+        <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:14px;">
+          <button class="qopt" onclick="startQuiz('${quizState.level}')">Repetir nivel</button>
+          <button class="qopt" onclick="quizState=null; renderTrivia();">Elegir otro nivel</button>
+        </div>
+      </div>`;
+    return;
+  }
+  const i = quizState.idx;
+  const item = quizState.qs[i];
+  const answered = quizState.answered;
+  root.innerHTML = `
+    <div class="quizhead">
+      <span class="quizprog">Pregunta ${i+1} de ${quizState.qs.length} · Nivel ${quizState.level}</span>
+      <span class="quizscore">Aciertos: ${quizState.score}</span>
+    </div>
+    <div class="qcard" style="text-align:left;">
+      <h3 style="margin-top:0;">${item.q}</h3>
+      <div id="qz-opts">
+        ${item.opts.map((o,oi)=>`<button class="qz-opt" data-oi="${oi}" onclick="answerQuiz(${oi})" ${answered!==null?'disabled':''}>${o}</button>`).join('')}
+      </div>
+      ${answered!==null?`<div class="justif"><strong>${answered===item.correct?'✔ Correcto.':'✕ Incorrecto.'}</strong> ${item.just}</div>
+      <button class="qz-next" onclick="nextQuiz()">${i+1<quizState.qs.length?'Siguiente pregunta':'Ver resultado'}</button>`:''}
+    </div>`;
+  if(answered!==null){
+    const opts = root.querySelectorAll('.qz-opt');
+    opts.forEach(btn=>{
+      const oi = parseInt(btn.dataset.oi);
+      if(oi===item.correct) btn.classList.add('correct');
+      else if(oi===answered) btn.classList.add('incorrect');
+    });
+  }
+}
+function startQuiz(level){
+  quizState = { level, qs:TRIVIA[level], idx:0, score:0, answered:null, finished:false };
+  renderTrivia();
+}
+function answerQuiz(oi){
+  if(quizState.answered!==null) return;
+  quizState.answered = oi;
+  const item = quizState.qs[quizState.idx];
+  if(oi===item.correct) quizState.score++;
+  renderTrivia();
+}
+function nextQuiz(){
+  quizState.idx++;
+  quizState.answered = null;
+  if(quizState.idx>=quizState.qs.length){ quizState.finished = true; }
+  renderTrivia();
+}
+
+/* ============ CONTACTO ============ */
+/* 1) Crear cuenta gratis en https://formspree.io (podés entrar con GitHub).
+   2) New Form -> email de destino: hysl.hmh@gmail.com -> confirmar el mail de verificación.
+   3) Copiar el endpoint (https://formspree.io/f/XXXXXXXX) y pegarlo abajo, reemplazando el texto entre comillas. */
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/mnjkwakz";
+
+function sendContact(e){
+  e.preventDefault();
+  const name = document.getElementById('cf-name').value.trim();
+  const mail = document.getElementById('cf-mail').value.trim();
+  const servicio = document.getElementById('cf-servicio').value.trim();
+  const msg = document.getElementById('cf-msg').value.trim();
+  const fb = document.getElementById('cf-feedback');
+  const btn = e.target.querySelector('.sendbtn');
+
+  if(!name || !mail || !servicio || !msg){
+    fb.innerHTML = `<div class="formmsg err">Completá los cuatro campos antes de enviar.</div>`;
+    return false;
+  }
+
+  if(FORMSPREE_ENDPOINT.startsWith('REEMPLAZAR')){
+    fb.innerHTML = `<div class="formmsg err">El envío automático todavía no está configurado (falta el endpoint de Formspree). Mientras tanto, escribí directamente a <strong>hysl.hmh@gmail.com</strong>.</div>`;
+    return false;
+  }
+
+  btn.disabled = true; btn.textContent = 'Enviando...';
+  fetch(FORMSPREE_ENDPOINT, {
+    method:'POST',
+    headers:{ 'Accept':'application/json', 'Content-Type':'application/json' },
+    body: JSON.stringify({
+      nombre_y_apellido: name,
+      mail: mail,
+      servicio: servicio,
+      mensaje: msg,
+      _subject: 'Consulta de gestión de residuos — '+servicio
+    })
+  })
+  .then(res=>{
+    btn.disabled = false; btn.textContent = 'Enviar por correo';
+    if(res.ok){
+      fb.innerHTML = `<div class="formmsg ok">Mensaje enviado a Higiene y Seguridad Laboral. Te van a responder a ${mail}.</div>`;
+      document.getElementById('contactForm').reset();
+    } else {
+      fb.innerHTML = `<div class="formmsg err">No se pudo enviar el mensaje. Probá de nuevo o escribí a <strong>hysl.hmh@gmail.com</strong>.</div>`;
+    }
+  })
+  .catch(()=>{
+    btn.disabled = false; btn.textContent = 'Enviar por correo';
+    fb.innerHTML = `<div class="formmsg err">No se pudo enviar el mensaje (sin conexión). Probá de nuevo o escribí a <strong>hysl.hmh@gmail.com</strong>.</div>`;
+  });
+  return false;
+}
+
+/* ============ INIT ============ */
+renderHomeGrid();
+renderCategoriasList('');
+renderClasificador();
+renderPracticas();
+renderTrivia();
+</script>
+</body>
+</html>
