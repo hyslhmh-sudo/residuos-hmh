@@ -103,6 +103,11 @@
     font-size:11.5px; text-transform:uppercase; letter-spacing:.09em;
     color:var(--muted); font-weight:700; margin:26px 0 12px 2px;
   }
+  .principios{display:grid; grid-template-columns:repeat(auto-fill, minmax(180px,1fr)); gap:12px;}
+  .principio{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px;}
+  .principio .picon{width:26px;height:26px;color:var(--navy); margin-bottom:10px;}
+  .principio .ptitle{font-weight:700; font-size:13.5px; margin-bottom:4px; color:var(--ink);}
+  .principio .ptext{font-size:12.3px; color:var(--muted); line-height:1.55;}
 
   .grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(148px,1fr)); gap:10px;}
   .catcard{
@@ -290,6 +295,9 @@
           <button class="quickbtn" onclick="goView('trivia')">🧠 Poner a prueba lo que sé</button>
         </div>
       </div>
+
+      <div class="section-label">Principios que guían esta gestión</div>
+      <div class="principios" id="principiosGrid"></div>
 
       <div class="section-label">Acceso rápido por color</div>
       <div class="grid" id="homeGrid"></div>
@@ -544,6 +552,44 @@ document.getElementById('tabs').addEventListener('click', e=>{
   if(!btn) return;
   goView(btn.dataset.view);
 });
+
+/* ============ PRINCIPIOS (Compromiso institucional) ============ */
+const PRINCIPIOS = [
+  {
+    icon:'<svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v6c0 5-3.5 8-7 9-3.5-1-7-4-7-9V6l7-3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>',
+    t:'Responsabilidad institucional',
+    d:'La gestión de residuos es una responsabilidad ineludible, ligada a la seguridad del paciente y la salud del personal.'
+  },
+  {
+    icon:'<svg viewBox="0 0 24 24" fill="none"><path d="M4 5h16l-6 8v6l-4 2v-8L4 5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>',
+    t:'Minimización en origen',
+    d:'Reducir la generación de residuos y valorizar los materiales reciclables siempre que sea posible.'
+  },
+  {
+    icon:'<svg viewBox="0 0 24 24" fill="none"><path d="M12 3l9 5-9 5-9-5 9-5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M3 13l9 5 9-5" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>',
+    t:'Segregación responsable',
+    d:'Clasificar según la naturaleza del residuo —no el sector— y hacerlo en el momento y lugar donde se genera.'
+  },
+  {
+    icon:'<svg viewBox="0 0 24 24" fill="none"><circle cx="5" cy="6" r="2" stroke="currentColor" stroke-width="1.8"/><circle cx="19" cy="18" r="2" stroke="currentColor" stroke-width="1.8"/><path d="M7 7c3 1 3 4 6 5s3 4 6 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
+    t:'Trazabilidad completa',
+    d:'Cada residuo se sigue desde su generación hasta la disposición final, con registros y certificados.'
+  },
+  {
+    icon:'<svg viewBox="0 0 24 24" fill="none"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M18 3v4h-4M6 21v-4h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    t:'Mejora continua',
+    d:'Auditorías periódicas, capacitación constante y actualización frente a cambios normativos.'
+  }
+];
+function renderPrincipios(){
+  document.getElementById('principiosGrid').innerHTML = PRINCIPIOS.map(p=>`
+    <div class="principio">
+      <div class="picon">${p.icon}</div>
+      <div class="ptitle">${p.t}</div>
+      <div class="ptext">${p.d}</div>
+    </div>
+  `).join('');
+}
 
 /* ============ RENDER CAT CARD ============ */
 function catCardHTML(c){
@@ -865,6 +911,7 @@ function sendContact(e){
 }
 
 /* ============ INIT ============ */
+renderPrincipios();
 renderHomeGrid();
 renderCategoriasList('');
 renderClasificador();
