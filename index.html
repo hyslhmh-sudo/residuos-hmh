@@ -98,6 +98,21 @@
     display:flex; align-items:center; gap:8px; color:var(--ink);
   }
   .quickbtn:hover{border-color:var(--navy); background:#eef1f6;}
+  .quickbtn-highlight{
+    position:relative; border:1px solid #E3B23C; background:linear-gradient(135deg,#FFF6E0,#FCEAC2);
+    color:#7A5A0A;
+  }
+  .quickbtn-highlight:hover{background:linear-gradient(135deg,#FCEAC2,#FADFA0); border-color:#C9971F;}
+  nav.tabs button.nav-novedades{position:relative;}
+  .navbadge{
+    display:inline-flex; align-items:center; justify-content:center; min-width:17px; height:17px;
+    padding:0 4px; border-radius:20px; background:#E0432B; color:#fff; font-size:10px; font-weight:800;
+    margin-left:6px; vertical-align:2px; animation:navpulse 1.8s ease-in-out infinite;
+  }
+  @keyframes navpulse{
+    0%,100%{ box-shadow:0 0 0 0 rgba(224,67,43,.55); }
+    50%{ box-shadow:0 0 0 5px rgba(224,67,43,0); }
+  }
 
   .section-label{
     font-size:11.5px; text-transform:uppercase; letter-spacing:.09em;
@@ -204,6 +219,35 @@
   .prohibido h4{margin:0 0 10px; color:#8a1f24; font-size:13.5px; text-transform:uppercase; letter-spacing:.05em;}
   .prohibido ul{margin:0; padding-left:18px; font-size:13.5px; line-height:1.7; color:#5c2427;}
 
+  /* NOVEDADES */
+  .novedad-card{
+    background:var(--card); border:1px solid var(--line); border-radius:16px; padding:0; margin-bottom:16px;
+    overflow:hidden; position:relative;
+  }
+  .novedad-card .bar{position:absolute; left:0; top:0; bottom:0; width:5px;}
+  .novedad-inner{padding:18px 20px 18px 24px;}
+  .novedad-top{display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:8px; flex-wrap:wrap;}
+  .novedad-tipo{
+    font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.06em;
+    padding:4px 10px; border-radius:20px; white-space:nowrap;
+  }
+  .novedad-fecha{font-size:12.5px; color:var(--muted); font-weight:600; white-space:nowrap;}
+  .novedad-title{font-size:16px; font-weight:700; color:var(--ink); margin:2px 0 8px;}
+  .novedad-desc{font-size:13.5px; color:var(--ink); line-height:1.6; margin-bottom:10px;}
+  .novedad-meta{font-size:12.5px; color:var(--muted); margin-bottom:12px; line-height:1.6;}
+  .novedad-meta b{color:var(--ink);}
+  .novedad-footer{display:flex; align-items:center; gap:12px; flex-wrap:wrap;}
+  .novedad-btn{
+    background:var(--navy); color:#fff; border:none; border-radius:10px; padding:10px 18px;
+    font-weight:700; font-size:13.5px; cursor:pointer; text-decoration:none; display:inline-block;
+  }
+  .novedad-btn:hover{background:var(--navy-dark);}
+  .novedad-estado{font-size:12.5px; font-weight:700;}
+  .novedad-estado.abierta{color:#1e5a24;}
+  .novedad-estado.cerrada{color:#8a1f24;}
+  .novedad-estado.proxima{color:#8A6D1F;}
+  .novedades-empty{text-align:center; color:var(--muted); padding:40px 20px; font-size:14px;}
+
   /* TRIVIA */
   .difwrap{display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:6px;}
   .difcard{
@@ -277,6 +321,7 @@
       <button data-view="categorias">Categorías</button>
       <button data-view="clasificador">¿Qué hago con esto?</button>
       <button data-view="practicas">Buenas prácticas</button>
+      <button data-view="novedades" class="nav-novedades">Novedades<span class="navbadge" id="navBadgeNovedades" style="display:none"></span></button>
       <button data-view="trivia">Trivia</button>
       <button data-view="contacto">Contacto HySL</button>
     </nav>
@@ -292,6 +337,7 @@
         <div class="quickrow">
           <button class="quickbtn" onclick="goView('clasificador')">🔎 No sé dónde tirar algo</button>
           <button class="quickbtn" onclick="goView('categorias')">📖 Ver todas las categorías</button>
+          <button class="quickbtn quickbtn-highlight" id="novedadesQuickBtn" onclick="goView('novedades')">📣 Novedades<span class="navbadge" id="quickBadgeNovedades" style="display:none"></span></button>
           <button class="quickbtn" onclick="goView('trivia')">🧠 Poner a prueba lo que sé</button>
         </div>
       </div>
@@ -343,6 +389,11 @@
           <li>Reencapuchar agujas.</li>
         </ul>
       </div>
+    </section>
+
+    <!-- NOVEDADES -->
+    <section class="view" id="view-novedades">
+      <div id="novedadesRoot"></div>
     </section>
 
     <!-- TRIVIA -->
@@ -738,6 +789,107 @@ function renderPracticas(){
   `).join('');
 }
 
+/* ============ NOVEDADES ============ */
+// Para agregar/editar novedades, sumá o modificá objetos en este array.
+// tipo: 'capacitacion' | 'aviso' | 'campaña'
+// estado: 'abierta' | 'proxima' | 'cerrada'
+const NOVEDADES = [
+  {
+    tipo: 'capacitacion',
+    tipoLabel: 'Capacitación',
+    color: 'var(--navy)',
+    bg: '#EEF1F6',
+    titulo: 'Gestión de Bienes de la Administración Pública y RAEE (Residuos de Aparatos Eléctricos y Electrónicos) en establecimientos de salud',
+    fecha: 'Viernes 24/7, 7/08 y 28/08 — 12 a 14 hs.',
+    organiza: 'Área de Higiene y Seguridad Laboral HZT - HMH · Dirección Provincial de Bienes Reales – Secretaría de Salud',
+    modalidad: 'Híbrida — 3 encuentros con evaluación final integradora. Se entrega constancia de asistencia y/o aprobación.',
+    lugar: 'Presencial: Sala de Videoconferencias, 1° piso, HMH, Trelew  ·  Virtual: Zoom ID 815 9673 2783',
+    estado: 'abierta',
+    links: [
+      { label: 'Inscribirme', url: 'https://forms.gle/Ctr1Bs4dYXG2SJDp7' },
+      { label: 'Unirme por Zoom', url: 'https://garrahan.zoom.us/j/81596732783' },
+    ]
+  },
+  {
+    tipo: 'capacitacion',
+    tipoLabel: 'Capacitación 2026',
+    color: 'var(--navy)',
+    bg: '#EEF1F6',
+    titulo: 'Prevención de Riesgos Laborales en Lavanderías Hospitalarias',
+    fecha: 'Inicia jueves 16 de julio — Finaliza 27 de agosto  ·  11:30 a 13:00 hs.',
+    organiza: 'Área de Higiene y Seguridad Laboral HZT - HMH',
+    destinatarios: 'Personal y referentes de lavanderías hospitalarias de Chubut',
+    modalidad: 'Híbrida — 7 jueves consecutivos con evaluación final integradora. Se entrega constancia de asistencia y/o aprobación.',
+    lugar: 'Presencial: Sala de Videoconferencias, 1° piso, HMH, Trelew  ·  Virtual: Zoom ID 824 6133 8488',
+    estado: 'abierta',
+    links: [
+      { label: 'Inscribirme', url: 'https://docs.google.com/forms/d/e/1FAIpQLSdW3Sm2JFh9myDktzzh6EzGxs4wqVlgpL8rgK2ySGu7hGPMtg/viewform?usp=header' },
+      { label: 'Ver programa', url: 'https://drive.google.com/file/d/1ZXcdgWLJTmLwlFoquHGmx8URcH3SJ1Jz/view?usp=sharing' },
+    ]
+  },
+];
+
+function novedadCardHTML(n) {
+  const estadoLabel = { abierta: '🟢 Inscripción abierta', proxima: '🟡 Próximamente', cerrada: '🔴 Cerrada' }[n.estado] || '';
+  const estadoClass = n.estado || '';
+  return `
+    <div class="novedad-card">
+      <div class="bar" style="background:${n.color}"></div>
+      <div class="novedad-inner">
+        <div class="novedad-top">
+          <span class="novedad-tipo" style="background:${n.bg}; color:${n.color}">${n.tipoLabel}</span>
+          <span class="novedad-fecha">📅 ${n.fecha}</span>
+        </div>
+        <div class="novedad-title">${n.titulo}</div>
+        ${n.descripcion ? `<div class="novedad-desc">${n.descripcion}</div>` : ''}
+        <div class="novedad-meta">
+          ${n.organiza ? `<div>🏛️ <b>Organiza:</b> ${n.organiza}</div>` : ''}
+          ${n.destinatarios ? `<div>🎯 <b>Destinatarios:</b> ${n.destinatarios}</div>` : ''}
+          ${n.modalidad ? `<div>🧩 <b>Modalidad:</b> ${n.modalidad}</div>` : ''}
+          ${n.lugar ? `<div>📍 ${n.lugar}</div>` : ''}
+          ${n.cupo ? `<div>👥 <b>Cupo:</b> ${n.cupo}</div>` : ''}
+        </div>
+        <div class="novedad-footer">
+          <span class="novedad-estado ${estadoClass}">${estadoLabel}</span>
+          ${n.estado === 'abierta' && n.links ? n.links.map(l => `<a class="novedad-btn" href="${l.url}" target="_blank" rel="noopener">${l.label}</a>`).join('') : ''}
+          ${n.estado === 'abierta' && !n.links && n.link ? `<a class="novedad-btn" href="${n.link}" target="_blank" rel="noopener">Inscribirme</a>` : ''}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function updateNovedadesBadges() {
+  const count = NOVEDADES.filter(n => n.estado === 'abierta' || n.estado === 'proxima').length;
+  [document.getElementById('navBadgeNovedades'), document.getElementById('quickBadgeNovedades')].forEach(el => {
+    if (!el) return;
+    if (count > 0) {
+      el.textContent = count;
+      el.style.display = 'inline-flex';
+    } else {
+      el.style.display = 'none';
+    }
+  });
+}
+
+function renderNovedades() {
+  const root = document.getElementById('novedadesRoot');
+  root.innerHTML = `
+    <div class="hero" style="margin-bottom:20px;">
+      <div class="blob"></div>
+      <h2>Novedades</h2>
+      <p>Capacitaciones, campañas internas y avisos del Servicio de Higiene y Seguridad Laboral.</p>
+    </div>
+  `;
+  if (!NOVEDADES.length) {
+    root.innerHTML += `<div class="novedades-empty">No hay novedades publicadas por el momento. Volvé a revisar más adelante.</div>`;
+    updateNovedadesBadges();
+    return;
+  }
+  root.innerHTML += NOVEDADES.map(novedadCardHTML).join('');
+  updateNovedadesBadges();
+}
+
 /* ============ TRIVIA ============ */
 const TRIVIA = {
   facil:[
@@ -916,6 +1068,7 @@ renderHomeGrid();
 renderCategoriasList('');
 renderClasificador();
 renderPracticas();
+renderNovedades();
 renderTrivia();
 </script>
 </body>
