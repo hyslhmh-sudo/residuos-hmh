@@ -248,6 +248,34 @@
   .novedad-estado.proxima{color:#8A6D1F;}
   .novedades-empty{text-align:center; color:var(--muted); padding:40px 20px; font-size:14px;}
 
+  /* BANCO DE RECURSOS */
+  .recursos-subtabs{display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap;}
+  .recursos-subtab{
+    border:2px solid var(--line); background:var(--card); border-radius:12px; padding:10px 18px;
+    font-weight:700; font-size:13.5px; cursor:pointer; color:var(--muted);
+  }
+  .recursos-subtab.active{border-color:var(--navy); color:var(--navy); background:#eef1f6;}
+  .biblio-item{
+    background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px 18px; margin-bottom:10px;
+    display:flex; justify-content:space-between; align-items:center; gap:14px; flex-wrap:wrap;
+  }
+  .biblio-text .t{font-weight:700; font-size:14px; color:var(--ink); line-height:1.4;}
+  .biblio-text .s{font-size:12.5px; color:var(--muted); margin-top:3px;}
+  .biblio-link{
+    flex-shrink:0; border:1.5px solid var(--navy); color:var(--navy); background:transparent;
+    border-radius:10px; padding:8px 14px; font-weight:700; font-size:12.5px; text-decoration:none;
+  }
+  .biblio-link:hover{background:var(--navy); color:#fff;}
+  .biblio-nolink{flex-shrink:0; font-size:12px; color:var(--muted); font-style:italic;}
+  .recurso-cap-card{
+    background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px 18px; margin-bottom:12px;
+  }
+  .recurso-cap-card .t{font-weight:700; font-size:14.5px; color:var(--ink); margin-bottom:4px;}
+  .recurso-cap-card .f{font-size:12.5px; color:var(--muted); margin-bottom:8px;}
+  .recurso-cap-card .d{font-size:13.3px; color:var(--ink); line-height:1.55; margin-bottom:10px;}
+  .recurso-cap-links{display:flex; gap:10px; flex-wrap:wrap;}
+  .recursos-empty{text-align:center; color:var(--muted); padding:30px 20px; font-size:13.5px;}
+
   /* TRIVIA */
   .difwrap{display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:6px;}
   .difcard{
@@ -322,6 +350,7 @@
       <button data-view="clasificador">¿Qué hago con esto?</button>
       <button data-view="practicas">Buenas prácticas</button>
       <button data-view="novedades" class="nav-novedades">Novedades<span class="navbadge" id="navBadgeNovedades" style="display:none"></span></button>
+      <button data-view="recursos">Banco de Recursos</button>
       <button data-view="trivia">Trivia</button>
       <button data-view="contacto">Contacto HySL</button>
     </nav>
@@ -394,6 +423,11 @@
     <!-- NOVEDADES -->
     <section class="view" id="view-novedades">
       <div id="novedadesRoot"></div>
+    </section>
+
+    <!-- BANCO DE RECURSOS -->
+    <section class="view" id="view-recursos">
+      <div id="recursosRoot"></div>
     </section>
 
     <!-- TRIVIA -->
@@ -890,6 +924,91 @@ function renderNovedades() {
   updateNovedadesBadges();
 }
 
+/* ============ BANCO DE RECURSOS ============ */
+// Para sumar/editar material, agregá objetos a estos dos arrays.
+const BIBLIOGRAFIA = [
+  { titulo: 'Directrices Nacionales para la Gestión de Residuos en Establecimientos de Salud (GREAS)', fuente: 'Res. Ministerio de Salud de la Nación N.º 134/2016', link: 'https://www.argentina.gob.ar/sites/default/files/res_msn_134-16_directrices_nacionales_greas.pdf' },
+  { titulo: 'Señalética de la Gestión de Residuos en Establecimientos de Salud', fuente: 'Res. Ministerio de Salud de la Nación N.º 1792/2014', link: 'https://www.argentina.gob.ar/sites/default/files/res_msn_1792-2014_directrices_sanitarias_senalizacion_gestion_residuos_en_atencion_salud.pdf' },
+  { titulo: 'Ley de Residuos Peligrosos', fuente: 'Ley Nacional N.º 24.051 y Dec. Reglamentario 831/93', link: 'https://servicios.infoleg.gob.ar/infolegInternet/verNorma.do?id=450' },
+  { titulo: 'Ley General del Ambiente', fuente: 'Ley Nacional N.º 25.675', link: 'https://servicios.infoleg.gob.ar/infolegInternet/verNorma.do?id=79980' },
+  { titulo: 'Ley de Gestión de Residuos Domiciliarios (residuos especiales, RAEE)', fuente: 'Ley Nacional N.º 25.916, art. 35', link: 'https://servicios.infoleg.gob.ar/infolegInternet/verNorma.do?id=98327' },
+  { titulo: 'Ley de Protección de Datos Personales', fuente: 'Ley Nacional N.º 25.326', link: 'https://servicios.infoleg.gob.ar/infolegInternet/verNorma.do?id=64790' },
+  { titulo: 'Código Ambiental de la Provincia del Chubut', fuente: 'Ley XI N.º 35', link: 'https://digesto.legislaturadelchubut.gob.ar/public/rama/11/ley/35' },
+  { titulo: 'Programa Provincial de Reciclado de RAEE', fuente: 'Ley XI N.º 56 (Chubut)', link: 'https://ambiente.chubut.gov.ar/legislacion/' },
+  { titulo: 'Recolección diferenciada de RAEE en Trelew', fuente: 'Ordenanza Municipal N.º 11735/2012', link: 'https://concejotrelew.gob.ar/digesto/sites/default/files/2025-07/11735.pdf' },
+];
+
+const RECURSOS_CAPACITACIONES = [
+  {
+    titulo: 'Gestión de Bienes de la Administración Pública y RAEE en establecimientos de salud',
+    fecha: 'Julio–agosto 2026',
+    descripcion: 'Material y grabación disponibles una vez finalizada la capacitación en curso (ver pestaña Novedades para inscripción mientras esté abierta).',
+    links: []
+  },
+  {
+    titulo: 'Prevención de Riesgos Laborales en Lavanderías Hospitalarias',
+    fecha: 'Julio–agosto 2026',
+    descripcion: 'Material y grabación disponibles una vez finalizada la capacitación en curso (ver pestaña Novedades para inscripción mientras esté abierta).',
+    links: []
+  },
+];
+
+let recursosSubtab = 'bibliografia';
+
+function biblioItemHTML(b) {
+  return `
+    <div class="biblio-item">
+      <div class="biblio-text">
+        <div class="t">${b.titulo}</div>
+        <div class="s">${b.fuente}</div>
+      </div>
+      ${b.link ? `<a class="biblio-link" href="${b.link}" target="_blank" rel="noopener">Ver documento</a>` : `<span class="biblio-nolink">Consultar en HySL</span>`}
+    </div>
+  `;
+}
+
+function recursoCapHTML(c) {
+  return `
+    <div class="recurso-cap-card">
+      <div class="t">${c.titulo}</div>
+      <div class="f">📅 ${c.fecha}</div>
+      <div class="d">${c.descripcion}</div>
+      ${c.links && c.links.length ? `<div class="recurso-cap-links">${c.links.map(l => `<a class="novedad-btn" href="${l.url}" target="_blank" rel="noopener">${l.label}</a>`).join('')}</div>` : ''}
+    </div>
+  `;
+}
+
+function renderRecursos() {
+  const root = document.getElementById('recursosRoot');
+  root.innerHTML = `
+    <div class="hero" style="margin-bottom:20px;">
+      <div class="blob"></div>
+      <h2>Banco de Recursos</h2>
+      <p>Bibliografía normativa y material de capacitaciones anteriores del Servicio de Higiene y Seguridad Laboral.</p>
+    </div>
+    <div class="recursos-subtabs">
+      <button class="recursos-subtab ${recursosSubtab === 'bibliografia' ? 'active' : ''}" onclick="setRecursosSubtab('bibliografia')">📚 Bibliografía</button>
+      <button class="recursos-subtab ${recursosSubtab === 'capacitaciones' ? 'active' : ''}" onclick="setRecursosSubtab('capacitaciones')">🎓 Capacitaciones</button>
+    </div>
+    <div id="recursosContent"></div>
+  `;
+  renderRecursosContent();
+}
+
+function setRecursosSubtab(tab) {
+  recursosSubtab = tab;
+  renderRecursos();
+}
+
+function renderRecursosContent() {
+  const el = document.getElementById('recursosContent');
+  if (recursosSubtab === 'bibliografia') {
+    el.innerHTML = BIBLIOGRAFIA.length ? BIBLIOGRAFIA.map(biblioItemHTML).join('') : `<div class="recursos-empty">No hay bibliografía cargada todavía.</div>`;
+  } else {
+    el.innerHTML = RECURSOS_CAPACITACIONES.length ? RECURSOS_CAPACITACIONES.map(recursoCapHTML).join('') : `<div class="recursos-empty">Todavía no hay material de capacitaciones anteriores disponible.</div>`;
+  }
+}
+
 /* ============ TRIVIA ============ */
 const TRIVIA = {
   facil:[
@@ -1069,6 +1188,7 @@ renderCategoriasList('');
 renderClasificador();
 renderPracticas();
 renderNovedades();
+renderRecursos();
 renderTrivia();
 </script>
 </body>
