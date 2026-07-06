@@ -942,14 +942,18 @@ const RECURSOS_CAPACITACIONES = [
   {
     titulo: 'Gestión de Bienes de la Administración Pública y RAEE en establecimientos de salud',
     fecha: 'Julio–agosto 2026',
-    descripcion: 'Material y grabación disponibles una vez finalizada la capacitación en curso (ver pestaña Novedades para inscripción mientras esté abierta).',
-    links: []
+    descripcion: 'Grabación del encuentro disponible. Podés seguir la capacitación completa en el siguiente video.',
+    links: [
+      { label: '▶ Ver grabación', url: 'https://www.youtube.com/watch?v=Q7lMJ8z1sgw&t=2750s' },
+    ]
   },
   {
     titulo: 'Prevención de Riesgos Laborales en Lavanderías Hospitalarias',
     fecha: 'Julio–agosto 2026',
-    descripcion: 'Material y grabación disponibles una vez finalizada la capacitación en curso (ver pestaña Novedades para inscripción mientras esté abierta).',
-    links: []
+    descripcion: 'Grabación del encuentro disponible. Podés seguir la capacitación completa en el siguiente video.',
+    links: [
+      { label: '▶ Ver grabación', url: 'https://www.youtube.com/watch?v=40Kea43t1wE&t=4608s' },
+    ]
   },
 ];
 
@@ -984,7 +988,7 @@ function renderRecursos() {
     <div class="hero" style="margin-bottom:20px;">
       <div class="blob"></div>
       <h2>Banco de Recursos</h2>
-      <p>Bibliografía normativa y material de capacitaciones anteriores del Servicio de Higiene y Seguridad Laboral.</p>
+      <p>Bibliografía normativa vigente y material de capacitaciones ya dictadas por el Servicio de Higiene y Seguridad Laboral.</p>
     </div>
     <div class="recursos-subtabs">
       <button class="recursos-subtab ${recursosSubtab === 'bibliografia' ? 'active' : ''}" onclick="setRecursosSubtab('bibliografia')">📚 Bibliografía</button>
