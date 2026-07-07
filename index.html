@@ -185,7 +185,24 @@
   /* CLASIFICADOR */
   .qcard{background:var(--card); border:1px solid var(--line); border-radius:18px; padding:26px 24px; text-align:center;}
   .qcard .qlabel{font-size:11.5px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); font-weight:700;}
-  .qcard h3{font-size:19px; margin:10px 0 22px; line-height:1.4;}
+  .qcard h3{font-size:19.5px; margin:8px 0 22px; line-height:1.4; font-weight:800;}
+  .clas-icon{font-size:52px; line-height:1; margin:10px 0 4px;}
+  .clas-detail{font-size:13.5px; color:var(--muted); margin:0 0 24px; line-height:1.5;}
+  .clas-intro{
+    background:#EEF1F6; border:1.5px solid var(--line); border-radius:16px; padding:18px 20px; margin-bottom:16px;
+  }
+  .clas-intro-step{
+    display:flex; align-items:center; gap:12px; font-size:14.5px; font-weight:600; color:var(--ink);
+    padding:6px 0;
+  }
+  .clas-intro-num{
+    flex-shrink:0; width:26px; height:26px; border-radius:50%; background:var(--navy); color:#fff;
+    display:flex; align-items:center; justify-content:center; font-weight:800; font-size:13.5px;
+  }
+  .qopt-yes{border-color:#2E7D32 !important; color:#1e5a24 !important;}
+  .qopt-yes:hover{background:#E9F4EA !important;}
+  .qopt-no{border-color:#B50000 !important; color:#8a1f24 !important;}
+  .qopt-no:hover{background:#FBEAEA !important;}
   .qopts{display:flex; gap:12px; justify-content:center; flex-wrap:wrap;}
   .qopt{
     border:2px solid var(--line); background:var(--paper); border-radius:12px; padding:14px 26px;
@@ -386,7 +403,7 @@
     <nav class="tabs" id="tabs">
       <button data-view="inicio" class="active">Inicio</button>
       <button data-view="categorias">Categorías</button>
-      <button data-view="clasificador">¿Qué hago con esto?</button>
+      <button data-view="clasificador">¿Dónde tiro esto?</button>
       <button data-view="practicas">Buenas prácticas</button>
       <button data-view="novedades" class="nav-novedades">Novedades<span class="navbadge" id="navBadgeNovedades" style="display:none"></span></button>
       <button data-view="recursos">Banco de Recursos</button>
@@ -801,17 +818,17 @@ function showDetail(id){
 
 /* ============ CLASIFICADOR ============ */
 const TREE = {
-  q1: { text:'¿El residuo tuvo contacto con sangre, secreciones o fluidos corporales, o proviene de un paciente en aislamiento?', yes:'q1b', no:'q2' },
-  q1b: { text:'¿Es un objeto que corta o pincha: aguja, hoja de bisturí, lanceta, catéter o vidrio roto contaminado?', yes:'RESULT:corto', no:'RESULT:bio' },
-  q2: { text:'¿Es un medicamento, envase de medicamento, o resto farmacéutico?', yes:'q2b', no:'q3' },
-  q2b: { text:'¿Es una ampolla o frasco-ampolla de vidrio (inyectable), usado o vencido?', yes:'RESULT:y3', no:'RESULT:med' },
-  q3: { text:'¿Es un químico peligroso: reactivo de laboratorio, líquido de revelado, mercurio o solvente?', yes:'RESULT:quim', no:'q4' },
-  q4: { text:'¿Es una pila, batería, lámpara, aparato eléctrico/electrónico o aceite usado?', yes:'RESULT:regu', no:'q5' },
-  q5: { text:'¿Es vidrio roto y no está contaminado?', yes:'RESULT:vidrio', no:'q6' },
-  q6: { text:'¿Es un plástico limpio y seco: botella, envase, tapita, bolsa o sachet?', yes:'RESULT:plas', no:'q7' },
-  q7: { text:'¿Es papel limpio y seco, sin datos de pacientes ni plastificado?', yes:'RESULT:papel', no:'q8' },
-  q8: { text:'¿Es cartón limpio y seco?', yes:'RESULT:carton', no:'q9' },
-  q9: { text:'¿Es un residuo orgánico apto para compostaje (yerba, café, cáscaras, restos vegetales)?', yes:'RESULT:compost', no:'RESULT:rsu' }
+  q1: { icon:'🩸', text:'¿El residuo tuvo contacto con sangre, secreciones o fluidos corporales, o proviene de un paciente en aislamiento?', yes:'q1b', no:'q2' },
+  q1b: { icon:'💉', text:'¿Es un objeto que corta o pincha: aguja, hoja de bisturí, lanceta, catéter o vidrio roto contaminado?', yes:'RESULT:corto', no:'RESULT:bio' },
+  q2: { icon:'💊', text:'¿Es un medicamento, envase de medicamento, o resto farmacéutico?', yes:'q2b', no:'q3' },
+  q2b: { icon:'💉', text:'¿Es una ampolla o frasco-ampolla de vidrio (inyectable), usado o vencido?', yes:'RESULT:y3', no:'RESULT:med' },
+  q3: { icon:'🧪', text:'¿Es un químico peligroso: reactivo de laboratorio, líquido de revelado, mercurio o solvente?', yes:'RESULT:quim', no:'q4' },
+  q4: { icon:'🔋', text:'¿Es una pila, batería, lámpara, aparato eléctrico/electrónico o aceite usado?', yes:'RESULT:regu', no:'q5' },
+  q5: { icon:'🥛', text:'¿Es vidrio roto y no está contaminado?', yes:'RESULT:vidrio', no:'q6' },
+  q6: { icon:'♻️', text:'¿Es un plástico limpio y seco: botella, envase, tapita, bolsa o sachet?', yes:'RESULT:plas', no:'q7' },
+  q7: { icon:'📄', text:'¿Es papel limpio y seco, sin datos de pacientes ni plastificado?', yes:'RESULT:papel', no:'q8' },
+  q8: { icon:'📦', text:'¿Es cartón limpio y seco?', yes:'RESULT:carton', no:'q9' },
+  q9: { icon:'🍃', text:'¿Es un residuo orgánico apto para compostaje (yerba, café, cáscaras, restos vegetales)?', yes:'RESULT:compost', no:'RESULT:rsu' }
 };
 let clasState = { node:'q1', trail:[] };
 function renderClasificador(){
@@ -823,29 +840,38 @@ function renderClasificador(){
     root.innerHTML = `
       <div class="qcard" style="padding:0; overflow:hidden;">
         <div class="resulthead" style="background:${c.color}">
-          <div class="tag">Corresponde a</div>
+          <div class="tag">Va acá 👇</div>
           <h2>${c.name}${c.ycode?` (${c.ycode})`:''}</h2>
         </div>
         <div style="padding:24px;">
-          <p style="font-size:14.5px; color:var(--ink); margin:0 0 6px;"><strong>📦 ${c.container}</strong></p>
+          <p style="font-size:16px; color:var(--ink); margin:0 0 6px; font-weight:700;">📦 ${c.container}</p>
           <p style="font-size:13.5px; color:var(--muted); margin:0 0 20px;">${c.desc}</p>
           <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
-            <button class="qopt" style="border-color:${c.color}; color:${c.color}" onclick="showDetail('${c.id}')">Ver ficha completa</button>
-            <button class="qopt" onclick="resetClasificador()">Volver a empezar</button>
+            <button class="qopt" style="border-color:${c.color}; color:${c.color}" onclick="showDetail('${c.id}')">Ver más detalle</button>
+            <button class="qopt" onclick="resetClasificador()">Empezar de nuevo</button>
           </div>
         </div>
       </div>`;
     return;
   }
   const q = TREE[node];
+  const isFirst = clasState.trail.length === 0;
   root.innerHTML = `
+    ${isFirst ? `
+    <div class="clas-intro">
+      <div class="clas-intro-step"><span class="clas-intro-num">1</span> Fijate qué residuo tenés en la mano.</div>
+      <div class="clas-intro-step"><span class="clas-intro-num">2</span> Tocá <b>Sí</b> o <b>No</b> en cada pregunta.</div>
+      <div class="clas-intro-step"><span class="clas-intro-num">3</span> Al final te decimos dónde va.</div>
+    </div>` : ''}
     ${clasState.trail.length? `<div class="trail">${clasState.trail.map(t=>`<span class="crumb">${t}</span>`).join('')}</div>`:''}
     <div class="qcard">
       <div class="qlabel">Pregunta ${clasState.trail.length+1}</div>
+      <div class="clas-icon">${q.icon || ''}</div>
       <h3>${q.text}</h3>
+      ${q.detail ? `<p class="clas-detail">${q.detail}</p>` : ''}
       <div class="qopts">
-        <button class="qopt" onclick="answerClas('yes')">Sí</button>
-        <button class="qopt" onclick="answerClas('no')">No</button>
+        <button class="qopt qopt-yes" onclick="answerClas('yes')">✔ Sí</button>
+        <button class="qopt qopt-no" onclick="answerClas('no')">✕ No</button>
       </div>
     </div>
     ${clasState.trail.length? `<button class="restartbtn" onclick="resetClasificador()">Empezar de nuevo</button>`:''}
