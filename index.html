@@ -98,6 +98,28 @@
     display:flex; align-items:center; gap:8px; color:var(--ink);
   }
   .quickbtn:hover{border-color:var(--navy); background:#eef1f6;}
+
+  .onboarding-tip{
+    position:relative; background:#FBF3DC; border:1.5px solid #EBD9A0; border-radius:16px;
+    padding:16px 40px 16px 18px; margin-bottom:22px;
+  }
+  .onboarding-title{font-weight:700; font-size:14px; margin-bottom:8px; color:var(--ink);}
+  .onboarding-step{font-size:13px; color:var(--ink); line-height:1.6; margin-bottom:3px;}
+  .onboarding-close{
+    position:absolute; top:12px; right:12px; border:none; background:rgba(0,0,0,.06); color:var(--muted);
+    width:24px; height:24px; border-radius:50%; cursor:pointer; font-size:12px; line-height:1;
+  }
+  .onboarding-close:hover{background:rgba(0,0,0,.12);}
+
+  .home-nav-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(150px,1fr)); gap:10px; margin-bottom:8px;}
+  .home-nav-card{
+    position:relative; background:var(--card); border:1px solid var(--line); border-radius:14px;
+    padding:16px 14px; cursor:pointer; text-align:left; transition:transform .12s, box-shadow .12s;
+  }
+  .home-nav-card:hover{transform:translateY(-2px); box-shadow:0 6px 16px rgba(20,30,50,.10); border-color:var(--navy);}
+  .home-nav-icon{font-size:24px; margin-bottom:8px; display:block;}
+  .home-nav-title{font-weight:700; font-size:13.5px; color:var(--ink); line-height:1.3;}
+  .home-nav-sub{font-size:11.5px; color:var(--muted); margin-top:3px; line-height:1.4;}
   .quickbtn-highlight{
     position:relative; border:1px solid #E3B23C; background:linear-gradient(135deg,#FFF6E0,#FCEAC2);
     color:#7A5A0A;
@@ -453,19 +475,24 @@
       <div class="hero">
         <div class="blob"></div>
         <h2>Separar bien protege a todo el equipo</h2>
-        <p>Esta guía reúne las 12 corrientes de residuos del hospital, sus recipientes correspondientes y los pasos correctos de descarte.</p>
-        <div class="quickrow">
-          <button class="quickbtn" onclick="goView('clasificador')">🔎 No sé dónde tirar algo</button>
-          <button class="quickbtn" onclick="goView('categorias')">📖 Ver todas las categorías</button>
-          <button class="quickbtn quickbtn-highlight" id="novedadesQuickBtn" onclick="goView('novedades')">📣 Novedades<span class="navbadge" id="quickBadgeNovedades" style="display:none"></span></button>
-          <button class="quickbtn" onclick="goView('trivia')">🧠 Poner a prueba lo que sé</button>
-        </div>
+        <p>Portal de Gestión Integral de Residuos Hospitalarios — HZT / HMH. Guía de las 12 corrientes de residuos, clasificador, capacitaciones y más.</p>
       </div>
 
-      <div class="section-label">Principios que guían esta gestión</div>
+      <div class="onboarding-tip" id="onboardingTip">
+        <button class="onboarding-close" onclick="dismissOnboarding()">✕</button>
+        <div class="onboarding-title">👋 ¿Primera vez? Así se usa:</div>
+        <div class="onboarding-step">1️⃣ ¿Tenés un residuo en la mano y no sabés dónde va? Tocá <b>"¿Dónde tiro esto?"</b> abajo.</div>
+        <div class="onboarding-step">2️⃣ ¿Querés el detalle de una corriente en particular? Andá a <b>Categorías</b>.</div>
+        <div class="onboarding-step">3️⃣ Para capacitaciones, normativa, dudas o consultas, usá el resto de los accesos.</div>
+      </div>
+
+      <div class="section-label">Accesos</div>
+      <div class="home-nav-grid" id="homeNavGrid"></div>
+
+      <div class="section-label" style="margin-top:26px;">Principios que guían esta gestión</div>
       <div class="principios" id="principiosGrid"></div>
 
-      <div class="section-label">Acceso rápido por color</div>
+      <div class="section-label">Categorías por color</div>
       <div class="grid" id="homeGrid"></div>
 
       <div class="note" style="margin-top:22px;">
@@ -775,6 +802,28 @@ const PRINCIPIOS = [
     d:'Auditorías periódicas, capacitación constante y actualización frente a cambios normativos.'
   }
 ];
+const NAV_DESTINATIONS = [
+  { view:'clasificador', icon:'🔎', title:'¿Dónde tiro esto?', sub:'Respondé preguntas y te decimos dónde va' },
+  { view:'categorias', icon:'📖', title:'Categorías', sub:'Las 12 corrientes en detalle' },
+  { view:'practicas', icon:'✅', title:'Buenas prácticas', sub:'Circuito de retiro y transporte' },
+  { view:'novedades', icon:'📣', title:'Novedades', sub:'Capacitaciones y avisos', badge:true },
+  { view:'recursos', icon:'📚', title:'Banco de Recursos', sub:'Normativa, EPP, carteles y más' },
+  { view:'trivia', icon:'🧠', title:'Trivia', sub:'Poné a prueba lo que sabés' },
+  { view:'contacto', icon:'✉️', title:'Contacto HySL', sub:'Consultas y calificación' },
+];
+function renderHomeNavGrid(){
+  document.getElementById('homeNavGrid').innerHTML = NAV_DESTINATIONS.map(d => `
+    <button class="home-nav-card" onclick="goView('${d.view}')">
+      <span class="home-nav-icon">${d.icon}</span>
+      <div class="home-nav-title">${d.title}${d.badge ? '<span class="navbadge" id="quickBadgeNovedades" style="display:none"></span>' : ''}</div>
+      <div class="home-nav-sub">${d.sub}</div>
+    </button>
+  `).join('');
+}
+function dismissOnboarding(){
+  const el = document.getElementById('onboardingTip');
+  if (el) el.style.display = 'none';
+}
 function renderPrincipios(){
   document.getElementById('principiosGrid').innerHTML = PRINCIPIOS.map(p=>`
     <div class="principio">
@@ -1212,6 +1261,20 @@ function renderRecursosContent() {
       <p style="font-size:12.3px; color:var(--muted); margin-top:12px; line-height:1.6;">
         <b>(1)</b> Máscara N95. &nbsp; <b>(2)</b> Máscara respiratoria. &nbsp; <b>(3)</b> Según análisis de riesgo de la tarea.
       </p>
+      <div class="note" style="margin-top:18px;">
+        Esta tabla fija el <strong>estándar general</strong> de las Directrices GREAS (Res. 134/2016). Por la Ley 19.587 de Higiene y Seguridad en el Trabajo y su Dec. Reglamentario 351/79, la evaluación del riesgo específico de cada tarea y la designación final del EPP es <strong>competencia del Servicio de Higiene y Seguridad Laboral (HySL)</strong>, que puede ajustar estos estándares según las condiciones reales de cada puesto.
+      </div>
+
+      <div class="section-label" style="margin-top:26px;">Esquema de vacunación</div>
+      <p style="font-size:13.5px; color:var(--muted); margin:0 0 14px;">Calendario Nacional de Vacunación, Ministerio de Salud de la Nación. Consultá tu esquema y el de tu equipo antes de tareas con riesgo biológico.</p>
+      <a class="drive-folder-card" href="https://www.argentina.gob.ar/salud/vacunas" target="_blank" rel="noopener">
+        <div class="drive-folder-icon">💉</div>
+        <div>
+          <div class="drive-folder-title">Ver esquema de vacunación</div>
+          <div class="drive-folder-sub">argentina.gob.ar/salud/vacunas</div>
+        </div>
+        <div class="drive-folder-arrow">↗</div>
+      </a>
     `;
   } else {
     el.innerHTML = RECURSOS_CAPACITACIONES.length ? RECURSOS_CAPACITACIONES.map(recursoCapHTML).join('') : `<div class="recursos-empty">Todavía no hay material de capacitaciones anteriores disponible.</div>`;
@@ -1220,7 +1283,7 @@ function renderRecursosContent() {
 
 /* ============ TRIVIA ============ */
 const TRIVIA = {
-  facil:[
+  nivel1:[
     {q:'¿De qué color es la bolsa para residuos biopatogénicos?', opts:['Roja','Verde','Negra','Azul'], correct:0, just:'La Res. 1792/2014 establece la bolsa roja para residuos con riesgo biológico, colocada dentro de un contenedor rojo rotulado.'},
     {q:'¿Dónde se descartan las agujas usadas?', opts:['En bolsa roja común','En el descartador rígido de cortopunzantes','En bolsa negra','En el bidón Y3'], correct:1, just:'Las agujas y otros objetos punzocortantes van exclusivamente en un recipiente rígido, resistente a la punción y con tapa de seguridad.'},
     {q:'¿En qué contenedor van las ampollas de vidrio vencidas?', opts:['Bidón amarillo Y3','Bolsa de plásticos limpios','Caja de vidrios rotos','Bolsa negra'], correct:0, just:'Los frascos y ampollas de vidrio utilizados o vencidos se descartan directamente en el bidón amarillo rotulado Y3.'},
@@ -1232,7 +1295,7 @@ const TRIVIA = {
     {q:'¿Qué color tiene el recipiente para medicamentos vencidos o sobrantes?', opts:['Amarillo','Verde','Gris','Negro'], correct:0, just:'El resto de medicamentos se descarta en bolsa o recipiente amarillo identificado. Es residuo Y3 (Ley 24.051), igual que las ampollas y frascos ampolla de vidrio, pero estos van en un bidón rígido aparte.'},
     {q:'Si un vidrio roto tiene sangre, ¿a qué circuito pertenece?', opts:['Vidrios rotos comunes','Circuito biopatogénico','Reciclables','RSU'], correct:1, just:'Si el vidrio está contaminado con sangre o fluidos, debe seguir el circuito biopatogénico y avisarse al superior; no va a la caja de vidrios comunes.'}
   ],
-  media:[
+  nivel2:[
     {q:'¿Qué resolución regula la señalética de residuos en establecimientos de salud?', opts:['Res. 134/2016','Res. 1792/2014','Ley 24.051','Ley 19.587'], correct:1, just:'La Res. Ministerial N.º 1792/2014 estableció las directrices sanitarias para la señalización de la gestión interna de residuos.'},
     {q:'¿Qué norma nacional establece las Directrices Nacionales para la Gestión de Residuos en Establecimientos de Salud (GREAS)?', opts:['Res. 134/2016','Ley 25.916','Ley XI N.º 35','Res. 1792/2014'], correct:0, just:'La Resolución Ministerial N.º 134/2016 aprueba las Directrices Nacionales para la Gestión de Residuos en Establecimientos de Salud (GREAS).'},
     {q:'¿Qué ley nacional regula los residuos peligrosos?', opts:['Ley 25.675','Ley 24.051','Ley 25.326','Ley 20.284'], correct:1, just:'La Ley 24.051 de Residuos Peligrosos refuerza la obligación de manejo diferenciado de residuos como los químicos peligrosos.'},
@@ -1244,7 +1307,7 @@ const TRIVIA = {
     {q:'¿Qué corriente incluye pilas, lámparas de mercurio y equipos electrónicos en desuso?', opts:['Residuos comunes','REGU / RAEE','Reciclables','Químicos peligrosos'], correct:1, just:'Los Residuos Especiales de Generación Universal (REGU) incluyen RAEE, pilas, baterías, lámparas, aceites y escombros.'},
     {q:'¿Está permitido usar los carros de residuos para transportar también alimentos o ropa?', opts:['Sí, si están limpios','No, deben ser de uso exclusivo','Sí, fuera de horario','Solo los de residuos comunes'], correct:1, just:'Los carros de residuos deben ser de uso exclusivo; está prohibido utilizarlos para transportar alimentos, ropa o insumos.'}
   ],
-  dificil:[
+  nivel3:[
     {q:'¿Qué ley provincial de Chubut regula la gestión de residuos peligrosos y fija presupuestos mínimos?', opts:['Ley XI N.º 35 (Código Ambiental)','Ley XI N.º 56','Ordenanza 4232/92','Ley 25.675'], correct:0, just:'El Código Ambiental de la Provincia del Chubut (Ley XI N.º 35) fija los presupuestos mínimos de protección y gestión de residuos peligrosos.'},
     {q:'¿Qué documento certifica que los residuos peligrosos fueron efectivamente tratados y dispuestos por el operador autorizado?', opts:['El manifiesto de transporte','El Certificado de Tratamiento y Disposición Final','El remito interno','El registro de generación'], correct:1, just:'El Certificado de Tratamiento y Disposición Final, emitido por el operador habilitado, es la única prueba válida de que los residuos no fueron desviados a circuitos informales.'},
     {q:'¿Cuántos años deben conservarse los registros de gestión de residuos según la normativa ambiental?', opts:['2 años','5 años','10 años','20 años'], correct:2, just:'Los registros, manifiestos y certificados deben conservarse por un período mínimo de 10 años, disponibles para auditorías o inspecciones.'},
@@ -1255,6 +1318,30 @@ const TRIVIA = {
     {q:'¿Qué ley provincial creó el Programa Provincial de Reciclado de RAEE en Chubut?', opts:['Ley XI N.º 35','Ley XI N.º 56','Ordenanza 11735/12','Ley 25.916'], correct:1, just:'La Ley XI N.º 56 de la Provincia de Chubut crea el Programa Provincial de Reciclado de RAEE.'},
     {q:'¿Qué ordenanza municipal de Trelew se vincula con el reciclado y los RAEE?', opts:['Ordenanza N.º 4232/92','Ordenanza N.º 11735/12','Ordenanza N.º 185','Ordenanza N.º 1792'], correct:1, just:'La Ordenanza Municipal N.º 11735/12 de Trelew se articula con la gestión provincial de RAEE.'},
     {q:'Un cuerpo de jeringa ya utilizado, sin la aguja, ¿a qué circuito corresponde en el hospital?', opts:['Cortopunzantes','Biopatogénico','Y3','Residuo común'], correct:1, just:'La aguja va al descartador rígido de cortopunzantes; el cuerpo de la jeringa, ya sin la aguja, se descarta como biopatogénico.'}
+  ],
+  nivel4:[
+    {q:'Según la tabla de precauciones de almacenaje, ¿con qué no deben almacenarse los ácidos inorgánicos?', opts:['Bases minerales, cianuros, nitruros, sulfuros e hipocloritos','Agua destilada únicamente','Otros ácidos inorgánicos de la misma familia','Ninguna restricción'], correct:0, just:'La guía de compatibilidad química (Directrices GREAS 134/2016) indica que los ácidos inorgánicos no deben almacenarse junto a bases minerales, cianuros, nitruros, sulfuros ni hipocloritos, por riesgo de reacción violenta.'},
+    {q:'¿Qué resultado produce mezclar álcalis y ácidos fuertes con solventes, ácidos orgánicos o combustibles?', opts:['Ningún efecto relevante','Explosión o incendio','Solo cambio de color','Neutralización segura'], correct:1, just:'Esa combinación genera riesgo de explosión o incendio, según la tabla de efectos de mezclas químicas incompatibles.'},
+    {q:'¿Qué produce la mezcla de ácidos con álcalis?', opts:['Vapores corrosivos y generación de calor','Un precipitado inofensivo','Enfriamiento del recipiente','No reaccionan entre sí'], correct:0, just:'Ácidos y álcalis combinados generan vapores corrosivos y liberación de calor, por lo que nunca deben mezclarse.'},
+    {q:'¿Con qué no deben almacenarse los oxidantes?', opts:['Materiales combustibles e inflamables y materiales orgánicos','Otros oxidantes de cualquier tipo','Recipientes de vidrio','Envases plásticos limpios'], correct:0, just:'Los oxidantes no deben almacenarse junto a materiales combustibles, inflamables u orgánicos, que pueden reaccionar violentamente.'},
+    {q:'¿Qué deben evitar en particular los agentes reductores?', opts:['El contacto con agua, aire y oxígeno','La luz solar directa','El frío extremo','Los envases de vidrio'], correct:0, just:'Los reductores reaccionan con agua, aire y oxígeno, por lo que deben mantenerse aislados de esos elementos.'},
+    {q:'¿Cuál es la regla general para descartar un residuo químico respecto de trasvasarlo a otro envase?', opts:['Se descarta en su envase original, salvo que se haya diluido o preparado fuera de él','Siempre se trasvasa a un bidón amarillo','Se trasvasa solo si el envase original es de vidrio','No importa el envase, solo el rótulo'], correct:0, just:'La regla es no trasvasar: se descarta en el envase original para no perder la identificación de la sustancia, salvo productos diluidos o preparados fuera de él, como los líquidos de revelado radiográfico.'},
+    {q:'¿Hasta qué porcentaje de su capacidad se llena un envase de residuos químicos peligrosos?', opts:['50%','75%','90%','100%'], correct:1, just:'Los envases de residuos químicos se llenan como máximo hasta el 75% de su capacidad, para evitar salpicaduras o derrames.'},
+    {q:'¿Qué código Y corresponde específicamente a los líquidos de revelado radiográfico?', opts:['Y1','Y3','Y16','Y29'], correct:2, just:'Los líquidos de revelado y fijado radiográfico corresponden a la corriente Y16 de la Ley de Residuos Peligrosos N.º 24.051.'},
+    {q:'Ante una duda puntual sobre si dos sustancias químicas son compatibles entre sí, ¿qué corresponde hacer?', opts:['Mezclarlas en poca cantidad para probar','Consultar la ficha de seguridad (MSDS) de cada sustancia o a HySL','Diluir ambas con agua antes de decidir','Descartarlas juntas igual, si están en el mismo sector'], correct:1, just:'Ante cualquier duda sobre compatibilidad, se debe consultar la ficha de seguridad (MSDS) de cada sustancia o directamente a HySL antes de envasar juntos dos residuos.'},
+    {q:'Para la recolección de residuos químicos, según la Tabla N.º 8 de GREAS, ¿alcanza con guantes como único EPP?', opts:['Sí, es suficiente','No, también se requieren delantal impermeable, botas, protector facial y protección respiratoria', 'No, alcanza con un barbijo quirúrgico', 'Depende del color del envase'], correct:1, just:'Según la Tabla N.º 8 de las Directrices GREAS, la recolección de químicos requiere mameluco, delantal impermeable, botas, guantes, protector facial y protección respiratoria (máscara respiratoria).'}
+  ],
+  nivel5:[
+    {q:'¿Cuál es la relación correcta entre REGU y RAEE?', opts:['Son sinónimos exactos','Todo RAEE es REGU, pero no todo REGU es RAEE','Todo REGU es RAEE','No tienen relación entre sí'], correct:1, just:'Los RAEE (equipos eléctricos y electrónicos) son un subtipo específico dentro de los REGU (categoría general de residuos especiales de generación universal): todo RAEE es REGU, pero pilas o aceites, por ejemplo, son REGU sin ser RAEE.'},
+    {q:'Antes de descartar un RAEE que es bien patrimonial del hospital, ¿qué trámite corresponde?', opts:['Ninguno, se descarta directamente','La baja patrimonial ante Patrimonio del hospital','Solo avisar a Servicios Generales','Pedir autorización al proveedor original'], correct:1, just:'Muchos RAEE son bienes inventariables; antes de descartarlos corresponde tramitar la baja patrimonial, para evitar inconsistencias contables y demoras en la reposición.'},
+    {q:'En el protocolo de Profilaxis Post-Exposición (PEP) para VIH, ¿en cuánto tiempo debe iniciarse como máximo tras la exposición?', opts:['24 horas','48 horas','72 horas','7 días'], correct:2, just:'La PEP debe iniciarse dentro de las 72 horas de la exposición; no debe esperarse el resultado de laboratorio para comenzarla.'},
+    {q:'¿Cuál es el esquema de elección para iniciar la PEP según el Anexo D del manual?', opts:['Tenofovir + Lamivudina + Dolutegravir','Amoxicilina + Ácido clavulánico','Ceftriaxona + Azitromicina','Metronidazol + Doxiciclina'], correct:0, just:'El esquema de elección es TDF (Tenofovir) + 3TC (Lamivudina) + Dolutegravir, co-formulado en un solo comprimido diario.'},
+    {q:'Un envase de químico peligroso descartado en su envase original, ¿puede llevar solo la etiqueta comercial del producto?', opts:['Sí, alcanza con la etiqueta de fábrica','No, además necesita su propio rótulo de residuo (código Y, fecha, servicio de origen)','Solo si el producto es inflamable','Solo si lo autoriza el proveedor'], correct:1, just:'Aunque se use el envase original, una vez que es residuo debe llevar su propio rótulo con el código Y correspondiente, la fecha de inicio y el servicio de origen: la etiqueta comercial original no alcanza.'},
+    {q:'Si un bidón de líquidos de revelado radiográfico no se completa antes, ¿cada cuánto tiempo como máximo debe descartarse igual?', opts:['3 meses','6 meses','12 meses','No tiene plazo máximo'], correct:1, just:'El bidón de líquidos de revelado radiográfico (Y16) debe descartarse cuando se completa o, como máximo, a los 6 meses.'},
+    {q:'Según la normativa de higiene y seguridad, ¿quién tiene la competencia de evaluar el riesgo específico de cada tarea y designar el EPP correspondiente?', opts:['Cada trabajador, a su criterio','El Servicio de Higiene y Seguridad Laboral (HySL)','El proveedor de insumos','El fabricante del EPP'], correct:1, just:'Por la Ley 19.587 de Higiene y Seguridad en el Trabajo y su Dec. Reglamentario 351/79, es competencia de HySL evaluar el riesgo de cada tarea y designar el EPP adecuado; la Tabla GREAS es una referencia estándar, no un reemplazo de esa evaluación.'},
+    {q:'¿Qué resolución nacional respalda la Tabla de EPP según situación de riesgo usada en este Portal?', opts:['Res. 134/2016 (Directrices GREAS)','Ley 25.326','Res. 1963-E/2016','Ley 23.922'], correct:0, just:'La Tabla N.º 8 de EPP según situación de riesgo pertenece a las Directrices Nacionales GREAS, aprobadas por Res. Ministerio de Salud de la Nación N.º 134/2016.'},
+    {q:'Según la guía institucional, ¿en qué envase se descartan específicamente las pilas (no las baterías)?', opts:['Un tupper plástico','Una botella plástica de 500 ml','Una bolsa de papel','Un frasco de vidrio'], correct:1, just:'Las pilas se descartan en una botella plástica de 500 ml (ideal de gaseosa, por el espesor del plástico); las baterías van en un tupper. Ambos envases deben estar sin grietas ni fisuras.'},
+    {q:'¿Qué distingue, en este Portal, a la corriente Y3 en bidón de la corriente Y3 en bolsa?', opts:['No hay diferencia, es la misma corriente y el mismo envase','El envase: bidón para ampollas/vidrio inyectable, bolsa para el resto de medicamentos','El color del rótulo únicamente','Una es peligrosa y la otra no'], correct:1, just:'Ambas son residuo Y3 según la Ley 24.051, pero se diferencian por el tipo de envase: el bidón es para ampollas y frascos de vidrio inyectables, y la bolsa para el resto de medicamentos (blísteres, comprimidos, envases no inyectables).'}
   ]
 };
 let quizState = null;
@@ -1265,17 +1352,26 @@ function renderTrivia(){
       <div class="hero" style="margin-bottom:20px;">
         <div class="blob"></div>
         <h2>Trivia de gestión de residuos</h2>
-        <p>30 preguntas en tres niveles, con justificación normativa en cada respuesta. Elegí un nivel para empezar.</p>
+        <p>50 preguntas en cinco niveles, con justificación normativa en cada respuesta. Elegí un nivel para empezar.</p>
+      </div>
+      <div class="note" style="margin-bottom:20px;">
+        Esta trivia es una <strong>autoevaluación con fines lúdicos y de aprendizaje</strong>. No es un examen formal: tus respuestas y puntajes <strong>no quedan guardados</strong> ni se envían a nadie, se pierden al recargar la página.
       </div>
       <div class="difwrap">
-        <div class="difcard" onclick="startQuiz('facil')" style="border-color:#2E7D32">
-          <div class="emoji">🟢</div><div class="lbl">Fácil</div><div class="cnt">10 preguntas</div>
+        <div class="difcard" onclick="startQuiz('nivel1')" style="border-color:#2E7D32">
+          <div class="emoji">🟢</div><div class="lbl">Nivel 1</div><div class="cnt">10 preguntas</div>
         </div>
-        <div class="difcard" onclick="startQuiz('media')" style="border-color:#C9971F">
-          <div class="emoji">🟡</div><div class="lbl">Media</div><div class="cnt">10 preguntas</div>
+        <div class="difcard" onclick="startQuiz('nivel2')" style="border-color:#4C8A3F">
+          <div class="emoji">🟩</div><div class="lbl">Nivel 2</div><div class="cnt">10 preguntas</div>
         </div>
-        <div class="difcard" onclick="startQuiz('dificil')" style="border-color:#B50000">
-          <div class="emoji">🔴</div><div class="lbl">Difícil</div><div class="cnt">10 preguntas</div>
+        <div class="difcard" onclick="startQuiz('nivel3')" style="border-color:#C9971F">
+          <div class="emoji">🟡</div><div class="lbl">Nivel 3</div><div class="cnt">10 preguntas</div>
+        </div>
+        <div class="difcard" onclick="startQuiz('nivel4')" style="border-color:#B8860B">
+          <div class="emoji">🟠</div><div class="lbl">Nivel 4</div><div class="cnt">10 preguntas · Compatibilidad química</div>
+        </div>
+        <div class="difcard" onclick="startQuiz('nivel5')" style="border-color:#B50000">
+          <div class="emoji">🔴</div><div class="lbl">Nivel 5</div><div class="cnt">10 preguntas · Experto</div>
         </div>
       </div>`;
     return;
@@ -1284,7 +1380,7 @@ function renderTrivia(){
     const pct = Math.round(quizState.score/quizState.qs.length*100);
     root.innerHTML = `
       <div class="qcard scorewrap">
-        <div class="qlabel">Resultado — Nivel ${quizState.level}</div>
+        <div class="qlabel">Resultado — Nivel ${quizState.level.replace('nivel','')}</div>
         <div class="big">${quizState.score} / ${quizState.qs.length}</div>
         <p style="color:var(--muted); font-size:14px;">${pct}% de respuestas correctas</p>
         <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:14px;">
@@ -1299,7 +1395,7 @@ function renderTrivia(){
   const answered = quizState.answered;
   root.innerHTML = `
     <div class="quizhead">
-      <span class="quizprog">Pregunta ${i+1} de ${quizState.qs.length} · Nivel ${quizState.level}</span>
+      <span class="quizprog">Pregunta ${i+1} de ${quizState.qs.length} · Nivel ${quizState.level.replace('nivel','')}</span>
       <span class="quizscore">Aciertos: ${quizState.score}</span>
     </div>
     <div class="qcard" style="text-align:left;">
@@ -1457,6 +1553,7 @@ function submitFeedback(){
 }
 
 /* ============ INIT ============ */
+renderHomeNavGrid();
 renderPrincipios();
 renderHomeGrid();
 renderCategoriasList('');
