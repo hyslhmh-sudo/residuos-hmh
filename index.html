@@ -332,6 +332,45 @@
   footer{
     text-align:center; padding:26px 20px 10px; color:var(--muted); font-size:11.5px; line-height:1.6;
   }
+
+  /* FEEDBACK FLOTANTE */
+  .feedback-fab{
+    position:fixed; bottom:20px; right:20px; z-index:100;
+    background:var(--navy); color:#fff; border:none; border-radius:30px;
+    padding:13px 20px; font-weight:700; font-size:13.5px; cursor:pointer;
+    box-shadow:0 6px 18px rgba(11,37,69,.28);
+  }
+  .feedback-fab:hover{background:var(--navy-dark);}
+  .feedback-overlay{
+    display:none; position:fixed; inset:0; background:rgba(11,20,35,.55); z-index:200;
+    align-items:center; justify-content:center; padding:20px;
+  }
+  .feedback-overlay.open{display:flex;}
+  .feedback-modal{
+    background:#fff; border-radius:18px; padding:26px; max-width:380px; width:100%;
+    position:relative; text-align:center;
+  }
+  .feedback-close{
+    position:absolute; top:14px; right:14px; border:none; background:var(--paper); color:var(--muted);
+    width:28px; height:28px; border-radius:50%; cursor:pointer; font-size:14px;
+  }
+  .feedback-modal h3{margin:0 0 4px; font-size:18px;}
+  .feedback-sub{color:var(--muted); font-size:13px; margin:0 0 18px;}
+  .feedback-stars{font-size:34px; letter-spacing:6px; margin-bottom:16px; cursor:pointer;}
+  .feedback-stars span{color:#E3E5E9; transition:color .15s;}
+  .feedback-stars span.on{color:#E3B23C;}
+  .feedback-modal textarea{
+    width:100%; min-height:80px; border:1.5px solid var(--line); border-radius:10px; padding:11px;
+    font-family:inherit; font-size:13.5px; resize:vertical; margin-bottom:16px; background:var(--paper);
+  }
+  .feedback-submit{
+    width:100%; background:var(--navy); color:#fff; border:none; border-radius:10px; padding:12px;
+    font-weight:700; font-size:14px; cursor:pointer;
+  }
+  .feedback-submit:hover{background:var(--navy-dark);}
+  #feedbackMsg{margin-top:12px; font-size:12.5px;}
+  #feedbackMsg.ok{color:#1e5a24;}
+  #feedbackMsg.err{color:#8a1f24;}
 </style>
 </head>
 <body>
@@ -468,6 +507,23 @@
     Basado en el Manual de Gestión de Residuos Hospitalarios (HMH) — Res. 134/2016 (GREAS), Res. 1792/2014, Ley 24.051, Código Ambiental de Chubut (Ley XI N.º 35).<br>
     Ante cualquier duda, consultar al Servicio de Higiene y Seguridad antes de descartar.
   </footer>
+
+  <!-- FEEDBACK FLOTANTE -->
+  <button class="feedback-fab" onclick="openFeedback()">⭐ Calificar la app</button>
+
+  <div class="feedback-overlay" id="feedbackOverlay" onclick="if(event.target===this) closeFeedback()">
+    <div class="feedback-modal">
+      <button class="feedback-close" onclick="closeFeedback()">✕</button>
+      <h3>¿Qué te pareció la app?</h3>
+      <p class="feedback-sub">Tu opinión nos ayuda a mejorarla.</p>
+      <div class="feedback-stars" id="feedbackStars">
+        <span data-v="1">★</span><span data-v="2">★</span><span data-v="3">★</span><span data-v="4">★</span><span data-v="5">★</span>
+      </div>
+      <textarea id="feedbackComment" placeholder="¿Algo que mejorarías? (opcional)"></textarea>
+      <button class="feedback-submit" onclick="submitFeedback()">Enviar calificación</button>
+      <div id="feedbackMsg"></div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -1183,6 +1239,72 @@ function sendContact(e){
     fb.innerHTML = `<div class="formmsg err">No se pudo enviar el mensaje (sin conexión). Probá de nuevo o escribí a <strong>hysl.hmh@gmail.com</strong>.</div>`;
   });
   return false;
+}
+
+/* ============ FEEDBACK DE LA APP ============ */
+let feedbackRating = 0;
+
+function openFeedback(){
+  document.getElementById('feedbackOverlay').classList.add('open');
+}
+function closeFeedback(){
+  document.getElementById('feedbackOverlay').classList.remove('open');
+}
+function paintStars(v){
+  document.querySelectorAll('#feedbackStars span').forEach(s=>{
+    s.classList.toggle('on', parseInt(s.dataset.v) <= v);
+  });
+}
+document.getElementById('feedbackStars').addEventListener('click', e=>{
+  const s = e.target.closest('span[data-v]');
+  if(!s) return;
+  feedbackRating = parseInt(s.dataset.v);
+  paintStars(feedbackRating);
+});
+
+function submitFeedback(){
+  const msgEl = document.getElementById('feedbackMsg');
+  if(feedbackRating === 0){
+    msgEl.className = 'err';
+    msgEl.textContent = 'Elegí al menos una estrella antes de enviar.';
+    return;
+  }
+  const comentario = document.getElementById('feedbackComment').value.trim();
+  const btn = document.querySelector('.feedback-submit');
+  btn.disabled = true; btn.textContent = 'Enviando...';
+
+  fetch(FORMSPREE_ENDPOINT, {
+    method: 'POST',
+    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      tipo: 'Feedback de la app',
+      calificacion: feedbackRating + ' / 5 estrellas',
+      comentario: comentario || '(sin comentario)',
+      _subject: 'Feedback de la app — ' + feedbackRating + '/5 estrellas'
+    })
+  })
+  .then(res => {
+    btn.disabled = false; btn.textContent = 'Enviar calificación';
+    if(res.ok){
+      msgEl.className = 'ok';
+      msgEl.textContent = '¡Gracias por tu opinión!';
+      setTimeout(() => {
+        closeFeedback();
+        feedbackRating = 0;
+        paintStars(0);
+        document.getElementById('feedbackComment').value = '';
+        msgEl.textContent = ''; msgEl.className = '';
+      }, 1500);
+    } else {
+      msgEl.className = 'err';
+      msgEl.textContent = 'No se pudo enviar. Probá de nuevo.';
+    }
+  })
+  .catch(() => {
+    btn.disabled = false; btn.textContent = 'Enviar calificación';
+    msgEl.className = 'err';
+    msgEl.textContent = 'No se pudo enviar (sin conexión).';
+  });
 }
 
 /* ============ INIT ============ */
