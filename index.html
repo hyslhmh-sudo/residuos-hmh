@@ -261,6 +261,16 @@
   .drive-folder-sub{font-size:12.5px; color:var(--muted); margin-top:2px;}
   .drive-folder-arrow{margin-left:auto; font-size:20px; color:var(--muted); flex-shrink:0;}
 
+  /* COMPATIBILIDAD QUÍMICA */
+  .quim-table-wrap{overflow-x:auto; border:1px solid var(--line); border-radius:12px;}
+  .quim-table{width:100%; border-collapse:collapse; font-size:12.8px; min-width:520px;}
+  .quim-table th{
+    background:var(--navy); color:#fff; text-align:left; padding:10px 12px; font-weight:700; font-size:12px;
+    text-transform:uppercase; letter-spacing:.03em;
+  }
+  .quim-table td{padding:10px 12px; border-top:1px solid var(--line); line-height:1.5; vertical-align:top;}
+  .quim-table tr:nth-child(even) td{background:#F8F9FA;}
+
   /* NOVEDADES */
   .novedad-card{
     background:var(--card); border:1px solid var(--line); border-radius:16px; padding:0; margin-bottom:16px;
@@ -630,14 +640,15 @@ const CATS = [
   },
   {
     id:'quim', name:'Residuos químicos peligrosos', ycode:null, color:'var(--c-quim)', bg:'var(--c-quim-bg)',
-    container:'Recipiente amarillo resistente a químicos, hermético y rotulado',
+    container:'Recipiente amarillo resistente a químicos, hermético y rotulado. Llenar como máximo hasta el 75% de su capacidad.',
     icon:'flask',
     desc:'Sustancias químicas que representan riesgo para la salud o el ambiente: solventes, reactivos de laboratorio, líquidos de revelado radiográfico y materiales con mercurio.',
     incluir:['Solventes y reactivos de laboratorio','Líquidos de revelado radiográfico','Termómetros y esfigmomanómetros con mercurio'],
     noIncluir:['Fármacos citotóxicos (van a Resto de medicamentos)','Medicamentos comunes vencidos','Residuos comunes','Biopatogénicos','Reciclables'],
-    pasos:['Identificar el químico y verificar compatibilidad antes de mezclar cualquier residuo (ver tabla de incompatibilidades del Anexo II).','Envasar en recipiente rotulado, hermético y resistente a agentes químicos.','Entregar al circuito interno de residuos peligrosos para su retiro por gestor autorizado.'],
-    importante:['Recipiente amarillo, hermético, resistente a agentes químicos y con rotulado de advertencia.','Nunca mezclar sustancias químicamente incompatibles.','Requiere manifiesto de transporte y certificado de tratamiento (gestor autorizado, ej. IMPEESA S.A.).'],
-    keywords:'quimico peligroso solvente reactivo revelado radiografico mercurio'
+    pasos:['Identificar el químico y verificar compatibilidad antes de mezclar cualquier residuo (ver "Compatibilidad Química" en Banco de Recursos).','Envasar en recipiente rotulado, hermético y resistente a agentes químicos, llenando como máximo el 75% de su capacidad para evitar salpicaduras o derrames.','Entregar al circuito interno de residuos peligrosos para su retiro por gestor autorizado.'],
+    importante:['Recipiente amarillo, hermético, resistente a agentes químicos y con rotulado de advertencia.','Usar el EPP indicado según la ficha de seguridad (MSDS) de cada sustancia; tenerlas accesibles y visibles en el servicio.','Mantener los envases tapados y sobre bateas o bandejas de contención si son líquidos, para contener eventuales derrames.','Nunca mezclar sustancias químicamente incompatibles.','Requiere manifiesto de transporte y certificado de tratamiento (gestor autorizado, ej. IMPEESA S.A.).'],
+    note:'Caso específico — líquidos de revelado radiográfico (Y16): usar un bidón de 5 litros, preferentemente amarillo, con tapa, limpio y seco. Rotular con la fecha de inicio de recolección, el servicio de origen y la corriente Y16 (Ley 24.051). Descartar cuando se completa o a los 6 meses, gestionándolo como residuo peligroso (retiro, tratamiento y disposición final por empresa autorizada).',
+    keywords:'quimico peligroso solvente reactivo revelado radiografico mercurio y16 bidon amarillo epp hojas de seguridad msds incompatibilidad'
   },
   {
     id:'plas', name:'Plásticos limpios', ycode:null, color:'var(--c-plas)', bg:'var(--c-plas-bg)',
@@ -696,15 +707,15 @@ const CATS = [
   },
   {
     id:'regu', name:'Residuos especiales (REGU / RAEE)', ycode:null, color:'var(--c-regu)', bg:'var(--c-regu-bg)',
-    container:'Recipiente específico por tipo (pilas, lámparas, RAEE, aceites)',
+    container:'Pilas: botella plástica de 500 ml. Baterías: contenedor plástico (tupper). Ambos sin grietas ni fisuras.',
     icon:'battery',
     desc:'Residuos Especiales de Generación Universal y Residuos de Aparatos Eléctricos y Electrónicos: pilas y baterías, lámparas fluorescentes o de mercurio, equipos eléctricos/electrónicos obsoletos, aceites y grasas de cocina.',
     incluir:['Pilas y baterías','Lámparas fluorescentes o de mercurio','RAEE: computadoras, monitores, impresoras','Aceites usados y grasas de cocina','Escombros y restos de obra (gestión de contratistas)'],
     noIncluir:['Residuos comunes','Biopatogénicos','Cortopunzantes'],
-    pasos:['Recolectar en contenedores rígidos específicos, con tapa y rotulado según el tipo (ej. "Pilas y baterías — Residuos peligrosos").','Verificar la compatibilidad antes de mezclar distintos tipos de REGU entre sí.','Mantener en lugar limpio, fresco y seco; entregar al servicio de maestranza o gestor autorizado para su disposición. Ante cualquier duda, consultar a HySL.'],
-    importante:['No mezclar distintos tipos de REGU entre sí sin verificar compatibilidad.','Programa Provincial de Reciclado de RAEE (Ley XI N.º 56 de Chubut) y Ordenanza Municipal N.º 11735/12 de Trelew.'],
+    pasos:['Pilas: usar una botella plástica de 500 ml (ideal de gaseosa, por el espesor del plástico). Baterías: usar un contenedor plástico (tupper). En ambos casos, verificar que no tenga grietas ni fisuras, por la capacidad de lixiviación de estos materiales.','Rotular el envase con el tipo de residuo (REGU), el tipo de pila o batería, y la fecha en que se empezó a utilizar.','Mantener el envase siempre tapado, en un lugar seco y visible. Retirarlo del servicio una vez lleno o al cabo de un año, y avisar a HySL para su retiro.'],
+    importante:['No mezclar distintos tipos de REGU entre sí sin verificar compatibilidad.','El envase debe estar siempre cerrado y sin grietas: una pila alcalina puede llegar a contaminar 167.000 litros de agua si el material lixivia.','Programa Provincial de Reciclado de RAEE (Ley XI N.º 56 de Chubut) y Ordenanza Municipal N.º 11735/12 de Trelew.'],
     note:'Importante: muchos RAEE son bienes inventariables (patrimonio del hospital). Antes de descartarlos, se debe tramitar la baja patrimonial correspondiente. Ante cualquier duda, consultar a Patrimonio del HMH.',
-    keywords:'pila bateria lampara raee electronico aceite grasa cocina escombro violeta baja patrimonial patrimonio'
+    keywords:'pila bateria lampara raee electronico aceite grasa cocina escombro violeta baja patrimonial patrimonio botella tupper'
   },
 ];
 
@@ -1105,6 +1116,7 @@ function renderRecursos() {
       <button class="recursos-subtab ${recursosSubtab === 'bibliografia' ? 'active' : ''}" onclick="setRecursosSubtab('bibliografia')">📚 Bibliografía</button>
       <button class="recursos-subtab ${recursosSubtab === 'capacitaciones' ? 'active' : ''}" onclick="setRecursosSubtab('capacitaciones')">🎓 Capacitaciones</button>
       <button class="recursos-subtab ${recursosSubtab === 'carteles' ? 'active' : ''}" onclick="setRecursosSubtab('carteles')">🖼️ Carteles</button>
+      <button class="recursos-subtab ${recursosSubtab === 'compatibilidad' ? 'active' : ''}" onclick="setRecursosSubtab('compatibilidad')">⚠️ Compatibilidad Química</button>
     </div>
     <div id="recursosContent"></div>
   `;
@@ -1146,6 +1158,49 @@ function renderRecursosContent() {
         </div>
         <div class="drive-folder-arrow">↗</div>
       </a>
+    `;
+  } else if (recursosSubtab === 'compatibilidad') {
+    const ALMACENAJE = [
+      ['Combustibles', 'Oxidantes, comburentes, sustancias tóxicas, gases venenosos, ácidos y bases minerales.', 'Fuentes de ignición (calor, chispas, superficies calientes o llamas abiertas).'],
+      ['Ácidos inorgánicos', 'Bases minerales, cianuros, nitruros, sulfuros, hipocloritos, distintas concentraciones del mismo ácido, ácidos orgánicos, materiales inflamables/combustibles, sustancias tóxicas o venenosas.', 'Agua. Metales reactivos.'],
+      ['Ácidos orgánicos', 'Ácidos inorgánicos, oxidantes, comburentes.', 'Fuentes de ignición (calor, chispas, superficies calientes o llamas abiertas).'],
+      ['Álcalis', 'Ácidos, explosivos, peróxidos orgánicos y materiales de fácil ignición, sustancias tóxicas o venenosas.', 'Agua. Metales reactivos.'],
+      ['Oxidantes', 'Materiales combustibles e inflamables, materiales orgánicos.', 'Fuentes de calor. Humedad. Agentes reductores: zinc, metales alcalinos.'],
+      ['Solventes', 'Ácidos. Materiales oxidantes.', 'Fuentes de ignición (calor, chispas, superficies calientes o llamas abiertas).'],
+      ['Reductores', 'Ácidos. Materiales oxidantes.', 'Alcoholes, halógenos, haluros. Agua, aire y oxígeno.'],
+      ['Fluidos criogénicos', 'Ácidos inorgánicos. Materiales oxidantes. Comburentes.', 'Agua. Fuentes de ignición (calor, chispas, superficies calientes o llamas abiertas).'],
+    ];
+    const MEZCLAS = [
+      ['Álcalis y ácidos fuertes + solventes, ácidos orgánicos, combustibles o fluidos criogénicos inflamables', 'Explosión / incendio'],
+      ['Álcalis y ácidos fuertes + solventes o sustancias tóxicas', 'Emisión de gas tóxico'],
+      ['Solventes, combustibles, ácidos orgánicos o fluidos criogénicos inflamables + oxidantes', 'Explosión / incendio'],
+      ['Ácidos + álcalis', 'Vapores corrosivos / generación de calor'],
+    ];
+    el.innerHTML = `
+      <p style="font-size:13.5px; color:var(--muted); margin:0 0 16px;">Guía de compatibilidad para el almacenamiento y descarte de residuos químicos peligrosos. Fuente: Directrices GREAS (Res. 134/2016, Ministerio de Salud de la Nación).</p>
+
+      <div class="section-label">Categorías que no deben mezclarse entre sí</div>
+      <p style="font-size:13.5px; color:var(--ink); margin:0 0 14px; line-height:1.6;">Ácidos inorgánicos, ácidos oxidantes, ácidos orgánicos, álcalis, oxidantes, tóxicos inorgánicos, tóxicos orgánicos, reactivos con agua y solventes orgánicos son, en general, incompatibles entre categorías distintas. Ante cualquier duda sobre una combinación puntual, consultar la ficha de seguridad (MSDS) de cada sustancia o a HySL antes de envasar juntos dos residuos químicos.</p>
+
+      <div class="section-label" style="margin-top:22px;">Precauciones de almacenaje por tipo de producto</div>
+      <div class="quim-table-wrap">
+        <table class="quim-table">
+          <thead><tr><th>Tipo de producto</th><th>No almacenar junto a</th><th>Evitar contacto o cercanía con</th></tr></thead>
+          <tbody>
+            ${ALMACENAJE.map(([tipo, no_junto, evitar]) => `<tr><td><b>${tipo}</b></td><td>${no_junto}</td><td>${evitar}</td></tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="section-label" style="margin-top:22px;">Efectos de mezclas químicas incompatibles</div>
+      <div class="quim-table-wrap">
+        <table class="quim-table">
+          <thead><tr><th>Combinación</th><th>Resultado</th></tr></thead>
+          <tbody>
+            ${MEZCLAS.map(([combo, resultado]) => `<tr><td>${combo}</td><td><b>${resultado}</b></td></tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
     `;
   } else {
     el.innerHTML = RECURSOS_CAPACITACIONES.length ? RECURSOS_CAPACITACIONES.map(recursoCapHTML).join('') : `<div class="recursos-empty">Todavía no hay material de capacitaciones anteriores disponible.</div>`;
