@@ -1440,6 +1440,52 @@ function renderRecursosContent() {
         </div>
         <div class="drive-folder-arrow">↗</div>
       </a>
+
+      <div class="section-label" style="margin-top:26px;">Accidentes de trabajo — Autoseguro Público Provincial</div>
+      <div class="note" style="margin-bottom:14px;">
+        Este régimen aplica al <strong>personal de planta y contratado directo del hospital</strong> (HZT/HMH). No cubre a empresas tercerizadas, monotributistas, cooperativas u otras formas de contratación externas: esos casos se rigen por la cobertura de su propio empleador.
+      </div>
+      <p style="font-size:13.5px; color:var(--muted); margin:0 0 14px;">Ante un accidente de trabajo (en el establecimiento o in itinere) o una enfermedad profesional, el régimen de Autoseguro Público Provincial de Chubut (Ley Nacional 27.348) es quien brinda la cobertura médica y dineraria correspondiente.</p>
+
+      <div class="section-label" style="margin-top:18px;">Primeras acciones ante un accidente laboral</div>
+      <div class="ciclo-wrap">
+        ${[
+          ['1','Llamar de inmediato al CeCAP','0800-348-1033, gratuito, las 24 horas. Puede llamar el accidentado, el empleador o cualquier tercero que conozca los datos del hecho.'],
+          ['2','Dar los datos del accidentado y describir lo ocurrido','El CeCAP coordina la asistencia e informa el centro prestador donde será atendido, junto con un número provisorio de siniestro.'],
+          ['3','Concurrir al prestador indicado','Con solo mencionar el número provisorio de siniestro, se recibe la primera atención médica.'],
+          ['4','Completar el Formulario de Denuncia','Debe estar firmado por el responsable del área correspondiente. Se descarga desde la web oficial (link abajo).'],
+        ].map(([num,titulo,detalle],i)=>`
+          <div class="ciclo-step" id="ciclo-autoseguro-${i}">
+            <div class="ciclo-q" onclick="toggleCiclo('autoseguro',${i})">
+              <span class="ciclo-num">${num}</span>
+              <span class="ciclo-titulo">${titulo}</span>
+              <span class="chev">▾</span>
+            </div>
+            <div class="ciclo-a"><div class="ciclo-a-inner">${detalle}</div></div>
+          </div>
+        `).join('')}
+      </div>
+
+      <div class="section-label" style="margin-top:22px;">Teléfonos y contacto</div>
+      <div class="quim-table-wrap" style="margin-bottom:14px;">
+        <table class="quim-table">
+          <thead><tr><th>Línea</th><th>Teléfono</th><th>Horario</th></tr></thead>
+          <tbody>
+            <tr><td><b>CeCAP — denuncias y urgencias</b></td><td>0800-348-1033</td><td>Las 24 hs, todos los días</td></tr>
+            <tr><td>Centro de Atención al Asegurado (consultas/reclamos)</td><td>0800-345-5663</td><td>Lunes a viernes, 8 a 15 hs</td></tr>
+            <tr><td>Superintendencia de Riesgos del Trabajo (SRT)</td><td>0800-666-6778</td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size:12.5px; color:var(--muted); margin:0 0 14px;">Mail para denuncias: denunciasaccidenteschubut@gmail.com</p>
+      <a class="drive-folder-card" href="https://app.chubut.gob.ar/" target="_blank" rel="noopener">
+        <div class="drive-folder-icon">🛡️</div>
+        <div>
+          <div class="drive-folder-title">Autoseguro Público Provincial Chubut</div>
+          <div class="drive-folder-sub">app.chubut.gob.ar — contacto, prestadores y formulario de denuncia</div>
+        </div>
+        <div class="drive-folder-arrow">↗</div>
+      </a>
     `;
   } else {
     el.innerHTML = RECURSOS_CAPACITACIONES.length ? RECURSOS_CAPACITACIONES.map(recursoCapHTML).join('') : `<div class="recursos-empty">Todavía no hay material de capacitaciones anteriores disponible.</div>`;
