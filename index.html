@@ -1413,37 +1413,9 @@ function renderRecursosContent() {
       ['Conducta ante emergencias', 'X', 'X', '', '', '', 'X', '', 'X', 'X (2)'],
     ];
     el.innerHTML = `
-      <p style="font-size:13.5px; color:var(--muted); margin:0 0 16px;">Equipo de protección personal (EPP) según situación de riesgo. Fuente: Directrices GREAS (Res. 134/2016, Ministerio de Salud de la Nación), Tabla N.º 8.</p>
-      <div class="section-label">Guía de EPP según actividad</div>
-      <div class="quim-table-wrap">
-        <table class="quim-table">
-          <thead><tr>${EPP_COLS.map(c => `<th>${c}</th>`).join('')}</tr></thead>
-          <tbody>
-            ${EPP_ROWS.map(row => `<tr><td><b>${row[0]}</b></td>${row.slice(1).map(v => `<td style="text-align:center;">${v}</td>`).join('')}</tr>`).join('')}
-          </tbody>
-        </table>
-      </div>
-      <p style="font-size:12.3px; color:var(--muted); margin-top:12px; line-height:1.6;">
-        <b>(1)</b> Máscara N95. &nbsp; <b>(2)</b> Máscara respiratoria. &nbsp; <b>(3)</b> Según análisis de riesgo de la tarea.
-      </p>
-      <div class="note" style="margin-top:18px;">
-        Esta tabla fija el <strong>estándar general</strong> de las Directrices GREAS (Res. 134/2016). Por la Ley 19.587 de Higiene y Seguridad en el Trabajo y su Dec. Reglamentario 351/79, la evaluación del riesgo específico de cada tarea y la designación final del EPP es <strong>competencia del Servicio de Higiene y Seguridad Laboral (HySL)</strong>, que puede ajustar estos estándares según las condiciones reales de cada puesto.
-      </div>
-
-      <div class="section-label" style="margin-top:26px;">Esquema de vacunación</div>
-      <p style="font-size:13.5px; color:var(--muted); margin:0 0 14px;">Calendario Nacional de Vacunación, Ministerio de Salud de la Nación. Consultá tu esquema y el de tu equipo antes de tareas con riesgo biológico.</p>
-      <a class="drive-folder-card" href="https://www.argentina.gob.ar/salud/vacunas" target="_blank" rel="noopener">
-        <div class="drive-folder-icon">💉</div>
-        <div>
-          <div class="drive-folder-title">Ver esquema de vacunación</div>
-          <div class="drive-folder-sub">argentina.gob.ar/salud/vacunas</div>
-        </div>
-        <div class="drive-folder-arrow">↗</div>
-      </a>
-
-      <div class="section-label" style="margin-top:26px;">Accidentes de trabajo — Autoseguro Público Provincial</div>
+      <div class="section-label">Accidentes de trabajo — Autoseguro Público Provincial</div>
       <div class="note" style="margin-bottom:14px;">
-        Este régimen aplica al <strong>personal de planta y contratado directo del hospital</strong> (HZT/HMH). No cubre a empresas tercerizadas, monotributistas, cooperativas u otras formas de contratación externas: esos casos se rigen por la cobertura de su propio empleador.
+        Este régimen aplica al <strong>personal de planta y contratado directo del hospital</strong> (HZT/HMH). No cubre a empresas tercerizadas, monotributistas, cooperativas u otras formas de contratación externas: <strong>ese personal debe seguir el circuito de su propia ART o seguro personal</strong>, según corresponda a su empleador.
       </div>
       <p style="font-size:13.5px; color:var(--muted); margin:0 0 14px;">Ante un accidente de trabajo (en el establecimiento o in itinere) o una enfermedad profesional, el régimen de Autoseguro Público Provincial de Chubut (Ley Nacional 27.348) es quien brinda la cobertura médica y dineraria correspondiente.</p>
 
@@ -1486,6 +1458,34 @@ function renderRecursosContent() {
         </div>
         <div class="drive-folder-arrow">↗</div>
       </a>
+
+      <div class="section-label" style="margin-top:30px;">Esquema de vacunación</div>
+      <p style="font-size:13.5px; color:var(--muted); margin:0 0 14px;">Calendario Nacional de Vacunación, Ministerio de Salud de la Nación. Consultá tu esquema y el de tu equipo antes de tareas con riesgo biológico.</p>
+      <a class="drive-folder-card" href="https://www.argentina.gob.ar/salud/vacunas" target="_blank" rel="noopener">
+        <div class="drive-folder-icon">💉</div>
+        <div>
+          <div class="drive-folder-title">Ver esquema de vacunación</div>
+          <div class="drive-folder-sub">argentina.gob.ar/salud/vacunas</div>
+        </div>
+        <div class="drive-folder-arrow">↗</div>
+      </a>
+
+      <div class="section-label" style="margin-top:30px;">Guía de EPP según actividad</div>
+      <p style="font-size:13.5px; color:var(--muted); margin:0 0 16px;">Equipo de protección personal (EPP) según situación de riesgo. Fuente: Directrices GREAS (Res. 134/2016, Ministerio de Salud de la Nación), Tabla N.º 8.</p>
+      <div class="quim-table-wrap">
+        <table class="quim-table">
+          <thead><tr>${EPP_COLS.map(c => `<th>${c}</th>`).join('')}</tr></thead>
+          <tbody>
+            ${EPP_ROWS.map(row => `<tr><td><b>${row[0]}</b></td>${row.slice(1).map(v => `<td style="text-align:center;">${v}</td>`).join('')}</tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size:12.3px; color:var(--muted); margin-top:12px; line-height:1.6;">
+        <b>(1)</b> Máscara N95. &nbsp; <b>(2)</b> Máscara respiratoria. &nbsp; <b>(3)</b> Según análisis de riesgo de la tarea.
+      </p>
+      <div class="note" style="margin-top:18px;">
+        Esta tabla fija el <strong>estándar general</strong> de las Directrices GREAS (Res. 134/2016). Por la Ley 19.587 de Higiene y Seguridad en el Trabajo y su Dec. Reglamentario 351/79, la evaluación del riesgo específico de cada tarea y la designación final del EPP es <strong>competencia del Servicio de Higiene y Seguridad Laboral (HySL)</strong>, que puede ajustar estos estándares según las condiciones reales de cada puesto.
+      </div>
     `;
   } else {
     el.innerHTML = RECURSOS_CAPACITACIONES.length ? RECURSOS_CAPACITACIONES.map(recursoCapHTML).join('') : `<div class="recursos-empty">Todavía no hay material de capacitaciones anteriores disponible.</div>`;
