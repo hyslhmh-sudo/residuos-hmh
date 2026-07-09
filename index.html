@@ -201,6 +201,39 @@
   .detail-image{max-width:100%; border-radius:14px; border:1px solid var(--line);}
   .detail-image-caption{font-size:12px; color:var(--muted); margin-top:8px; font-style:italic;}
 
+  .note-highlight{
+    border-left-width:5px; border-left-color:#B5560E; background:#FDEEE0;
+    padding:14px 16px 16px;
+  }
+  .note-highlight-tag{
+    display:inline-block; background:#B5560E; color:#fff; font-size:11px; font-weight:800;
+    text-transform:uppercase; letter-spacing:.04em; padding:3px 10px; border-radius:20px; margin-bottom:8px;
+  }
+
+  .dudas-btn{
+    display:block; width:100%; text-align:left; background:#FDEEE0; border:1.5px solid #F0C9A0;
+    color:#8A3B0E; font-weight:700; font-size:14px; border-radius:12px; padding:13px 16px; margin-bottom:14px;
+    cursor:pointer;
+  }
+  .dudas-btn:hover{background:#FBE2CC;}
+  .duda-item{background:var(--card); border:1px solid var(--line); border-radius:14px; margin-bottom:10px; overflow:hidden;}
+  .duda-q{
+    display:flex; justify-content:space-between; align-items:center; gap:10px; padding:15px 18px;
+    cursor:pointer; font-weight:700; font-size:14px; color:var(--ink);
+  }
+  .duda-q .chev{transition:transform .2s; color:var(--muted); flex-shrink:0;}
+  .duda-item.open .duda-q .chev{transform:rotate(180deg);}
+  .duda-a{max-height:0; overflow:hidden; transition:max-height .25s ease;}
+  .duda-item.open .duda-a{max-height:600px;}
+  .duda-a-inner{padding:0 18px 16px; font-size:13.5px; color:var(--ink); line-height:1.6;}
+  .duda-a-inner b{color:var(--ink);}
+  .duda-tags{margin-top:10px; display:flex; gap:6px; flex-wrap:wrap;}
+  .duda-tag{
+    font-size:11px; font-weight:700; background:var(--paper); border:1px solid var(--line); color:var(--muted);
+    padding:3px 10px; border-radius:20px; cursor:pointer;
+  }
+  .duda-tag:hover{border-color:var(--navy); color:var(--navy);}
+
   /* SEARCH */
   .searchbar{
     display:flex; align-items:center; gap:8px; background:var(--card); border:1px solid var(--line);
@@ -506,11 +539,17 @@
 
     <!-- CATEGORIAS -->
     <section class="view" id="view-categorias">
+      <button class="dudas-btn" onclick="goView('dudas')">❓ Dudas Frecuentes</button>
       <div class="searchbar">
         <span>🔎</span>
         <input id="searchInput" placeholder="Buscar por nombre, ejemplo o color (ej: jeringa, papel, Y3)...">
       </div>
       <div id="categoriasList"></div>
+    </section>
+
+    <!-- DUDAS FRECUENTES -->
+    <section class="view" id="view-dudas">
+      <div id="dudasRoot"></div>
     </section>
 
     <!-- DETALLE (subview) -->
@@ -620,22 +659,26 @@ const CATS = [
     container:'Bolsa negra / recipiente identificado',
     icon:'bag',
     desc:'Residuos que no representan riesgo biológico, químico ni ambiental. Se generan en áreas administrativas, salas de espera, oficinas y en la actividad diaria de cocina y limpieza, siempre que no estén contaminados.',
-    incluir:['Restos de comida no compostables','Servilletas y pañuelos usados','Envoltorios y descartables sucios no reciclables','Residuos húmedos del sector','Vasos y platos descartables sucios'],
-    noIncluir:['Vidrios','Y1 / Y3','Compostables','Reciclables (papel, cartón, plástico limpios)','Biopatogénicos o cortopunzantes'],
+    incluir:['Restos de comida no compostables (de paciente sin aislamiento por enfermedad infectocontagiosa)','Servilletas y pañuelos usados','Envoltorios y descartables sucios no reciclables','Residuos húmedos del sector','Vasos y platos descartables sucios','Pañales, toallitas y apósitos de higiene personal (paciente sin cuadro infectocontagioso)'],
+    noIncluir:['Vidrios','Y1 / Y3','Compostables','Reciclables (papel, cartón, plástico limpios)','Biopatogénicos o cortopunzantes','Pañales/toallitas de paciente con cuadro infectocontagioso, o pañales de puerperio con gran cantidad de sangre (van a biopatogénico)','Comida y vajilla de un paciente en aislamiento por enfermedad infectocontagiosa (va a biopatogénico)'],
     pasos:['Colocar los residuos comunes en bolsa negra o recipiente identificado.','Cerrar la bolsa o retirar el recipiente según el circuito interno, sin mezclar con otros residuos.','Trasladar al punto o contenedor correspondiente del circuito interno.'],
     importante:['Usar solo bolsa negra o recipiente identificado.','No mezclar con reciclables, compostables ni residuos especiales o peligrosos.','Retirar antes del desborde (no superar 3/4 de capacidad).'],
-    keywords:'basura comun restos de comida servilletas envoltorios sucios rsu negro'
+    note:'Pañales, toallitas y apósitos de higiene personal (incluidos los de puerperio) se clasifican como residuo común. Pasan a ser biopatogénicos únicamente en dos casos: 1) si el paciente cursa un cuadro infectocontagioso; o 2) si son pañales de puerperio con gran cantidad de sangre, por criterio higiénico, más allá del estado infeccioso del paciente.',
+    noteHighlight:true,
+    keywords:'basura comun restos de comida servilletas envoltorios sucios rsu negro pañal toallita puerperio higiene personal'
   },
   {
     id:'bio', name:'Biopatogénicos', ycode:'Y1', color:'var(--c-bio)', bg:'var(--c-bio-bg)',
     container:'Bolsa roja dentro de contenedor rojo rotulado',
     icon:'biohazard',
-    desc:'Material contaminado con sangre, secreciones o fluidos corporales, o con probabilidad de contener microorganismos patógenos. Incluye material de curaciones, guantes y barbijos contaminados, tubos de extracción y material de aislamiento.',
-    incluir:['Gasas, apósitos y algodones contaminados','Guantes y barbijos con sangre o fluidos','Material con sangre o fluidos (tubos, muestras)','Residuos de curaciones','Material de aislamiento de pacientes','Jeringas enteras (cuerpo plástico) usadas o contaminadas, sin la aguja'],
-    noIncluir:['Residuos comunes','Reciclables limpios','Medicamentos o residuos Y3','Restos de comida','Papel o cartón limpio','Agujas y objetos cortopunzantes (van en descartador rígido)'],
+    desc:'Material contaminado con sangre, secreciones o fluidos corporales, o con probabilidad de contener microorganismos patógenos. Incluye material de curaciones, guantes y barbijos contaminados, tubos de extracción, y todos los residuos (incluida la comida) de pacientes en aislamiento por enfermedad infectocontagiosa. No incluye a los pacientes en aislamiento protector/inverso (para proteger al paciente del ambiente), cuyos residuos se clasifican de forma normal.',
+    incluir:['Gasas, apósitos y algodones contaminados','Guantes y barbijos con sangre o fluidos','Material con sangre o fluidos (tubos, muestras)','Residuos de curaciones','Material y residuos de pacientes en aislamiento por enfermedad infectocontagiosa (incluida la comida de esos pacientes)','Jeringas enteras (cuerpo plástico) usadas o contaminadas, sin la aguja','Pañales/toallitas de paciente con cuadro infectocontagioso, y pañales de puerperio con gran cantidad de sangre'],
+    noIncluir:['Residuos comunes','Reciclables limpios','Medicamentos o residuos Y3','Restos de comida (salvo que sea de un paciente en aislamiento por enfermedad infectocontagiosa)','Papel o cartón limpio','Agujas y objetos cortopunzantes (van en descartador rígido)','Pañales/toallitas comunes de paciente sin cuadro infectocontagioso (van a RSU)','Residuos de pacientes en aislamiento protector/inverso, sin contacto con sangre o fluidos (van a RSU)'],
     pasos:['Colocar los residuos biopatogénicos en bolsa roja dentro del contenedor rojo identificado.','Cuando la bolsa llegue al 80% de su capacidad, cerrarla con doble nudo. Nunca sobrepasar ese nivel.','Colocar la bolsa cerrada en el contenedor correspondiente del circuito interno.'],
     importante:['Usar bolsa roja dentro del contenedor rojo identificado.','Cerrar con doble nudo al 80% de su capacidad como máximo.','No compactar las bolsas ni apoyarlas contra el cuerpo.','La frecuencia de retiro no debe superar las 24 horas.'],
-    keywords:'sangre fluidos gasas apositos guantes barbijos aislamiento curaciones jeringa cuerpo bolsa roja y1'
+    note:'Pañales, toallitas y apósitos de higiene personal (incluidos los de puerperio) se clasifican como residuo común (RSU). Pasan a ser biopatogénicos únicamente en dos casos: 1) si el paciente cursa un cuadro infectocontagioso; o 2) si son pañales de puerperio con gran cantidad de sangre, por criterio higiénico, más allá del estado infeccioso del paciente.',
+    noteHighlight:true,
+    keywords:'sangre fluidos gasas apositos guantes barbijos aislamiento curaciones jeringa cuerpo bolsa roja y1 pañal toallita puerperio infectocontagioso'
   },
   {
     id:'corto', name:'Cortopunzantes', ycode:null, color:'var(--c-corto)', bg:'var(--c-corto-bg)',
@@ -887,6 +930,59 @@ function renderCategoriasList(filter){
 document.getElementById('searchInput').addEventListener('input', e=>renderCategoriasList(e.target.value));
 
 /* ============ DETAIL VIEW ============ */
+/* ============ DUDAS FRECUENTES ============ */
+// Para sumar un caso nuevo, agregá un objeto a este array.
+const DUDAS_FRECUENTES = [
+  {
+    pregunta: '¿Los pañales usados son residuo común o biopatogénico?',
+    respuesta: 'Pañales, toallitas y apósitos de higiene personal (incluidos los de puerperio) se clasifican como <b>residuo común (RSU)</b>. Pasan a ser <b>biopatogénicos</b> únicamente en dos casos: 1) si el paciente cursa un cuadro infectocontagioso; o 2) si son pañales de puerperio con gran cantidad de sangre, por criterio higiénico, más allá del estado infeccioso del paciente.',
+    relacionadas: ['rsu', 'bio']
+  },
+  {
+    pregunta: '¿La comida de un paciente en aislamiento es biopatogénica?',
+    respuesta: 'Depende del <b>tipo de aislamiento</b>, y ahí está la clave para no confundirse:<br><br>🔴 <b>Aislamiento para proteger a otros del paciente</b> (por una enfermedad infectocontagiosa): toda la basura de esa habitación, incluida la vajilla descartable y los restos de comida, se descarta como <b>biopatogénico</b> (bolsa roja). No importa si la comida en sí tuvo contacto con sangre: alcanza con que venga de un ambiente con riesgo de contagio.<br><b>Ejemplos:</b> COVID-19, influenza, tuberculosis, varicela o sarampión (por aire); diarrea por rotavirus, norovirus o Clostridioides difficile (entérico/contacto); meningitis meningocócica o coqueluche (gotas); infección o colonización por bacterias multirresistentes como SAMR o KPC (contacto).<br><br>🟢 <b>Aislamiento para proteger al paciente del entorno</b> (llamado aislamiento protector o inverso): acá es al revés — el paciente es quien está en riesgo, no quien contagia. Sus residuos, incluida la comida, se clasifican de forma normal: si no tuvieron contacto con sangre o fluidos, van como <b>residuo común (RSU)</b>.<br><b>Ejemplos:</b> pacientes neutropénicos (por ejemplo, tras quimioterapia), trasplantados de médula ósea o de órganos, grandes quemados (más del 25% de superficie corporal), o con inmunosupresión severa (leucemia, aplasia medular, altas dosis de corticoides o inmunosupresores).<br><br>Truco para decidir rápido: preguntate <i>"¿este aislamiento es para que el paciente no contagie a otros, o para que el ambiente no lo enferme a él?"</i>. Primer caso: biopatogénico. Segundo caso: residuo común (salvo sangre/fluidos, como siempre).<br><br><i style="color:var(--muted); font-size:12.5px;">Fuente: Res. 134/2016 (Directrices Nacionales GREAS), Anexo, punto 8.1.2 "Residuos a ser considerados biopatogénicos", que incluye expresamente entre ellos a "todos los residuos provenientes de áreas de aislamiento" y menciona en particular los restos de alimentos. La distinción entre precauciones basadas en la transmisión (contacto, gotas, aérea) y aislamiento protector o inverso está descripta en la Bibliografía (ver Banco de Recursos → Bibliografía).</i>',
+    relacionadas: ['rsu', 'bio']
+  },
+];
+
+function dudaItemHTML(d, i) {
+  return `
+    <div class="duda-item" id="duda-${i}">
+      <div class="duda-q" onclick="toggleDuda(${i})">
+        <span>${d.pregunta}</span>
+        <span class="chev">▾</span>
+      </div>
+      <div class="duda-a">
+        <div class="duda-a-inner">
+          ${d.respuesta}
+          ${d.relacionadas && d.relacionadas.length ? `<div class="duda-tags">${d.relacionadas.map(id => {
+            const c = CATS.find(x => x.id === id);
+            return c ? `<span class="duda-tag" onclick="event.stopPropagation(); showDetail('${id}')">Ver ${c.name}</span>` : '';
+          }).join('')}</div>` : ''}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function toggleDuda(i) {
+  const el = document.getElementById('duda-' + i);
+  el.classList.toggle('open');
+}
+
+function renderDudas() {
+  const root = document.getElementById('dudasRoot');
+  root.innerHTML = `
+    <div class="hero" style="margin-bottom:20px;">
+      <div class="blob"></div>
+      <button class="back" style="background:rgba(11,37,69,.08); color:var(--navy); border:none; border-radius:8px; padding:6px 10px; font-size:12.5px; font-weight:600; cursor:pointer; margin-bottom:12px;" onclick="goView('categorias')">← Volver a Categorías</button>
+      <h2>Dudas Frecuentes</h2>
+      <p>Casos puntuales que suelen generar dudas al clasificar un residuo, con la resolución y su fundamento. Tocá cada pregunta para ver la respuesta.</p>
+    </div>
+    ${DUDAS_FRECUENTES.length ? DUDAS_FRECUENTES.map((d, i) => dudaItemHTML(d, i)).join('') : '<div class="recursos-empty">Todavía no hay casos cargados.</div>'}
+  `;
+}
+
 function showDetail(id){
   const c = CATS.find(x=>x.id===id);
   const html = `
@@ -917,7 +1013,7 @@ function showDetail(id){
           <h4 style="color:${c.color}">⚠ Importante</h4>
           <ul>${c.importante.map(i=>`<li>${i}</li>`).join('')}</ul>
         </div>
-        ${c.note?`<div class="note">${c.note}</div>`:''}
+        ${c.note?(c.noteHighlight?`<div class="note note-highlight"><div class="note-highlight-tag">🔎 Consulta frecuente</div>${c.note}</div>`:`<div class="note">${c.note}</div>`):''}
         ${c.image?`<div class="detail-image-wrap"><img class="detail-image" src="data:image/jpeg;base64,${CATEGORY_IMAGES[c.image]||''}" alt="${c.imageCaption||''}"><div class="detail-image-caption">${c.imageCaption||''}</div></div>`:''}
       </div>
     </div>`;
@@ -929,7 +1025,7 @@ function showDetail(id){
 
 /* ============ CLASIFICADOR ============ */
 const TREE = {
-  q1: { icon:'🩸', text:'¿El residuo tuvo contacto con sangre, secreciones o fluidos corporales, o proviene de un paciente en aislamiento?', yes:'q1b', no:'q2' },
+  q1: { icon:'🩸', text:'¿El residuo tuvo contacto con sangre, secreciones o fluidos corporales, o proviene de un paciente en aislamiento por enfermedad infectocontagiosa (no protector/inverso)?', yes:'q1b', no:'q2' },
   q1b: { icon:'💉', text:'¿Es un objeto que corta o pincha: aguja, hoja de bisturí, lanceta, catéter o vidrio roto contaminado?', yes:'RESULT:corto', no:'RESULT:bio' },
   q2: { icon:'💊', text:'¿Es un medicamento, envase de medicamento, o resto farmacéutico?', yes:'q2b', no:'q3' },
   q2b: { icon:'💉', text:'¿Es una ampolla o frasco-ampolla de vidrio (inyectable), usado o vencido?', yes:'RESULT:y3', no:'RESULT:med' },
@@ -1132,6 +1228,7 @@ const BIBLIOGRAFIA = [
   { titulo: 'Código Ambiental de la Provincia del Chubut', fuente: 'Ley XI N.º 35', link: 'https://digesto.legislaturadelchubut.gob.ar/public/rama/11/ley/35' },
   { titulo: 'Programa Provincial de Reciclado de RAEE', fuente: 'Ley XI N.º 56 (Chubut)', link: 'https://ambiente.chubut.gov.ar/legislacion/' },
   { titulo: 'Recolección diferenciada de RAEE en Trelew', fuente: 'Ordenanza Municipal N.º 11735/2012', link: 'https://concejotrelew.gob.ar/digesto/sites/default/files/2025-07/11735.pdf' },
+  { titulo: 'Aislamiento hospitalario, concepto y tipos (incluye aislamiento protector o inverso)', fuente: 'Revista Ocronos — Editorial Científico-Técnica', link: 'https://revistamedica.com/caracteristicas-clinicas-aislamiento-hospitalario-concepto/' },
 ];
 
 const RECURSOS_CAPACITACIONES = [
@@ -1584,6 +1681,7 @@ renderHomeNavGrid();
 renderPrincipios();
 renderHomeGrid();
 renderCategoriasList('');
+renderDudas();
 renderClasificador();
 renderPracticas();
 renderNovedades();
