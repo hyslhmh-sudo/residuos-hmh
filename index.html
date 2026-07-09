@@ -965,6 +965,41 @@ const DUDAS_FRECUENTES = [
     respuesta: 'Depende del <b>tipo de aislamiento</b>, y ahí está la clave para no confundirse:<br><br>🔴 <b>Aislamiento para proteger a otros del paciente</b> (por una enfermedad infectocontagiosa): toda la basura de esa habitación, incluida la vajilla descartable y los restos de comida, se descarta como <b>biopatogénico</b> (bolsa roja). No importa si la comida en sí tuvo contacto con sangre: alcanza con que venga de un ambiente con riesgo de contagio.<br><b>Ejemplos:</b> COVID-19, influenza, tuberculosis, varicela o sarampión (por aire); diarrea por rotavirus, norovirus o Clostridioides difficile (entérico/contacto); meningitis meningocócica o coqueluche (gotas); infección o colonización por bacterias multirresistentes como SAMR o KPC (contacto).<br><br>🟢 <b>Aislamiento para proteger al paciente del entorno</b> (llamado aislamiento protector o inverso): acá es al revés — el paciente es quien está en riesgo, no quien contagia. Sus residuos, incluida la comida, se clasifican de forma normal: si no tuvieron contacto con sangre o fluidos, van como <b>residuo común (RSU)</b>.<br><b>Ejemplos:</b> pacientes neutropénicos (por ejemplo, tras quimioterapia), trasplantados de médula ósea o de órganos, grandes quemados (más del 25% de superficie corporal), o con inmunosupresión severa (leucemia, aplasia medular, altas dosis de corticoides o inmunosupresores).<br><br>Truco para decidir rápido: preguntate <i>"¿este aislamiento es para que el paciente no contagie a otros, o para que el ambiente no lo enferme a él?"</i>. Primer caso: biopatogénico. Segundo caso: residuo común (salvo sangre/fluidos, como siempre).<br><br><i style="color:var(--muted); font-size:12.5px;">Fuente: Res. 134/2016 (Directrices Nacionales GREAS), Anexo, punto 8.1.2 "Residuos a ser considerados biopatogénicos", que incluye expresamente entre ellos a "todos los residuos provenientes de áreas de aislamiento" y menciona en particular los restos de alimentos. La distinción entre precauciones basadas en la transmisión (contacto, gotas, aérea) y aislamiento protector o inverso está descripta en la Bibliografía (ver Banco de Recursos → Bibliografía).</i>',
     relacionadas: ['rsu', 'bio']
   },
+  {
+    pregunta: '¿Una bolsa de suero vacía y su vía (tubuladura) se descartan igual?',
+    respuesta: 'No, se descartan distinto. La <b>bolsa de suero</b> (el envase plástico vacío, sin sangre) se puede descartar como <b>plástico limpio / reciclable</b>. La <b>vía o tubuladura</b>, en cambio, se descarta como <b>biopatogénico</b>: aunque no se vea sangre a simple vista, no se puede asegurar que no haya habido retorno (reflujo) de sangre hacia la línea durante la infusión, así que se trata con el criterio más seguro.',
+    relacionadas: ['rsu', 'bio', 'plas']
+  },
+  {
+    pregunta: '¿Una sonda vesical o bolsa colectora de orina es residuo común o biopatogénico?',
+    respuesta: 'Es <b>biopatogénico</b>. A diferencia de un pañal (que es un producto de higiene personal), la sonda y la bolsa colectora son <b>resultantes de la atención médica</b> — el criterio que establece GREAS para estos casos, más allá de que el procedimiento en sí sea o no invasivo. Es el mismo principio que se aplica a gasas, guantes o cualquier otro material que resulte de un acto de atención médica, más allá de que el líquido en sí (la orina) no transmita infecciones por sí solo.',
+    relacionadas: ['bio']
+  },
+  {
+    pregunta: '¿El papel o nylon que envuelve el instrumental estéril es reciclable o biopatogénico?',
+    respuesta: 'Si no tuvo contacto con sangre, fluidos ni con el paciente, <b>no hay razón clínica para tratarlo como biopatogénico</b>: se descarta como papel o plástico limpio, reciclable. El solo hecho de haber estado "en el hospital" no lo contamina por sí mismo.',
+    relacionadas: ['papel', 'plas']
+  },
+  {
+    pregunta: '¿Cómo se descartan los restos anatómicos o piezas quirúrgicas (placenta, biopsias, amputaciones)?',
+    respuesta: 'Siguen un <b>protocolo específico</b>, distinto del circuito biopatogénico general: se colocan en <b>doble bolsa</b>, se <b>rotulan</b>, y el retiro lo realiza <b>personal de la morgue</b>, no el circuito habitual de residuos. Ante cualquier caso concreto, consultar con HySL o con el servicio correspondiente antes de proceder.',
+    relacionadas: ['bio']
+  },
+  {
+    pregunta: '¿La ropa de cama con sangre o fluidos se descarta como biopatogénico?',
+    respuesta: '<b>No se descarta: se lava.</b> El proceso de lavado en lavandería está pensado para tratar toda la ropa de cama de forma igualmente rigurosa, tenga o no contaminación visible — por eso no se trata como un residuo aparte. Aun así, requiere manipulación cuidadosa durante el traslado:<br><br>1) <b>No sacudirla</b>, para no dispersar partículas ni generar salpicaduras.<br>2) Quien la traslada debe usar el <b>EPP completo correspondiente</b> (no alcanza con guantes solamente).<br>3) Entregarla al circuito de lavandería según el protocolo del servicio, para su lavado con el proceso adecuado.',
+    relacionadas: ['bio']
+  },
+  {
+    pregunta: '¿El EPP (mameluco, cofia) usado durante un aislamiento que ya terminó es biopatogénico?',
+    respuesta: 'Sí, <b>si tuvo contacto con el paciente durante el período en que el aislamiento por enfermedad infectocontagiosa estaba vigente</b>. Lo que importa es el momento en que se usó el EPP, no si el aislamiento ya se levantó (por ejemplo, por alta del paciente) al momento de descartarlo.',
+    relacionadas: ['bio']
+  },
+  {
+    pregunta: 'Un tubo ya centrifugado o una punta de pipeta usada, después de analizada la muestra, ¿sigue siendo biopatogénico?',
+    respuesta: 'Sí. El análisis de la muestra <b>no la "descontamina"</b>: el material que tuvo contacto con sangre o fluidos corporales sigue siendo biopatogénico, haya sido ya utilizado para el estudio o no.',
+    relacionadas: ['bio']
+  },
 ];
 
 function dudaItemHTML(d, i) {
