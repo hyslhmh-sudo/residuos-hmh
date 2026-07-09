@@ -1465,7 +1465,8 @@ const TRIVIA = {
     {q:'Según la normativa de higiene y seguridad, ¿quién tiene la competencia de evaluar el riesgo específico de cada tarea y designar el EPP correspondiente?', opts:['Cada trabajador, a su criterio','El Servicio de Higiene y Seguridad Laboral (HySL)','El proveedor de insumos','El fabricante del EPP'], correct:1, just:'Por la Ley 19.587 de Higiene y Seguridad en el Trabajo y su Dec. Reglamentario 351/79, es competencia de HySL evaluar el riesgo de cada tarea y designar el EPP adecuado; la Tabla GREAS es una referencia estándar, no un reemplazo de esa evaluación.'},
     {q:'¿Qué resolución nacional respalda la Tabla de EPP según situación de riesgo usada en este Portal?', opts:['Res. 134/2016 (Directrices GREAS)','Ley 25.326','Res. 1963-E/2016','Ley 23.922'], correct:0, just:'La Tabla N.º 8 de EPP según situación de riesgo pertenece a las Directrices Nacionales GREAS, aprobadas por Res. Ministerio de Salud de la Nación N.º 134/2016.'},
     {q:'Según la guía institucional, ¿en qué envase se descartan las pilas sueltas (REGU)?', opts:['Un tupper plástico','Una botella plástica de 500 ml','Una bolsa de papel','Un frasco de vidrio'], correct:1, just:'Las pilas sueltas (REGU) se descartan en una botella plástica de 500 ml, ideal de gaseosa por el espesor del plástico, sin grietas ni fisuras. Las baterías de equipos médicos, en cambio, se gestionan como RAEE.'},
-    {q:'¿Qué distingue, en este Portal, a la corriente Y3 en bidón de la corriente Y3 en bolsa?', opts:['No hay diferencia, es la misma corriente y el mismo envase','El envase: bidón para ampollas/vidrio inyectable, bolsa para el resto de medicamentos','El color del rótulo únicamente','Una es peligrosa y la otra no'], correct:1, just:'Ambas son residuo Y3 según la Ley 24.051, pero se diferencian por el tipo de envase: el bidón es para ampollas y frascos de vidrio inyectables, y la bolsa para el resto de medicamentos (blísteres, comprimidos, envases no inyectables).'}
+    {q:'¿Qué distingue, en este Portal, a la corriente Y3 en bidón de la corriente Y3 en bolsa?', opts:['No hay diferencia, es la misma corriente y el mismo envase','El envase: bidón para ampollas/vidrio inyectable, bolsa para el resto de medicamentos','El color del rótulo únicamente','Una es peligrosa y la otra no'], correct:1, just:'Ambas son residuo Y3 según la Ley 24.051, pero se diferencian por el tipo de envase: el bidón es para ampollas y frascos de vidrio inyectables, y la bolsa para el resto de medicamentos (blísteres, comprimidos, envases no inyectables).'},
+    {q:'La bandeja de comida de un paciente neutropénico en aislamiento protector, sin contacto con sangre, ¿cómo se descarta?', opts:['Como biopatogénico, por estar en aislamiento','Como residuo común (RSU), como cualquier otro paciente','Como químico peligroso','No se puede descartar, hay que esterilizarla'], correct:1, just:'El aislamiento protector o inverso protege al paciente inmunodeprimido del entorno; no genera riesgo de contagio hacia afuera. Por eso sus residuos, incluida la comida, se clasifican de forma normal: sin contacto con sangre o fluidos, van como RSU. Es distinto del aislamiento por enfermedad infectocontagiosa (Res. 134/2016, Anexo 8.1.2), donde sí correspondería biopatogénico.'}
   ]
 };
 let quizState = null;
@@ -1476,7 +1477,7 @@ function renderTrivia(){
       <div class="hero" style="margin-bottom:20px;">
         <div class="blob"></div>
         <h2>Trivia de gestión de residuos</h2>
-        <p>50 preguntas en cinco niveles, con justificación normativa en cada respuesta. Elegí un nivel para empezar.</p>
+        <p>51 preguntas en cinco niveles, con justificación normativa en cada respuesta. Elegí un nivel para empezar.</p>
       </div>
       <div class="note" style="margin-bottom:20px;">
         Esta trivia es una <strong>autoevaluación con fines lúdicos y de aprendizaje</strong>. No es un examen formal: tus respuestas y puntajes <strong>no quedan guardados</strong> ni se envían a nadie, se pierden al recargar la página.
@@ -1495,7 +1496,7 @@ function renderTrivia(){
           <div class="emoji">🟠</div><div class="lbl">Nivel 4</div><div class="cnt">10 preguntas · Compatibilidad química</div>
         </div>
         <div class="difcard" onclick="startQuiz('nivel5')" style="border-color:#B50000">
-          <div class="emoji">🔴</div><div class="lbl">Nivel 5</div><div class="cnt">10 preguntas · Experto</div>
+          <div class="emoji">🔴</div><div class="lbl">Nivel 5</div><div class="cnt">11 preguntas · Experto</div>
         </div>
       </div>`;
     return;
