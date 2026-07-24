@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Portal de Gestión Integral de Residuos Hospitalarios — HZT / HMH</title>
 <link rel="preconnect" href="https://fonts.googleapis.com/">
-<link href="./Portal de Gestión Integral de Residuos Hospitalarios — HZT _ HMH_files/css2" rel="stylesheet">
-<link href="./Portal de Gestión Integral de Residuos Hospitalarios — HZT _ HMH_files/css2(1)" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0" rel="stylesheet">
 <style>
   :root{
     --navy:#0D313F;
@@ -523,11 +523,11 @@
     </div>
     <div class="pagetitle">Portal de Gestión Integral de Residuos Hospitalarios — HZT / HMH</div>
     <nav class="tabs" id="tabs">
-      <button data-view="inicio" class="">Inicio</button>
+      <button data-view="inicio" class="active">Inicio</button>
       <button data-view="categorias">Categorías</button>
       <button data-view="clasificador">¿Dónde tiro esto?</button>
       <button data-view="practicas">Buenas prácticas</button>
-      <button data-view="novedades" class="nav-novedades active">Novedades<span class="navbadge" id="navBadgeNovedades" style="display: inline-flex;">2</span></button>
+      <button data-view="novedades" class="nav-novedades">Novedades<span class="navbadge" id="navBadgeNovedades" style="display:none"></span></button>
       <button data-view="recursos">Banco de Recursos</button>
       <button data-view="trivia">Trivia</button>
       <button data-view="contacto">Contacto HySL</button>
@@ -536,7 +536,7 @@
 
   <main>
     <!-- INICIO -->
-    <section class="view" id="view-inicio">
+    <section class="view active" id="view-inicio">
       <div class="hero">
         <div class="blob"></div>
         <h2>Separar bien protege a todo el equipo</h2>
@@ -552,189 +552,13 @@
       </div>
 
       <div class="section-label">Accesos</div>
-      <div class="home-nav-grid" id="homeNavGrid">
-    <button class="home-nav-card" onclick="goView(&#39;clasificador&#39;)">
-      <span class="home-nav-icon msi">search</span>
-      <div class="home-nav-title">¿Dónde tiro esto?</div>
-      <div class="home-nav-sub">Respondé preguntas y te decimos dónde va</div>
-    </button>
-  
-    <button class="home-nav-card" onclick="goView(&#39;categorias&#39;)">
-      <span class="home-nav-icon msi">menu_book</span>
-      <div class="home-nav-title">Categorías</div>
-      <div class="home-nav-sub">Las 13 corrientes en detalle</div>
-    </button>
-  
-    <button class="home-nav-card" onclick="goView(&#39;practicas&#39;)">
-      <span class="home-nav-icon msi">task_alt</span>
-      <div class="home-nav-title">Buenas prácticas</div>
-      <div class="home-nav-sub">Circuito de retiro y transporte</div>
-    </button>
-  
-    <button class="home-nav-card" onclick="goView(&#39;novedades&#39;)">
-      <span class="home-nav-icon msi">campaign</span>
-      <div class="home-nav-title">Novedades<span class="navbadge" id="quickBadgeNovedades" style="display: inline-flex;">2</span></div>
-      <div class="home-nav-sub">Capacitaciones y avisos</div>
-    </button>
-  
-    <button class="home-nav-card" onclick="goView(&#39;recursos&#39;)">
-      <span class="home-nav-icon msi">folder_open</span>
-      <div class="home-nav-title">Banco de Recursos</div>
-      <div class="home-nav-sub">Normativa, EPP, carteles y más</div>
-    </button>
-  
-    <button class="home-nav-card" onclick="goView(&#39;trivia&#39;)">
-      <span class="home-nav-icon msi">psychology</span>
-      <div class="home-nav-title">Trivia</div>
-      <div class="home-nav-sub">Poné a prueba lo que sabés</div>
-    </button>
-  
-    <button class="home-nav-card" onclick="goView(&#39;contacto&#39;)">
-      <span class="home-nav-icon msi">mail</span>
-      <div class="home-nav-title">Contacto HySL</div>
-      <div class="home-nav-sub">Consultas y calificación</div>
-    </button>
-  </div>
+      <div class="home-nav-grid" id="homeNavGrid"></div>
 
       <div class="section-label" style="margin-top:26px;">Principios que guían esta gestión</div>
-      <div class="principios" id="principiosGrid">
-    <div class="principio">
-      <div class="picon"><span class="msi">verified_user</span></div>
-      <div class="ptitle">Responsabilidad institucional</div>
-      <div class="ptext">La gestión de residuos es una responsabilidad ineludible, ligada a la seguridad del paciente y la salud del personal.</div>
-    </div>
-  
-    <div class="principio">
-      <div class="picon"><span class="msi">trending_down</span></div>
-      <div class="ptitle">Minimización en origen</div>
-      <div class="ptext">Reducir la generación de residuos y valorizar los materiales reciclables siempre que sea posible.</div>
-    </div>
-  
-    <div class="principio">
-      <div class="picon"><span class="msi">call_split</span></div>
-      <div class="ptitle">Segregación responsable</div>
-      <div class="ptext">Clasificar según la naturaleza del residuo —no el sector— y hacerlo en el momento y lugar donde se genera.</div>
-    </div>
-  
-    <div class="principio">
-      <div class="picon"><span class="msi">timeline</span></div>
-      <div class="ptitle">Trazabilidad completa</div>
-      <div class="ptext">Cada residuo se sigue desde su generación hasta la disposición final, con registros y certificados.</div>
-    </div>
-  
-    <div class="principio">
-      <div class="picon"><span class="msi">autorenew</span></div>
-      <div class="ptitle">Mejora continua</div>
-      <div class="ptext">Auditorías periódicas, capacitación constante y actualización frente a cambios normativos.</div>
-    </div>
-  </div>
+      <div class="principios" id="principiosGrid"></div>
 
       <div class="section-label">Categorías por color</div>
-      <div class="grid" id="homeGrid"><div class="catcard" style="background:var(--c-rsu-bg)" onclick="showDetail(&#39;rsu&#39;)">
-    <div class="bar" style="background:var(--c-rsu)"></div>
-    
-    <div class="icon" style="color:var(--c-rsu)"><span class="msi">delete</span></div>
-    <div>
-      <div class="name" style="color:var(--c-rsu)">Residuos comunes (RSU)</div>
-      <div class="sub">Bolsa negra / recipiente identificado</div>
-    </div>
-  </div><div class="catcard" style="background:var(--c-bio-bg)" onclick="showDetail(&#39;bio&#39;)">
-    <div class="bar" style="background:var(--c-bio)"></div>
-    <div class="ycode" style="background:var(--c-bio);color:#fff">Y1</div>
-    <div class="icon" style="color:var(--c-bio)"><span class="msi">coronavirus</span></div>
-    <div>
-      <div class="name" style="color:var(--c-bio)">Biopatogénicos</div>
-      <div class="sub">Bolsa roja dentro de contenedor rojo rotulado</div>
-    </div>
-  </div><div class="catcard" style="background:var(--c-corto-bg)" onclick="showDetail(&#39;corto&#39;)">
-    <div class="bar" style="background:var(--c-corto)"></div>
-    
-    <div class="icon" style="color:var(--c-corto)"><span class="msi">vaccines</span></div>
-    <div>
-      <div class="name" style="color:var(--c-corto)">Cortopunzantes</div>
-      <div class="sub">Descartador rígido resistente a la punción</div>
-    </div>
-  </div><div class="catcard" style="background:var(--c-med-bg)" onclick="showDetail(&#39;med&#39;)">
-    <div class="bar" style="background:var(--c-med)"></div>
-    <div class="ycode" style="background:var(--c-med);color:#fff">Y3</div>
-    <div class="icon" style="color:var(--c-med)"><span class="msi">medication</span></div>
-    <div>
-      <div class="name" style="color:var(--c-med)">Resto de medicamentos</div>
-      <div class="sub">Bolsa o recipiente amarillo identificado (circuito Y3 — bolsa)</div>
-    </div>
-  </div><div class="catcard" style="background:var(--c-y3-bg)" onclick="showDetail(&#39;y3&#39;)">
-    <div class="bar" style="background:var(--c-y3)"></div>
-    <div class="ycode" style="background:var(--c-y3);color:#fff">Y3</div>
-    <div class="icon" style="color:var(--c-y3)"><span class="msi">medication_liquid</span></div>
-    <div>
-      <div class="name" style="color:var(--c-y3)">Ampollas y frascos ampolla de vidrio</div>
-      <div class="sub">Bidón amarillo rígido (circuito Y3 — bidón)</div>
-    </div>
-  </div><div class="catcard" style="background:var(--c-quim-bg)" onclick="showDetail(&#39;quim&#39;)">
-    <div class="bar" style="background:var(--c-quim)"></div>
-    
-    <div class="icon" style="color:var(--c-quim)"><span class="msi">science</span></div>
-    <div>
-      <div class="name" style="color:var(--c-quim)">Residuos químicos peligrosos</div>
-      <div class="sub">Recipiente amarillo resistente a químicos, hermético y rotulado. Llenar como máximo hasta el 75% de su capacidad.</div>
-    </div>
-  </div><div class="catcard" style="background:var(--c-plas-bg)" onclick="showDetail(&#39;plas&#39;)">
-    <div class="bar" style="background:var(--c-plas)"></div>
-    
-    <div class="icon" style="color:var(--c-plas)"><span class="msi">recycling</span></div>
-    <div>
-      <div class="name" style="color:var(--c-plas)">Plásticos limpios</div>
-      <div class="sub">Bolsa verde identificada</div>
-    </div>
-  </div><div class="catcard" style="background:var(--c-papel-bg)" onclick="showDetail(&#39;papel&#39;)">
-    <div class="bar" style="background:var(--c-papel)"></div>
-    
-    <div class="icon" style="color:var(--c-papel)"><span class="msi">description</span></div>
-    <div>
-      <div class="name" style="color:var(--c-papel)">Papel limpio</div>
-      <div class="sub">Caja identificada "Papel limpio"</div>
-    </div>
-  </div><div class="catcard" style="background:var(--c-carton-bg)" onclick="showDetail(&#39;carton&#39;)">
-    <div class="bar" style="background:var(--c-carton)"></div>
-    
-    <div class="icon" style="color:var(--c-carton)"><span class="msi">inventory_2</span></div>
-    <div>
-      <div class="name" style="color:var(--c-carton)">Cartón limpio</div>
-      <div class="sub">Caja armada limpia, usada como contenedor</div>
-    </div>
-  </div><div class="catcard" style="background:var(--c-compost-bg)" onclick="showDetail(&#39;compost&#39;)">
-    <div class="bar" style="background:var(--c-compost)"></div>
-    
-    <div class="icon" style="color:var(--c-compost)"><span class="msi">eco</span></div>
-    <div>
-      <div class="name" style="color:var(--c-compost)">Compostables</div>
-      <div class="sub">Recipiente o bolsa identificada para compostables</div>
-    </div>
-  </div><div class="catcard" style="background:var(--c-vidrio-bg)" onclick="showDetail(&#39;vidrio&#39;)">
-    <div class="bar" style="background:var(--c-vidrio)"></div>
-    
-    <div class="icon" style="color:var(--c-vidrio)"><span class="msi">local_bar</span></div>
-    <div>
-      <div class="name" style="color:var(--c-vidrio)">Vidrios rotos no contaminados</div>
-      <div class="sub">Caja rígida cerrada y rotulada</div>
-    </div>
-  </div><div class="catcard" style="background:var(--c-regu-bg)" onclick="showDetail(&#39;regu&#39;)">
-    <div class="bar" style="background:var(--c-regu)"></div>
-    
-    <div class="icon" style="color:var(--c-regu)"><span class="msi">battery_full</span></div>
-    <div>
-      <div class="name" style="color:var(--c-regu)">Residuos Especiales de Generación Universal (REGU)</div>
-      <div class="sub">Envase específico según subtipo de residuo</div>
-    </div>
-  </div><div class="catcard" style="background:var(--c-raee-bg)" onclick="showDetail(&#39;raee&#39;)">
-    <div class="bar" style="background:var(--c-raee)"></div>
-    
-    <div class="icon" style="color:var(--c-raee)"><span class="msi">devices</span></div>
-    <div>
-      <div class="name" style="color:var(--c-raee)">Residuos de Aparatos Eléctricos y Electrónicos (RAEE)</div>
-      <div class="sub">Depósito de RAEE ventilado y señalizado, con inventario.</div>
-    </div>
-  </div></div>
+      <div class="grid" id="homeGrid"></div>
 
       <div class="note" style="margin-top:22px;">
         <strong>Regla de oro:</strong> la clasificación depende de la naturaleza del residuo, no del sector donde se genera. Un guante con sangre es biopatogénico tanto en quirófano como en un consultorio. No mezclar corrientes: una bolsa común contaminada con material biopatogénico se convierte íntegramente en residuo peligroso.
@@ -743,246 +567,17 @@
 
     <!-- CATEGORIAS -->
     <section class="view" id="view-categorias">
-      <button class="dudas-btn" onclick="goView(&#39;dudas&#39;)">❓ Dudas Frecuentes</button>
+      <button class="dudas-btn" onclick="goView('dudas')">❓ Dudas Frecuentes</button>
       <div class="searchbar">
         <span>🔎</span>
         <input id="searchInput" placeholder="Buscar por nombre, ejemplo o color (ej: jeringa, papel, Y3)...">
       </div>
-      <div id="categoriasList"><div class="grid"><div class="catcard" style="background:var(--c-rsu-bg)" onclick="showDetail(&#39;rsu&#39;)">
-    <div class="bar" style="background:var(--c-rsu)"></div>
-    
-    <div class="icon" style="color:var(--c-rsu)"><span class="msi">delete</span></div>
-    <div>
-      <div class="name" style="color:var(--c-rsu)">Residuos comunes (RSU)</div>
-      <div class="sub">Bolsa negra / recipiente identificado</div>
-    </div>
-  </div><div class="catcard" style="background:var(--c-bio-bg)" onclick="showDetail(&#39;bio&#39;)">
-    <div class="bar" style="background:var(--c-bio)"></div>
-    <div class="ycode" style="background:var(--c-bio);color:#fff">Y1</div>
-    <div class="icon" style="color:var(--c-bio)"><span class="msi">coronavirus</span></div>
-    <div>
-      <div class="name" style="color:var(--c-bio)">Biopatogénicos</div>
-      <div class="sub">Bolsa roja dentro de contenedor rojo rotulado</div>
-    </div>
-  </div><div class="catcard" style="background:var(--c-corto-bg)" onclick="showDetail(&#39;corto&#39;)">
-    <div class="bar" style="background:var(--c-corto)"></div>
-    
-    <div class="icon" style="color:var(--c-corto)"><span class="msi">vaccines</span></div>
-    <div>
-      <div class="name" style="color:var(--c-corto)">Cortopunzantes</div>
-      <div class="sub">Descartador rígido resistente a la punción</div>
-    </div>
-  </div><div class="catcard" style="background:var(--c-med-bg)" onclick="showDetail(&#39;med&#39;)">
-    <div class="bar" style="background:var(--c-med)"></div>
-    <div class="ycode" style="background:var(--c-med);color:#fff">Y3</div>
-    <div class="icon" style="color:var(--c-med)"><span class="msi">medication</span></div>
-    <div>
-      <div class="name" style="color:var(--c-med)">Resto de medicamentos</div>
-      <div class="sub">Bolsa o recipiente amarillo identificado (circuito Y3 — bolsa)</div>
-    </div>
-  </div><div class="catcard" style="background:var(--c-y3-bg)" onclick="showDetail(&#39;y3&#39;)">
-    <div class="bar" style="background:var(--c-y3)"></div>
-    <div class="ycode" style="background:var(--c-y3);color:#fff">Y3</div>
-    <div class="icon" style="color:var(--c-y3)"><span class="msi">medication_liquid</span></div>
-    <div>
-      <div class="name" style="color:var(--c-y3)">Ampollas y frascos ampolla de vidrio</div>
-      <div class="sub">Bidón amarillo rígido (circuito Y3 — bidón)</div>
-    </div>
-  </div><div class="catcard" style="background:var(--c-quim-bg)" onclick="showDetail(&#39;quim&#39;)">
-    <div class="bar" style="background:var(--c-quim)"></div>
-    
-    <div class="icon" style="color:var(--c-quim)"><span class="msi">science</span></div>
-    <div>
-      <div class="name" style="color:var(--c-quim)">Residuos químicos peligrosos</div>
-      <div class="sub">Recipiente amarillo resistente a químicos, hermético y rotulado. Llenar como máximo hasta el 75% de su capacidad.</div>
-    </div>
-  </div><div class="catcard" style="background:var(--c-plas-bg)" onclick="showDetail(&#39;plas&#39;)">
-    <div class="bar" style="background:var(--c-plas)"></div>
-    
-    <div class="icon" style="color:var(--c-plas)"><span class="msi">recycling</span></div>
-    <div>
-      <div class="name" style="color:var(--c-plas)">Plásticos limpios</div>
-      <div class="sub">Bolsa verde identificada</div>
-    </div>
-  </div><div class="catcard" style="background:var(--c-papel-bg)" onclick="showDetail(&#39;papel&#39;)">
-    <div class="bar" style="background:var(--c-papel)"></div>
-    
-    <div class="icon" style="color:var(--c-papel)"><span class="msi">description</span></div>
-    <div>
-      <div class="name" style="color:var(--c-papel)">Papel limpio</div>
-      <div class="sub">Caja identificada "Papel limpio"</div>
-    </div>
-  </div><div class="catcard" style="background:var(--c-carton-bg)" onclick="showDetail(&#39;carton&#39;)">
-    <div class="bar" style="background:var(--c-carton)"></div>
-    
-    <div class="icon" style="color:var(--c-carton)"><span class="msi">inventory_2</span></div>
-    <div>
-      <div class="name" style="color:var(--c-carton)">Cartón limpio</div>
-      <div class="sub">Caja armada limpia, usada como contenedor</div>
-    </div>
-  </div><div class="catcard" style="background:var(--c-compost-bg)" onclick="showDetail(&#39;compost&#39;)">
-    <div class="bar" style="background:var(--c-compost)"></div>
-    
-    <div class="icon" style="color:var(--c-compost)"><span class="msi">eco</span></div>
-    <div>
-      <div class="name" style="color:var(--c-compost)">Compostables</div>
-      <div class="sub">Recipiente o bolsa identificada para compostables</div>
-    </div>
-  </div><div class="catcard" style="background:var(--c-vidrio-bg)" onclick="showDetail(&#39;vidrio&#39;)">
-    <div class="bar" style="background:var(--c-vidrio)"></div>
-    
-    <div class="icon" style="color:var(--c-vidrio)"><span class="msi">local_bar</span></div>
-    <div>
-      <div class="name" style="color:var(--c-vidrio)">Vidrios rotos no contaminados</div>
-      <div class="sub">Caja rígida cerrada y rotulada</div>
-    </div>
-  </div><div class="catcard" style="background:var(--c-regu-bg)" onclick="showDetail(&#39;regu&#39;)">
-    <div class="bar" style="background:var(--c-regu)"></div>
-    
-    <div class="icon" style="color:var(--c-regu)"><span class="msi">battery_full</span></div>
-    <div>
-      <div class="name" style="color:var(--c-regu)">Residuos Especiales de Generación Universal (REGU)</div>
-      <div class="sub">Envase específico según subtipo de residuo</div>
-    </div>
-  </div><div class="catcard" style="background:var(--c-raee-bg)" onclick="showDetail(&#39;raee&#39;)">
-    <div class="bar" style="background:var(--c-raee)"></div>
-    
-    <div class="icon" style="color:var(--c-raee)"><span class="msi">devices</span></div>
-    <div>
-      <div class="name" style="color:var(--c-raee)">Residuos de Aparatos Eléctricos y Electrónicos (RAEE)</div>
-      <div class="sub">Depósito de RAEE ventilado y señalizado, con inventario.</div>
-    </div>
-  </div></div></div>
+      <div id="categoriasList"></div>
     </section>
 
     <!-- DUDAS FRECUENTES -->
     <section class="view" id="view-dudas">
-      <div id="dudasRoot">
-    <div class="hero" style="margin-bottom:20px;">
-      <div class="blob"></div>
-      <button class="back" style="background:rgba(11,37,69,.08); color:var(--navy); border:none; border-radius:8px; padding:6px 10px; font-size:12.5px; font-weight:600; cursor:pointer; margin-bottom:12px;" onclick="goView(&#39;categorias&#39;)">← Volver a Categorías</button>
-      <h2>Dudas Frecuentes</h2>
-      <p>Casos puntuales que suelen generar dudas al clasificar un residuo, con la resolución y su fundamento. Tocá cada pregunta para ver la respuesta.</p>
-    </div>
-    
-    <div class="duda-item" id="duda-0">
-      <div class="duda-q" onclick="toggleDuda(0)">
-        <span>¿Los pañales usados son residuo común o biopatogénico?</span>
-        <span class="chev">▾</span>
-      </div>
-      <div class="duda-a">
-        <div class="duda-a-inner">
-          Pañales, toallitas y apósitos de higiene personal (incluidos los de puerperio) se clasifican como <b>residuo común (RSU)</b>. Pasan a ser <b>biopatogénicos</b> únicamente en dos casos: 1) si el paciente cursa un cuadro infectocontagioso; o 2) si son pañales de puerperio con gran cantidad de sangre, por criterio higiénico, más allá del estado infeccioso del paciente.
-          <div class="duda-tags"><span class="duda-tag" onclick="event.stopPropagation(); showDetail(&#39;rsu&#39;)">Ver Residuos comunes (RSU)</span><span class="duda-tag" onclick="event.stopPropagation(); showDetail(&#39;bio&#39;)">Ver Biopatogénicos</span></div>
-        </div>
-      </div>
-    </div>
-  
-    <div class="duda-item" id="duda-1">
-      <div class="duda-q" onclick="toggleDuda(1)">
-        <span>¿La comida de un paciente en aislamiento es biopatogénica?</span>
-        <span class="chev">▾</span>
-      </div>
-      <div class="duda-a">
-        <div class="duda-a-inner">
-          Depende del <b>tipo de aislamiento</b>, y ahí está la clave para no confundirse:<br><br>🔴 <b>Aislamiento para proteger a otros del paciente</b> (por una enfermedad infectocontagiosa): toda la basura de esa habitación, incluida la vajilla descartable y los restos de comida, se descarta como <b>biopatogénico</b> (bolsa roja). No importa si la comida en sí tuvo contacto con sangre: alcanza con que venga de un ambiente con riesgo de contagio.<br><b>Ejemplos:</b> COVID-19, influenza, tuberculosis, varicela o sarampión (por aire); diarrea por rotavirus, norovirus o Clostridioides difficile (entérico/contacto); meningitis meningocócica o coqueluche (gotas); infección o colonización por bacterias multirresistentes como SAMR o KPC (contacto).<br><br>🟢 <b>Aislamiento para proteger al paciente del entorno</b> (llamado aislamiento protector o inverso): acá es al revés — el paciente es quien está en riesgo, no quien contagia. Sus residuos, incluida la comida, se clasifican de forma normal: si no tuvieron contacto con sangre o fluidos, van como <b>residuo común (RSU)</b>.<br><b>Ejemplos:</b> pacientes neutropénicos (por ejemplo, tras quimioterapia), trasplantados de médula ósea o de órganos, grandes quemados (más del 25% de superficie corporal), o con inmunosupresión severa (leucemia, aplasia medular, altas dosis de corticoides o inmunosupresores).<br><br>Truco para decidir rápido: preguntate <i>"¿este aislamiento es para que el paciente no contagie a otros, o para que el ambiente no lo enferme a él?"</i>. Primer caso: biopatogénico. Segundo caso: residuo común (salvo sangre/fluidos, como siempre).<br><br><i style="color:var(--muted); font-size:12.5px;">Fuente: Res. 134/2016 (Directrices Nacionales GREAS), Anexo, punto 8.1.2 "Residuos a ser considerados biopatogénicos", que incluye expresamente entre ellos a "todos los residuos provenientes de áreas de aislamiento" y menciona en particular los restos de alimentos. La distinción entre precauciones basadas en la transmisión (contacto, gotas, aérea) y aislamiento protector o inverso está descripta en la Bibliografía (ver Banco de Recursos → Bibliografía).</i>
-          <div class="duda-tags"><span class="duda-tag" onclick="event.stopPropagation(); showDetail(&#39;rsu&#39;)">Ver Residuos comunes (RSU)</span><span class="duda-tag" onclick="event.stopPropagation(); showDetail(&#39;bio&#39;)">Ver Biopatogénicos</span></div>
-        </div>
-      </div>
-    </div>
-  
-    <div class="duda-item" id="duda-2">
-      <div class="duda-q" onclick="toggleDuda(2)">
-        <span>¿Una bolsa de suero vacía y su vía (tubuladura) se descartan igual?</span>
-        <span class="chev">▾</span>
-      </div>
-      <div class="duda-a">
-        <div class="duda-a-inner">
-          No, se descartan distinto. La <b>bolsa de suero</b> (el envase plástico vacío, sin sangre) se puede descartar como <b>plástico limpio / reciclable</b>. La <b>vía o tubuladura</b>, en cambio, se descarta como <b>biopatogénico</b>: aunque no se vea sangre a simple vista, no se puede asegurar que no haya habido retorno (reflujo) de sangre hacia la línea durante la infusión, así que se trata con el criterio más seguro.
-          <div class="duda-tags"><span class="duda-tag" onclick="event.stopPropagation(); showDetail(&#39;rsu&#39;)">Ver Residuos comunes (RSU)</span><span class="duda-tag" onclick="event.stopPropagation(); showDetail(&#39;bio&#39;)">Ver Biopatogénicos</span><span class="duda-tag" onclick="event.stopPropagation(); showDetail(&#39;plas&#39;)">Ver Plásticos limpios</span></div>
-        </div>
-      </div>
-    </div>
-  
-    <div class="duda-item" id="duda-3">
-      <div class="duda-q" onclick="toggleDuda(3)">
-        <span>¿Una sonda vesical o bolsa colectora de orina es residuo común o biopatogénico?</span>
-        <span class="chev">▾</span>
-      </div>
-      <div class="duda-a">
-        <div class="duda-a-inner">
-          Es <b>biopatogénico</b>. A diferencia de un pañal (que es un producto de higiene personal), la sonda y la bolsa colectora son <b>resultantes de la atención médica</b> — el criterio que establece GREAS para estos casos, más allá de que el procedimiento en sí sea o no invasivo. Es el mismo principio que se aplica a gasas, guantes o cualquier otro material que resulte de un acto de atención médica, más allá de que el líquido en sí (la orina) no transmita infecciones por sí solo.
-          <div class="duda-tags"><span class="duda-tag" onclick="event.stopPropagation(); showDetail(&#39;bio&#39;)">Ver Biopatogénicos</span></div>
-        </div>
-      </div>
-    </div>
-  
-    <div class="duda-item" id="duda-4">
-      <div class="duda-q" onclick="toggleDuda(4)">
-        <span>¿El papel o nylon que envuelve el instrumental estéril es reciclable o biopatogénico?</span>
-        <span class="chev">▾</span>
-      </div>
-      <div class="duda-a">
-        <div class="duda-a-inner">
-          Si no tuvo contacto con sangre, fluidos ni con el paciente, <b>no hay razón clínica para tratarlo como biopatogénico</b>: se descarta como papel o plástico limpio, reciclable. El solo hecho de haber estado "en el hospital" no lo contamina por sí mismo.
-          <div class="duda-tags"><span class="duda-tag" onclick="event.stopPropagation(); showDetail(&#39;papel&#39;)">Ver Papel limpio</span><span class="duda-tag" onclick="event.stopPropagation(); showDetail(&#39;plas&#39;)">Ver Plásticos limpios</span></div>
-        </div>
-      </div>
-    </div>
-  
-    <div class="duda-item" id="duda-5">
-      <div class="duda-q" onclick="toggleDuda(5)">
-        <span>¿Cómo se descartan los restos anatómicos o piezas quirúrgicas (placenta, biopsias, amputaciones)?</span>
-        <span class="chev">▾</span>
-      </div>
-      <div class="duda-a">
-        <div class="duda-a-inner">
-          Siguen un <b>protocolo específico</b>, distinto del circuito biopatogénico general: se colocan en <b>doble bolsa</b>, se <b>rotulan</b>, y el retiro lo realiza <b>personal de la morgue</b>, no el circuito habitual de residuos. Ante cualquier caso concreto, consultar con HySL o con el servicio correspondiente antes de proceder.
-          <div class="duda-tags"><span class="duda-tag" onclick="event.stopPropagation(); showDetail(&#39;bio&#39;)">Ver Biopatogénicos</span></div>
-        </div>
-      </div>
-    </div>
-  
-    <div class="duda-item" id="duda-6">
-      <div class="duda-q" onclick="toggleDuda(6)">
-        <span>¿La ropa de cama con sangre o fluidos se descarta como biopatogénico?</span>
-        <span class="chev">▾</span>
-      </div>
-      <div class="duda-a">
-        <div class="duda-a-inner">
-          <b>No se descarta: se lava.</b> El proceso de lavado en lavandería está pensado para tratar toda la ropa de cama de forma igualmente rigurosa, tenga o no contaminación visible — por eso no se trata como un residuo aparte. Aun así, requiere manipulación cuidadosa durante el traslado:<br><br>1) <b>No sacudirla</b>, para no dispersar partículas ni generar salpicaduras.<br>2) Quien la traslada debe usar el <b>EPP completo correspondiente</b> (no alcanza con guantes solamente).<br>3) Entregarla al circuito de lavandería según el protocolo del servicio, para su lavado con el proceso adecuado.
-          <div class="duda-tags"><span class="duda-tag" onclick="event.stopPropagation(); showDetail(&#39;bio&#39;)">Ver Biopatogénicos</span></div>
-        </div>
-      </div>
-    </div>
-  
-    <div class="duda-item" id="duda-7">
-      <div class="duda-q" onclick="toggleDuda(7)">
-        <span>¿El EPP (mameluco, cofia) usado durante un aislamiento que ya terminó es biopatogénico?</span>
-        <span class="chev">▾</span>
-      </div>
-      <div class="duda-a">
-        <div class="duda-a-inner">
-          Sí, <b>si tuvo contacto con el paciente durante el período en que el aislamiento por enfermedad infectocontagiosa estaba vigente</b>. Lo que importa es el momento en que se usó el EPP, no si el aislamiento ya se levantó (por ejemplo, por alta del paciente) al momento de descartarlo.
-          <div class="duda-tags"><span class="duda-tag" onclick="event.stopPropagation(); showDetail(&#39;bio&#39;)">Ver Biopatogénicos</span></div>
-        </div>
-      </div>
-    </div>
-  
-    <div class="duda-item" id="duda-8">
-      <div class="duda-q" onclick="toggleDuda(8)">
-        <span>Un tubo ya centrifugado o una punta de pipeta usada, después de analizada la muestra, ¿sigue siendo biopatogénico?</span>
-        <span class="chev">▾</span>
-      </div>
-      <div class="duda-a">
-        <div class="duda-a-inner">
-          Sí. El análisis de la muestra <b>no la "descontamina"</b>: el material que tuvo contacto con sangre o fluidos corporales sigue siendo biopatogénico, haya sido ya utilizado para el estudio o no.
-          <div class="duda-tags"><span class="duda-tag" onclick="event.stopPropagation(); showDetail(&#39;bio&#39;)">Ver Biopatogénicos</span></div>
-        </div>
-      </div>
-    </div>
-  
-  </div>
+      <div id="dudasRoot"></div>
     </section>
 
     <!-- DETALLE (subview) -->
@@ -990,26 +585,7 @@
 
     <!-- CLASIFICADOR -->
     <section class="view" id="view-clasificador">
-      <div id="clasificadorRoot">
-    
-    <div class="clas-intro">
-      <div class="clas-intro-step"><span class="clas-intro-num">1</span> Fijate qué residuo tenés en la mano.</div>
-      <div class="clas-intro-step"><span class="clas-intro-num">2</span> Tocá <b>Sí</b> o <b>No</b> en cada pregunta.</div>
-      <div class="clas-intro-step"><span class="clas-intro-num">3</span> Al final te decimos dónde va.</div>
-    </div>
-    
-    <div class="qcard">
-      <div class="qlabel">Pregunta 1</div>
-      <div class="clas-icon">🩸</div>
-      <h3>¿El residuo tuvo contacto con sangre, secreciones o fluidos corporales, o proviene de un paciente en aislamiento por enfermedad infectocontagiosa (no protector/inverso)?</h3>
-      
-      <div class="qopts">
-        <button class="qopt qopt-yes" onclick="answerClas(&#39;yes&#39;)">✔ Sí</button>
-        <button class="qopt qopt-no" onclick="answerClas(&#39;no&#39;)">✕ No</button>
-      </div>
-    </div>
-    
-  </div>
+      <div id="clasificadorRoot"></div>
     </section>
 
     <!-- BUENAS PRACTICAS -->
@@ -1019,47 +595,7 @@
         <h2>Circuito general de retiro y transporte</h2>
         <p>Estos pasos aplican a cualquier corriente de residuo, del punto de generación al depósito interno.</p>
       </div>
-      <div id="practicasItems">
-    <div class="practItem">
-      <div class="num">1</div>
-      <div class="practText"><div class="t">Separar en el punto de generación</div><div class="d">Cada trabajador descarta el residuo de inmediato, en el recipiente correcto, en el mismo lugar donde se genera.</div></div>
-    </div>
-  
-    <div class="practItem">
-      <div class="num">2</div>
-      <div class="practText"><div class="t">Usar guantes y EPP indicado</div><div class="d">Guantes resistentes, uniforme y calzado cerrado como mínimo; protección ocular y mascarilla según el tipo de residuo.</div></div>
-    </div>
-  
-    <div class="practItem">
-      <div class="num">3</div>
-      <div class="practText"><div class="t">No mezclar corrientes</div><div class="d">Una bolsa común contaminada con material biopatogénico se convierte íntegramente en residuo peligroso.</div></div>
-    </div>
-  
-    <div class="practItem">
-      <div class="num">4</div>
-      <div class="practText"><div class="t">Cerrar en el lugar de generación</div><div class="d">Cerrar con nudo, precinto o mecanismo equivalente. No trasvasar residuos ni reabrir bolsas ya cerradas.</div></div>
-    </div>
-  
-    <div class="practItem">
-      <div class="num">5</div>
-      <div class="practText"><div class="t">Respetar el límite de llenado</div><div class="d">No superar 3/4 de la capacidad del recipiente (80% en biopatogénicos), para permitir un cierre seguro.</div></div>
-    </div>
-  
-    <div class="practItem">
-      <div class="num">6</div>
-      <div class="practText"><div class="t">Transportar en carro exclusivo y con tapa</div><div class="d">Carro de uso exclusivo para residuos, identificado, sin desborde ni arrastre. Nunca por pasillos o ascensores de público.</div></div>
-    </div>
-  
-    <div class="practItem">
-      <div class="num">7</div>
-      <div class="practText"><div class="t">Seguir la ruta interna definida</div><div class="d">Trasladar por los recorridos predeterminados y señalizados hacia el depósito intermedio o final.</div></div>
-    </div>
-  
-    <div class="practItem">
-      <div class="num">8</div>
-      <div class="practText"><div class="t">Lavarse las manos al finalizar</div><div class="d">Higiene de manos inmediatamente después de retirar los guantes.</div></div>
-    </div>
-  </div>
+      <div id="practicasItems"></div>
       <div class="prohibido">
         <h4>⛔ Prohibido durante el transporte interno</h4>
         <ul>
@@ -1074,200 +610,18 @@
     </section>
 
     <!-- NOVEDADES -->
-    <section class="view active" id="view-novedades">
-      <div id="novedadesRoot">
-    <div class="hero" style="margin-bottom:20px;">
-      <div class="blob"></div>
-      <h2>Novedades</h2>
-      <p>Capacitaciones, campañas internas y avisos del Servicio de Higiene y Seguridad Laboral.</p>
-    </div>
-  
-    <div class="novedad-card">
-      <div class="bar" style="background:var(--navy)"></div>
-      <div class="novedad-inner">
-        <div class="novedad-top">
-          <span class="novedad-tipo" style="background:#EEF1F6; color:var(--navy)">Capacitación</span>
-          <span class="novedad-fecha">📅 Viernes 24/7, 7/08 y 28/08 — 12 a 14 hs.</span>
-        </div>
-        <div class="novedad-title">Gestión de Bienes de la Administración Pública y RAEE (Residuos de Aparatos Eléctricos y Electrónicos) en establecimientos de salud</div>
-        
-        <div class="novedad-meta">
-          <div>🏛️ <b>Organiza:</b> Área de Higiene y Seguridad Laboral HZT - HMH · Dirección Provincial de Bienes Reales – Secretaría de Salud</div>
-          
-          <div>🧩 <b>Modalidad:</b> Híbrida — 3 encuentros con evaluación final integradora. Se entrega constancia de asistencia y/o aprobación.</div>
-          <div>📍 Presencial: Sala de Videoconferencias, 1° piso, HMH, Trelew  ·  Virtual: Zoom ID 815 9673 2783</div>
-          
-        </div>
-        <div class="novedad-footer">
-          <span class="novedad-estado abierta">🟢 Inscripción abierta</span>
-          <a class="novedad-btn" href="https://forms.gle/Ctr1Bs4dYXG2SJDp7" target="_blank" rel="noopener">Inscribirme</a><a class="novedad-btn" href="https://garrahan.zoom.us/j/81596732783" target="_blank" rel="noopener">Unirme por Zoom</a>
-          
-        </div>
-      </div>
-    </div>
-  
-    <div class="novedad-card">
-      <div class="bar" style="background:var(--navy)"></div>
-      <div class="novedad-inner">
-        <div class="novedad-top">
-          <span class="novedad-tipo" style="background:#EEF1F6; color:var(--navy)">Capacitación 2026</span>
-          <span class="novedad-fecha">📅 Inicia jueves 16 de julio — Finaliza 27 de agosto  ·  11:30 a 13:00 hs.</span>
-        </div>
-        <div class="novedad-title">Prevención de Riesgos Laborales en Lavanderías Hospitalarias</div>
-        
-        <div class="novedad-meta">
-          <div>🏛️ <b>Organiza:</b> Área de Higiene y Seguridad Laboral HZT - HMH</div>
-          <div>🎯 <b>Destinatarios:</b> Personal y referentes de lavanderías hospitalarias de Chubut</div>
-          <div>🧩 <b>Modalidad:</b> Híbrida — 7 jueves consecutivos con evaluación final integradora. Se entrega constancia de asistencia y/o aprobación.</div>
-          <div>📍 Presencial: Sala de Videoconferencias, 1° piso, HMH, Trelew  ·  Virtual: Zoom ID 824 6133 8488</div>
-          
-        </div>
-        <div class="novedad-footer">
-          <span class="novedad-estado abierta">🟢 Inscripción abierta</span>
-          <a class="novedad-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSdW3Sm2JFh9myDktzzh6EzGxs4wqVlgpL8rgK2ySGu7hGPMtg/viewform?usp=header" target="_blank" rel="noopener">Inscribirme</a><a class="novedad-btn" href="https://drive.google.com/file/d/1ZXcdgWLJTmLwlFoquHGmx8URcH3SJ1Jz/view?usp=sharing" target="_blank" rel="noopener">Ver programa</a>
-          
-        </div>
-      </div>
-    </div>
-  </div>
+    <section class="view" id="view-novedades">
+      <div id="novedadesRoot"></div>
     </section>
 
     <!-- BANCO DE RECURSOS -->
     <section class="view" id="view-recursos">
-      <div id="recursosRoot">
-    <div class="hero" style="margin-bottom:20px;">
-      <div class="blob"></div>
-      <h2>Banco de Recursos</h2>
-      <p>Bibliografía normativa vigente y material de capacitaciones ya dictadas por el Servicio de Higiene y Seguridad Laboral.</p>
-    </div>
-    <div class="section-label">Herramientas relacionadas</div>
-    <a class="drive-folder-card" style="margin-bottom:22px;" href="https://hyslhmh-sudo.github.io/sieq-hys/" target="_blank" rel="noopener">
-      <div class="drive-folder-icon">🧪</div>
-      <div>
-        <div class="drive-folder-title">SIEQ v2 — Sistema de Etiquetado Químico hospitalario</div>
-        <div class="drive-folder-sub">hyslhmh-sudo.github.io/sieq-hys — generador de etiquetas para residuos peligrosos y químicos</div>
-      </div>
-      <div class="drive-folder-arrow">↗</div>
-    </a>
-    <div class="recursos-subtabs">
-      <button class="recursos-subtab active" onclick="setRecursosSubtab(&#39;bibliografia&#39;)">📚 Bibliografía</button>
-      <button class="recursos-subtab " onclick="setRecursosSubtab(&#39;capacitaciones&#39;)">🎓 Capacitaciones</button>
-      <button class="recursos-subtab " onclick="setRecursosSubtab(&#39;carteles&#39;)">🖼️ Carteles</button>
-      <button class="recursos-subtab " onclick="setRecursosSubtab(&#39;compatibilidad&#39;)">⚠️ Compatibilidad Química</button>
-      <button class="recursos-subtab " onclick="setRecursosSubtab(&#39;salud&#39;)">🦺 Salud del Trabajador</button>
-    </div>
-    <div id="recursosContent">
-    <div class="biblio-item">
-      <div class="biblio-text">
-        <div class="t">Directrices Nacionales para la Gestión de Residuos en Establecimientos de Salud (GREAS)</div>
-        <div class="s">Res. Ministerio de Salud de la Nación N.º 134/2016</div>
-      </div>
-      <a class="biblio-link" href="https://www.argentina.gob.ar/sites/default/files/res_msn_134-16_directrices_nacionales_greas.pdf" target="_blank" rel="noopener">Ver documento</a>
-    </div>
-  
-    <div class="biblio-item">
-      <div class="biblio-text">
-        <div class="t">Señalética de la Gestión de Residuos en Establecimientos de Salud</div>
-        <div class="s">Res. Ministerio de Salud de la Nación N.º 1792/2014</div>
-      </div>
-      <a class="biblio-link" href="https://www.argentina.gob.ar/sites/default/files/res_msn_1792-2014_directrices_sanitarias_senalizacion_gestion_residuos_en_atencion_salud.pdf" target="_blank" rel="noopener">Ver documento</a>
-    </div>
-  
-    <div class="biblio-item">
-      <div class="biblio-text">
-        <div class="t">Ley de Residuos Peligrosos</div>
-        <div class="s">Ley Nacional N.º 24.051 y Dec. Reglamentario 831/93</div>
-      </div>
-      <a class="biblio-link" href="https://servicios.infoleg.gob.ar/infolegInternet/verNorma.do?id=450" target="_blank" rel="noopener">Ver documento</a>
-    </div>
-  
-    <div class="biblio-item">
-      <div class="biblio-text">
-        <div class="t">Ley General del Ambiente</div>
-        <div class="s">Ley Nacional N.º 25.675</div>
-      </div>
-      <a class="biblio-link" href="https://servicios.infoleg.gob.ar/infolegInternet/verNorma.do?id=79980" target="_blank" rel="noopener">Ver documento</a>
-    </div>
-  
-    <div class="biblio-item">
-      <div class="biblio-text">
-        <div class="t">Ley de Gestión de Residuos Domiciliarios (residuos especiales, RAEE)</div>
-        <div class="s">Ley Nacional N.º 25.916, art. 35</div>
-      </div>
-      <a class="biblio-link" href="https://servicios.infoleg.gob.ar/infolegInternet/verNorma.do?id=98327" target="_blank" rel="noopener">Ver documento</a>
-    </div>
-  
-    <div class="biblio-item">
-      <div class="biblio-text">
-        <div class="t">Ley de Protección de Datos Personales</div>
-        <div class="s">Ley Nacional N.º 25.326</div>
-      </div>
-      <a class="biblio-link" href="https://servicios.infoleg.gob.ar/infolegInternet/verNorma.do?id=64790" target="_blank" rel="noopener">Ver documento</a>
-    </div>
-  
-    <div class="biblio-item">
-      <div class="biblio-text">
-        <div class="t">Código Ambiental de la Provincia del Chubut</div>
-        <div class="s">Ley XI N.º 35</div>
-      </div>
-      <a class="biblio-link" href="https://digesto.legislaturadelchubut.gob.ar/public/rama/11/ley/35" target="_blank" rel="noopener">Ver documento</a>
-    </div>
-  
-    <div class="biblio-item">
-      <div class="biblio-text">
-        <div class="t">Programa Provincial de Reciclado de RAEE</div>
-        <div class="s">Ley XI N.º 56 (Chubut)</div>
-      </div>
-      <a class="biblio-link" href="https://ambiente.chubut.gov.ar/legislacion/" target="_blank" rel="noopener">Ver documento</a>
-    </div>
-  
-    <div class="biblio-item">
-      <div class="biblio-text">
-        <div class="t">Recolección diferenciada de RAEE en Trelew</div>
-        <div class="s">Ordenanza Municipal N.º 11735/2012</div>
-      </div>
-      <a class="biblio-link" href="https://concejotrelew.gob.ar/digesto/sites/default/files/2025-07/11735.pdf" target="_blank" rel="noopener">Ver documento</a>
-    </div>
-  
-    <div class="biblio-item">
-      <div class="biblio-text">
-        <div class="t">Aislamiento hospitalario, concepto y tipos (incluye aislamiento protector o inverso)</div>
-        <div class="s">Revista Ocronos — Editorial Científico-Técnica</div>
-      </div>
-      <a class="biblio-link" href="https://revistamedica.com/caracteristicas-clinicas-aislamiento-hospitalario-concepto/" target="_blank" rel="noopener">Ver documento</a>
-    </div>
-  </div>
-  </div>
+      <div id="recursosRoot"></div>
     </section>
 
     <!-- TRIVIA -->
     <section class="view" id="view-trivia">
-      <div id="triviaRoot">
-      <div class="hero" style="margin-bottom:20px;">
-        <div class="blob"></div>
-        <h2>Trivia de gestión de residuos</h2>
-        <p>75 preguntas en cinco niveles, con justificación normativa en cada respuesta. Elegí un nivel para empezar.</p>
-      </div>
-      <div class="note" style="margin-bottom:20px;">
-        Esta trivia es una <strong>autoevaluación con fines lúdicos y de aprendizaje</strong>. No es un examen formal: tus respuestas y puntajes <strong>no quedan guardados</strong> ni se envían a nadie, se pierden al recargar la página.
-      </div>
-      <div class="difwrap">
-        <div class="difcard" onclick="startQuiz(&#39;nivel1&#39;)" style="border-color:#2E7D32">
-          <div class="emoji">🟢</div><div class="lbl">Nivel 1</div><div class="cnt">15 preguntas</div>
-        </div>
-        <div class="difcard" onclick="startQuiz(&#39;nivel2&#39;)" style="border-color:#4C8A3F">
-          <div class="emoji">🟩</div><div class="lbl">Nivel 2</div><div class="cnt">15 preguntas</div>
-        </div>
-        <div class="difcard" onclick="startQuiz(&#39;nivel3&#39;)" style="border-color:#C9971F">
-          <div class="emoji">🟡</div><div class="lbl">Nivel 3</div><div class="cnt">15 preguntas</div>
-        </div>
-        <div class="difcard" onclick="startQuiz(&#39;nivel4&#39;)" style="border-color:#B8860B">
-          <div class="emoji">🟠</div><div class="lbl">Nivel 4</div><div class="cnt">15 preguntas · Avanzado</div>
-        </div>
-        <div class="difcard" onclick="startQuiz(&#39;nivel5&#39;)" style="border-color:#B50000">
-          <div class="emoji">🔴</div><div class="lbl">Nivel 5</div><div class="cnt">15 preguntas · Química y compatibilidades</div>
-        </div>
-      </div></div>
+      <div id="triviaRoot"></div>
     </section>
 
     <!-- CONTACTO -->
