@@ -453,13 +453,14 @@
   /* TRIVIA */
   .difwrap{display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:6px;}
   .difcard{
-    border:2px solid var(--line); border-radius:14px; padding:20px 24px; cursor:pointer; text-align:center;
-    background:var(--card); min-width:140px; transition:transform .12s;
+    border:2px solid var(--line); border-radius:14px; padding:14px; cursor:pointer; text-align:center;
+    background:var(--card); width:152px; height:128px; box-sizing:border-box;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; transition:transform .12s;
   }
   .difcard:hover{transform:translateY(-2px);}
   .difcard .emoji{font-size:26px;}
   .difcard .lbl{font-weight:700; margin-top:6px; font-size:14.5px;}
-  .difcard .cnt{font-size:12px; color:var(--muted); margin-top:2px;}
+  .difcard .cnt{font-size:11.5px; color:var(--muted); margin-top:3px; line-height:1.3;}
   .quizhead{display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;}
   .quizprog{font-size:12.5px; color:var(--muted); font-weight:600;}
   .quizscore{font-size:12.5px; font-weight:700; color:var(--navy);}
