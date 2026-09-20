@@ -408,6 +408,8 @@
   .novedad-fecha{font-size:12.5px; color:var(--muted); font-weight:600; white-space:nowrap;}
   .novedad-title{font-size:16px; font-weight:700; color:var(--ink); margin:2px 0 8px;}
   .novedad-desc{font-size:13.5px; color:var(--ink); line-height:1.6; margin-bottom:10px;}
+  .novedad-temario{display:flex; flex-wrap:wrap; gap:6px; margin:0 0 12px; padding:0; list-style:none;}
+  .novedad-temario li{font-size:12px; font-weight:600; color:var(--ink); background:var(--paper2, #EEF2F3); border-radius:20px; padding:4px 12px;}
   .novedad-meta{font-size:12.5px; color:var(--muted); margin-bottom:12px; line-height:1.6;}
   .novedad-meta b{color:var(--ink);}
   .novedad-footer{display:flex; align-items:center; gap:12px; flex-wrap:wrap;}
@@ -1944,6 +1946,31 @@ function renderPracticas(){
 // estado: 'abierta' | 'proxima' | 'cerrada'
 const NOVEDADES = [
   {
+    tipo: 'capacitacion',
+    tipoLabel: 'Capacitación',
+    color: '#0D313F',
+    bg: '#E8ECEF',
+    titulo: 'Programa de Capacitación en Riesgos Laborales para Personal de Limpieza y Mucamas (CAP-HYS-045)',
+    fecha: 'Jueves 12:00 h · 9 encuentros, desde octubre de 2026',
+    descripcion: 'Capacitación virtual sincrónica sobre riesgo biológico, gestión de residuos hospitalarios, riesgo químico, ergonómico, mecánico y eléctrico, destinada a personal de limpieza y mucamas de hospitales y CAPs.',
+    temario: [
+      'Derechos y obligaciones',
+      'Riesgo biológico',
+      'Gestión de residuos',
+      'Riesgo químico',
+      'Riesgo ergonómico',
+      'Riesgo mecánico',
+      'Riesgo eléctrico',
+      'Incendio y evacuación',
+      'Cierre integrador'
+    ],
+    organiza: 'Área de Higiene y Seguridad Laboral HZT - HMH',
+    destinatarios: 'Personal de limpieza y mucamas de hospitales y CAPs',
+    modalidad: 'Virtual sincrónica · 9 encuentros',
+    estado: 'abierta',
+    links: [{ url: 'https://docs.google.com/forms/d/e/1FAIpQLSfhvjLADNs_r6sL_Z8dPcw5GW_KK9oCFXj2JM3eGsT5-UvTKA/viewform?usp=header', label: 'Inscribirme' }]
+  },
+  {
     tipo: 'aviso',
     tipoLabel: 'Nueva funcionalidad',
     color: '#5894A7',
@@ -1983,6 +2010,7 @@ function novedadCardHTML(n) {
         </div>
         <div class="novedad-title">${n.titulo}</div>
         ${n.descripcion ? `<div class="novedad-desc">${n.descripcion}</div>` : ''}
+        ${n.temario ? `<ul class="novedad-temario">${n.temario.map(t => `<li>${t}</li>`).join('')}</ul>` : ''}
         <div class="novedad-meta">
           ${n.organiza ? `<div>🏛️ <b>Organiza:</b> ${n.organiza}</div>` : ''}
           ${n.destinatarios ? `<div>🎯 <b>Destinatarios:</b> ${n.destinatarios}</div>` : ''}
