@@ -600,6 +600,45 @@
   .pwa-toast.show{ display:flex; }
   .pwa-toast button{ background:var(--teal); color:#fff; border:0; border-radius:8px; padding:6px 10px; font:700 12.5px inherit; cursor:pointer; }
   @media (display-mode: standalone){ .pwa-install{ display:none !important; } }
+
+  /* ===== TARJETA "BAJÁ LA APP" ===== */
+  .app-card{
+    background:linear-gradient(135deg, var(--navy) 0%, #16485B 100%); color:#fff;
+    border-radius:18px; padding:22px; margin-bottom:20px; position:relative; overflow:hidden;
+  }
+  .app-card::after{content:""; position:absolute; top:-70px; right:-70px; width:220px; height:220px; border-radius:50%;
+    background:radial-gradient(circle at 30% 30%, rgba(88,148,167,.45), transparent 70%); pointer-events:none;}
+  .app-card-head{display:flex; align-items:center; gap:14px; position:relative; z-index:1;}
+  .app-card-icon{width:56px; height:56px; border-radius:14px; background:#fff; box-shadow:0 4px 12px rgba(0,0,0,.25); flex:none;}
+  .app-card-badge{display:inline-block; background:var(--teal); color:#fff; font-size:10.5px; font-weight:800; letter-spacing:.08em; padding:3px 8px; border-radius:999px; margin-bottom:4px;}
+  .app-card h2{font-size:19px; margin:0; font-weight:700; color:#fff;}
+  .app-card-lead{margin:14px 0 16px; font-size:14.5px; line-height:1.55; color:rgba(255,255,255,.88); position:relative; z-index:1;}
+  .app-feats{display:grid; grid-template-columns:repeat(auto-fit, minmax(140px, 1fr)); gap:10px; position:relative; z-index:1;}
+  .app-feat{display:flex; flex-direction:column; gap:6px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.12); border-radius:12px; padding:11px 12px;}
+  .app-feat .msi{color:#9FD0DF; font-size:22px; flex:none;}
+  .app-feat b{display:block; font-size:13.5px; margin-bottom:2px;}
+  .app-feat span:not(.msi){display:block; font-size:12.5px; line-height:1.45; color:rgba(255,255,255,.78);}
+  .app-card-actions{display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-top:18px; position:relative; z-index:1;}
+  .app-card-btn{display:inline-flex; align-items:center; gap:8px; background:#fff; color:var(--navy); border:0; border-radius:12px;
+    padding:12px 18px; font:800 14.5px 'Plus Jakarta Sans', system-ui, sans-serif; cursor:pointer; box-shadow:0 4px 14px rgba(0,0,0,.2);}
+  .app-card-btn:hover{background:#EAF3F6;}
+  .app-card-btn .msi{font-size:20px;}
+  .app-card-hint{font-size:12.5px; color:rgba(255,255,255,.7);}
+  .app-card-done{display:none; align-items:center; gap:8px; margin-top:18px; font-weight:700; font-size:14px; position:relative; z-index:1;}
+  .app-card-done .msi{color:#9FD0DF;}
+  .app-card.installed .app-card-actions, .pwa-installed .app-card .app-card-actions{display:none;}
+  .pwa-installed .app-card-done{display:flex;}
+  .pwa-installed .app-card-mini{display:none;}
+  .app-card.installed .app-card-done{display:flex;}
+  .app-card-note{display:flex; gap:8px; align-items:flex-start; margin:14px 0 0; font-size:12px; line-height:1.45; color:rgba(255,255,255,.65); position:relative; z-index:1;}
+  .app-card-note .msi{font-size:16px; flex:none; margin-top:1px;}
+  .pwa-sheet [data-os]{display:none;}
+  .pwa-sheet[data-show="ios"] [data-os="ios"], .pwa-sheet[data-show="android"] [data-os="android"]{display:block;}
+
+  .app-card-mini{cursor:pointer; padding:18px 20px; transition:transform .15s ease, box-shadow .15s ease;}
+  .app-card-mini:hover{transform:translateY(-1px); box-shadow:0 8px 22px rgba(13,49,63,.22);}
+  .app-card-mini .app-card-lead{margin:12px 0 0;}
+  .app-card-mini.installed{display:none;}
 </style>
 </head>
 <body>
@@ -637,10 +676,15 @@
   <main>
     <!-- INICIO -->
     <section class="view active" id="view-inicio">
-      <div class="hero">
-        <div class="blob"></div>
-        <h2>Separar bien protege a todo el equipo</h2>
-        <p>Portal de Gestión Integral de Residuos Hospitalarios — HZT / HMH. Guía de las 13 corrientes de residuos, clasificador, capacitaciones y más.</p>
+      <div class="app-card app-card-mini" id="appCardMini" role="button" tabindex="0" onclick="goView('novedades')" onkeydown="if(event.key==='Enter')goView('novedades')" aria-label="Bajá la app al celular: ver detalles en Novedades">
+        <div class="app-card-head">
+          <img class="app-card-icon" src="icons/icon-192.png?v=3" alt="" width="56" height="56">
+          <div>
+            <span class="app-card-badge">NUEVO</span>
+            <h2>Bajá la app al celular</h2>
+          </div>
+        </div>
+        <p class="app-card-lead">El portal ahora se instala como una app: queda con su ícono en la pantalla de inicio, se abre a pantalla completa y <b>funciona sin conexión</b>.</p>
       </div>
 
       <div class="onboarding-tip" id="onboardingTip">
@@ -2083,6 +2127,31 @@ function updateNovedadesBadges() {
   });
 }
 
+const APP_CARD_HTML = `
+<div class="app-card" id="appCard">
+        <div class="app-card-head">
+          <img class="app-card-icon" src="icons/icon-192.png?v=3" alt="Ícono de la app" width="56" height="56">
+          <div>
+            <span class="app-card-badge">NUEVO</span>
+            <h2>Bajá la app al celular</h2>
+          </div>
+        </div>
+        <p class="app-card-lead">El portal ahora se instala como una app: queda con su ícono en la pantalla de inicio, se abre a pantalla completa y <b>funciona sin conexión</b>.</p>
+        <div class="app-feats">
+          <div class="app-feat"><span class="msi">wifi_off</span><div><b>Sin conexión</b><span>Consultá corrientes, clasificador y protocolos aunque no haya señal.</span></div></div>
+          <div class="app-feat"><span class="msi">touch_app</span><div><b>Acceso directo</b><span>Un toque desde la pantalla de inicio, sin buscar el link.</span></div></div>
+          <div class="app-feat"><span class="msi">update</span><div><b>Siempre actualizada</b><span>Te avisa cuando hay una versión nueva.</span></div></div>
+          <div class="app-feat"><span class="msi">phone_android</span><div><b>Sin tienda de apps</b><span>Sin Play Store ni App Store. Casi no ocupa espacio.</span></div></div>
+        </div>
+        <div class="app-card-actions" id="appCardActions">
+          <button type="button" class="app-card-btn" id="appCardInstall"><span class="msi">install_mobile</span>Instalar app</button>
+          <span class="app-card-hint" id="appCardHint">Android: Chrome · iPhone: Safari</span>
+        </div>
+        <div class="app-card-done" id="appCardDone"><span class="msi">check_circle</span>Ya estás usando la app instalada.</div>
+        <p class="app-card-note"><span class="msi">info</span>Necesitan conexión: la calificación de la app, las capacitaciones y evaluaciones, y los enlaces externos (normativa, Drive).</p>
+      </div>
+`;
+
 function renderNovedades() {
   const root = document.getElementById('novedadesRoot');
   root.innerHTML = `
@@ -2091,7 +2160,7 @@ function renderNovedades() {
       <h2>Novedades</h2>
       <p>Capacitaciones, campañas internas y avisos del Servicio de Higiene y Seguridad Laboral.</p>
     </div>
-  `;
+  ` + APP_CARD_HTML;
   if (!NOVEDADES.length) {
     root.innerHTML += `<div class="novedades-empty">No hay novedades publicadas por el momento. Volvé a revisar más adelante.</div>`;
     updateNovedadesBadges();
@@ -2691,14 +2760,25 @@ renderTrivia();
   <span class="material-symbols-outlined">install_mobile</span>Instalar app
 </button>
 <div class="pwa-sheet-bg" id="pwaIosSheet" role="dialog" aria-modal="true" aria-labelledby="pwaIosTitle">
-  <div class="pwa-sheet">
-    <h3 id="pwaIosTitle">Instalar en iPhone / iPad</h3>
-    <p>Abrí esta página en Safari y seguí estos pasos:</p>
-    <ol>
-      <li>Tocá <span class="material-symbols-outlined">ios_share</span> <b>Compartir</b> (barra inferior).</li>
-      <li>Elegí <span class="material-symbols-outlined">add_box</span> <b>Agregar a pantalla de inicio</b>.</li>
-      <li>Confirmá con <b>Agregar</b>.</li>
-    </ol>
+  <div class="pwa-sheet" id="pwaSheet" data-show="ios">
+    <div data-os="ios">
+      <h3 id="pwaIosTitle">Instalar en iPhone / iPad</h3>
+      <p>Abrí esta página en <b>Safari</b> y seguí estos pasos:</p>
+      <ol>
+        <li>Tocá <span class="material-symbols-outlined">ios_share</span> <b>Compartir</b> (barra inferior).</li>
+        <li>Elegí <span class="material-symbols-outlined">add_box</span> <b>Agregar a pantalla de inicio</b>.</li>
+        <li>Confirmá con <b>Agregar</b>.</li>
+      </ol>
+    </div>
+    <div data-os="android">
+      <h3>Instalar en Android / computadora</h3>
+      <p>Abrí esta página en <b>Chrome</b> (o Edge) y seguí estos pasos:</p>
+      <ol>
+        <li>Tocá el menú <span class="material-symbols-outlined">more_vert</span> (arriba a la derecha).</li>
+        <li>Elegí <span class="material-symbols-outlined">install_mobile</span> <b>Instalar app</b> o <b>Agregar a pantalla principal</b>.</li>
+        <li>Confirmá con <b>Instalar</b>.</li>
+      </ol>
+    </div>
     <button type="button" id="pwaIosClose">Entendido</button>
   </div>
 </div>
@@ -2707,31 +2787,45 @@ renderTrivia();
 </div>
 <script>
 (function(){
-  var btn = document.getElementById('pwaInstallBtn');
-  var sheet = document.getElementById('pwaIosSheet');
+  var fab = document.getElementById('pwaInstallBtn');
+  var bg = document.getElementById('pwaIosSheet');
+  var sheet = document.getElementById('pwaSheet');
   var deferred = null;
   var standalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
   var isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
+  function markInstalled(){
+    fab.classList.remove('show');
+    document.documentElement.classList.add('pwa-installed');
+    ['appCard','appCardMini'].forEach(function(id){ var el = document.getElementById(id); if(el) el.classList.add('installed'); });
+  }
+  if(standalone) markInstalled();
+
+  function showSheet(os){ sheet.setAttribute('data-show', os); bg.classList.add('show'); }
+
+  function install(){
+    if(deferred){
+      deferred.prompt();
+      deferred.userChoice.then(function(r){ if(r && r.outcome === 'accepted') markInstalled(); })
+        .finally(function(){ deferred = null; fab.classList.remove('show'); });
+    } else {
+      showSheet(isIOS ? 'ios' : 'android');
+    }
+  }
+
   // Android / Chrome / Edge: el navegador avisa que se puede instalar
   window.addEventListener('beforeinstallprompt', function(e){
     e.preventDefault(); deferred = e;
-    if(!standalone) btn.classList.add('show');
+    if(!standalone) fab.classList.add('show');
   });
   // iPhone / iPad: no hay aviso automático, se muestran instrucciones
-  if(isIOS && !standalone) btn.classList.add('show');
+  if(isIOS && !standalone) fab.classList.add('show');
 
-  btn.addEventListener('click', function(){
-    if(deferred){
-      deferred.prompt();
-      deferred.userChoice.finally(function(){ deferred = null; btn.classList.remove('show'); });
-    } else if(isIOS){
-      sheet.classList.add('show');
-    }
-  });
-  document.getElementById('pwaIosClose').addEventListener('click', function(){ sheet.classList.remove('show'); });
-  sheet.addEventListener('click', function(e){ if(e.target === sheet) sheet.classList.remove('show'); });
-  window.addEventListener('appinstalled', function(){ btn.classList.remove('show'); });
+  fab.addEventListener('click', install);
+  document.addEventListener('click', function(e){ if(e.target.closest('#appCardInstall')) install(); });
+  document.getElementById('pwaIosClose').addEventListener('click', function(){ bg.classList.remove('show'); });
+  bg.addEventListener('click', function(e){ if(e.target === bg) bg.classList.remove('show'); });
+  window.addEventListener('appinstalled', markInstalled);
 
   // Service worker: funcionamiento sin conexión + aviso de versión nueva
   if('serviceWorker' in navigator){
