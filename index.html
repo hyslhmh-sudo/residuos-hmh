@@ -628,6 +628,22 @@
   .app-card-mini:hover{transform:translateY(-1px); box-shadow:0 8px 22px rgba(13,49,63,.22);}
   .app-card-mini .app-card-lead{margin:12px 0 0;}
   .app-card-mini.installed{display:none;}
+
+  /* BUENAS PRÁCTICAS — desplegables */
+  .pract-acc{background:var(--card); border:1px solid var(--line); border-radius:16px; margin-bottom:14px; overflow:hidden;}
+  .pract-acc summary{list-style:none; display:flex; align-items:center; gap:14px; padding:16px 18px; cursor:pointer; user-select:none;}
+  .pract-acc summary::-webkit-details-marker{display:none;}
+  .pract-acc summary:hover{background:#F7F9FA;}
+  .pract-acc-icon{flex:none; width:40px; height:40px; border-radius:12px; background:var(--navy); color:#fff;
+    display:flex; align-items:center; justify-content:center; font-size:22px; overflow:hidden;}
+  .pract-acc-txt{flex:1; min-width:0;}
+  .pract-acc-txt b{display:block; font-size:15px; color:var(--ink);}
+  .pract-acc-txt small{display:block; font-size:12.8px; color:var(--muted); margin-top:2px; line-height:1.45;}
+  .pract-acc-chev{flex:none; width:26px; overflow:hidden; color:var(--teal); font-size:26px; transition:transform .2s ease;}
+  .pract-acc[open] .pract-acc-chev{transform:rotate(180deg);}
+  .pract-acc[open] summary{border-bottom:1px solid var(--line);}
+  .pract-acc-body{padding:14px 14px 4px; background:var(--paper);}
+  .pract-acc-body .prohibido{margin:14px 0 10px;}
 </style>
 </head>
 <body>
@@ -1149,61 +1165,40 @@
     <section class="view" id="view-practicas">
       <div class="hero" style="margin-bottom:20px;">
         <div class="blob"></div>
-        <h2>Circuito general de retiro y transporte</h2>
-        <p>Estos pasos aplican a cualquier corriente de residuo, del punto de generación al depósito interno.</p>
+        <h2>Buenas prácticas</h2>
+        <p>Tocá cada tema para ver el detalle.</p>
       </div>
-      <div id="practicasItems">
-    <div class="practItem">
-      <div class="num">1</div>
-      <div class="practText"><div class="t">Separar en el punto de generación</div><div class="d">Cada trabajador descarta el residuo de inmediato, en el recipiente correcto, en el mismo lugar donde se genera.</div></div>
-    </div>
-  
-    <div class="practItem">
-      <div class="num">2</div>
-      <div class="practText"><div class="t">Usar guantes y EPP indicado</div><div class="d">Guantes resistentes, uniforme y calzado cerrado como mínimo; protección ocular y mascarilla según el tipo de residuo.</div></div>
-    </div>
-  
-    <div class="practItem">
-      <div class="num">3</div>
-      <div class="practText"><div class="t">No mezclar corrientes</div><div class="d">Una bolsa común contaminada con material biopatogénico se convierte íntegramente en residuo peligroso.</div></div>
-    </div>
-  
-    <div class="practItem">
-      <div class="num">4</div>
-      <div class="practText"><div class="t">Cerrar en el lugar de generación</div><div class="d">Cerrar con nudo, precinto o mecanismo equivalente. No trasvasar residuos ni reabrir bolsas ya cerradas.</div></div>
-    </div>
-  
-    <div class="practItem">
-      <div class="num">5</div>
-      <div class="practText"><div class="t">Respetar el límite de llenado</div><div class="d">No superar 3/4 de la capacidad del recipiente (80% en biopatogénicos), para permitir un cierre seguro.</div></div>
-    </div>
-  
-    <div class="practItem">
-      <div class="num">6</div>
-      <div class="practText"><div class="t">Transportar en carro exclusivo y con tapa</div><div class="d">Carro de uso exclusivo para residuos, identificado, sin desborde ni arrastre. Nunca por pasillos o ascensores de público.</div></div>
-    </div>
-  
-    <div class="practItem">
-      <div class="num">7</div>
-      <div class="practText"><div class="t">Seguir la ruta interna definida</div><div class="d">Trasladar por los recorridos predeterminados y señalizados hacia el depósito intermedio o final.</div></div>
-    </div>
-  
-    <div class="practItem">
-      <div class="num">8</div>
-      <div class="practText"><div class="t">Lavarse las manos al finalizar</div><div class="d">Higiene de manos inmediatamente después de retirar los guantes.</div></div>
-    </div>
-  </div>
-      <div class="prohibido">
-        <h4>⛔ Prohibido durante el transporte interno</h4>
-        <ul>
-          <li>Trasladar bolsas abiertas, sin cierre o con exceso de carga.</li>
-          <li>Usar carros no exclusivos.</li>
-          <li>Circular por ascensores o pasillos destinados a pacientes o público.</li>
-          <li>Acopiar bolsas en lugares no habilitados.</li>
-          <li>Manipular residuos sin EPP, o reabrir bolsas ya cerradas para corregir un error.</li>
-          <li>Reencapuchar agujas.</li>
-        </ul>
-      </div>
+
+      <details class="pract-acc">
+        <summary>
+          <span class="msi pract-acc-icon">recycling</span>
+          <span class="pract-acc-txt"><b>Buenas prácticas de segregación</b><small>Del uso responsable de insumos al descarte correcto en el punto de generación.</small></span>
+          <span class="msi pract-acc-chev">expand_more</span>
+        </summary>
+        <div class="pract-acc-body" id="practicasSegregacion"></div>
+      </details>
+
+      <details class="pract-acc">
+        <summary>
+          <span class="msi pract-acc-icon">local_shipping</span>
+          <span class="pract-acc-txt"><b>Circuito general de retiro y transporte</b><small>Estos pasos aplican a cualquier corriente de residuo, del punto de generación al depósito interno.</small></span>
+          <span class="msi pract-acc-chev">expand_more</span>
+        </summary>
+        <div class="pract-acc-body">
+          <div id="practicasItems"></div>
+          <div class="prohibido">
+            <h4>⛔ Prohibido durante el transporte interno</h4>
+            <ul>
+              <li>Trasladar bolsas abiertas, sin cierre o con exceso de carga.</li>
+              <li>Usar carros no exclusivos.</li>
+              <li>Circular por ascensores o pasillos destinados a pacientes o público.</li>
+              <li>Acopiar bolsas en lugares no habilitados.</li>
+              <li>Manipular residuos sin EPP, o reabrir bolsas ya cerradas para corregir un error.</li>
+              <li>Reencapuchar agujas.</li>
+            </ul>
+          </div>
+        </div>
+      </details>
     </section>
 
     <!-- NOVEDADES -->
@@ -1996,6 +1991,24 @@ function answerClas(ans){
 function resetClasificador(){ clasState = { node:'q1', trail:[] }; renderClasificador(); }
 
 /* ============ BUENAS PRACTICAS ============ */
+const PRACTICAS_SEGREGACION = [
+  {t:'Evitá generar residuos innecesarios', d:'Antes de usar un insumo, verificá que sea necesario para la atención o la tarea.'},
+  {t:'Usá solo lo necesario', d:'Reducir residuos también permite cuidar los recursos del hospital, sin afectar la calidad de atención ni la bioseguridad.'},
+  {t:'Reutilizá solo cuando esté permitido', d:'Algunos materiales pueden reutilizarse si fueron diseñados para ello y cuentan con un proceso institucional autorizado de limpieza, desinfección o esterilización. Los elementos de un solo uso no deben reutilizarse.'},
+  {t:'Separá los reciclables limpios y secos', d:'Papel, cartón, envases u otros materiales reciclables pueden recuperarse si no están contaminados con sangre, fluidos, medicamentos o sustancias químicas.'},
+  {t:'Usá los circuitos de recuperación disponibles', d:'Incorporá papel, cartón, determinados envases limpios y RAEE a los circuitos institucionales definidos para su recuperación.'},
+  {t:'Descartá cada residuo en el momento y lugar en que se genera', d:'Usá el recipiente correspondiente apenas finaliza la tarea. No dejes residuos sobre mesadas, camas, escritorios u otras superficies para clasificarlos después.'},
+  {t:'Usá los tachos de los carros', d:'Los carros cuentan con recipientes destinados a residuos. No traslades residuos sueltos ni los acumules sobre el carro.'},
+  {t:'Clasificá según el riesgo real del residuo', d:'No todo residuo generado en el hospital es biopatogénico. Un envoltorio limpio, papel, envase vacío no contaminado o resto de comida no se vuelve peligroso por provenir de un sector asistencial.'},
+  {t:'Reservá la bolsa roja para los residuos que realmente la requieren', d:'No mezcles residuos comunes o reciclables con residuos biopatogénicos. Así se reducen riesgos, costos e impacto ambiental.'},
+  {t:'Cuidá los espacios compartidos', d:'En habitaciones de internación general, pasillos públicos, salas de espera y espacios de circulación de pacientes, familias y visitantes, evitá colocar bolsas rojas, salvo que el sector requiera un circuito específico por su actividad o condición clínica: aislamientos por enfermedad infectocontagiosa, terapias intensivas o shock room.'},
+  {t:'Prestá especial atención en Pediatría y en sectores con circulación de niños', d:'Pacientes, familias y visitantes no tienen por qué conocer los criterios técnicos de segregación. Por eso, los recipientes disponibles deben ser seguros, claros y adecuados al riesgo real.'},
+  {t:'Descartá los punzocortantes directamente en su recipiente rígido', d:'Agujas, hojas de bisturí, lancetas, ampollas rotas y otros elementos cortantes deben ir directamente al descartador correspondiente. No reencapuches, dobles ni rompas agujas.'},
+  {t:'Mantené separados los residuos de gestión especial', d:'Medicamentos, citostáticos, residuos químicos, mercurio, RAEE y residuos radiactivos requieren circuitos específicos. No los coloques en bolsas comunes ni biopatogénicas.'},
+  {t:'Respetá la capacidad de bolsas y descartadores', d:'No sobrellenes recipientes ni compactes bolsas con las manos. Cerrá cada recipiente al alcanzar el nivel de llenado indicado.'},
+  {t:'Ante una duda, consultá', d:'Si no sabés dónde corresponde descartar un residuo, consultá la señalización, el manual institucional, el portal o a HySL.'}
+];
+
 const PRACTICAS = [
   {t:'Separar en el punto de generación', d:'Cada trabajador descarta el residuo de inmediato, en el recipiente correcto, en el mismo lugar donde se genera.'},
   {t:'Usar guantes y EPP indicado', d:'Guantes resistentes, uniforme y calzado cerrado como mínimo; protección ocular y mascarilla según el tipo de residuo.'},
@@ -2006,7 +2019,16 @@ const PRACTICAS = [
   {t:'Seguir la ruta interna definida', d:'Trasladar por los recorridos predeterminados y señalizados hacia el depósito intermedio o final.'},
   {t:'Lavarse las manos al finalizar', d:'Higiene de manos inmediatamente después de retirar los guantes.'}
 ];
+function practItemsHTML(lista){
+  return lista.map((item,i)=>`
+    <div class="practItem">
+      <div class="num">${i+1}</div>
+      <div class="practText"><div class="t">${item.t}</div><div class="d">${item.d}</div></div>
+    </div>
+  `).join('');
+}
 function renderPracticas(){
+  document.getElementById('practicasSegregacion').innerHTML = practItemsHTML(PRACTICAS_SEGREGACION);
   document.getElementById('practicasItems').innerHTML = PRACTICAS.map((item,i)=>`
     <div class="practItem">
       <div class="num">${i+1}</div>
