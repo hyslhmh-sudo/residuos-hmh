@@ -1,8 +1,17 @@
 <!DOCTYPE html>
-<!-- saved from url=(0044)https://hyslhmh-sudo.github.io/residuos-hmh/ -->
-<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html lang="es"><head>
+<meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="Portal de Gestión Integral de Residuos Hospitalarios — Hospital Zonal Trelew y Hospital María Humphreys.">
+<meta name="theme-color" content="#0D313F">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png?v=3">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png?v=3">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Residuos HZT·HMH">
 <title>Portal de Gestión Integral de Residuos Hospitalarios — HZT / HMH</title>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
 <style>
@@ -558,9 +567,42 @@
   #feedbackMsg{margin-top:12px; font-size:12.5px;}
   #feedbackMsg.ok{color:#1e5a24;}
   #feedbackMsg.err{color:#8a1f24;}
+
+  /* ===== APP (PWA) ===== */
+  header.top{ padding-top:env(safe-area-inset-top, 0px); }
+  .feedback-fab{ bottom:calc(20px + env(safe-area-inset-bottom, 0px)); }
+  .pwa-install{
+    position:fixed; left:20px; bottom:calc(20px + env(safe-area-inset-bottom, 0px)); z-index:100;
+    display:none; align-items:center; gap:8px;
+    background:var(--navy); color:#fff; border:0; border-radius:999px;
+    padding:11px 18px 11px 14px; font:700 14px 'Plus Jakarta Sans', system-ui, sans-serif;
+    box-shadow:0 6px 18px rgba(13,49,63,.28); cursor:pointer;
+  }
+  .pwa-install.show{ display:inline-flex; }
+  .pwa-install:hover{ background:var(--navy-dark); }
+  .pwa-install .material-symbols-outlined{ font-size:20px; }
+  .pwa-sheet-bg{ position:fixed; inset:0; background:rgba(11,20,35,.55); z-index:300; display:none; align-items:flex-end; justify-content:center; }
+  .pwa-sheet-bg.show{ display:flex; }
+  .pwa-sheet{
+    background:#fff; color:var(--ink); width:100%; max-width:480px; border-radius:18px 18px 0 0;
+    padding:22px 22px calc(22px + env(safe-area-inset-bottom, 0px)); font-family:'Plus Jakarta Sans', system-ui, sans-serif;
+  }
+  .pwa-sheet h3{ margin:0 0 6px; color:var(--navy); font-size:17px; }
+  .pwa-sheet p{ margin:0 0 14px; font-size:13.5px; color:var(--muted); }
+  .pwa-sheet ol{ margin:0 0 18px; padding-left:20px; font-size:14px; line-height:1.7; }
+  .pwa-sheet .material-symbols-outlined{ font-size:18px; vertical-align:-4px; color:var(--teal); }
+  .pwa-sheet button{ width:100%; background:var(--navy); color:#fff; border:0; border-radius:10px; padding:12px; font:700 14px 'Plus Jakarta Sans', system-ui, sans-serif; cursor:pointer; }
+  .pwa-toast{
+    position:fixed; left:50%; transform:translateX(-50%); bottom:calc(84px + env(safe-area-inset-bottom, 0px));
+    background:var(--ink); color:#fff; padding:10px 16px; border-radius:10px; font:600 13px 'Plus Jakarta Sans', system-ui, sans-serif;
+    z-index:310; display:none; align-items:center; gap:10px; box-shadow:0 6px 18px rgba(0,0,0,.25);
+  }
+  .pwa-toast.show{ display:flex; }
+  .pwa-toast button{ background:var(--teal); color:#fff; border:0; border-radius:8px; padding:6px 10px; font:700 12.5px inherit; cursor:pointer; }
+  @media (display-mode: standalone){ .pwa-install{ display:none !important; } }
 </style>
-<style id="_goober"> .go1475592160{height:0;}.go1671063245{height:auto;}.go1888806478{display:flex;flex-wrap:wrap;flex-grow:1;}@media (min-width:600px){.go1888806478{flex-grow:initial;min-width:288px;}}.go167266335{background-color:#313131;font-size:0.875rem;line-height:1.43;letter-spacing:0.01071em;color:#fff;align-items:center;padding:6px 16px;border-radius:4px;box-shadow:0px 3px 5px -1px rgba(0,0,0,0.2),0px 6px 10px 0px rgba(0,0,0,0.14),0px 1px 18px 0px rgba(0,0,0,0.12);}.go3162094071{padding-left:20px;}.go3844575157{background-color:#313131;}.go1725278324{background-color:#43a047;}.go3651055292{background-color:#d32f2f;}.go4215275574{background-color:#ff9800;}.go1930647212{background-color:#2196f3;}.go946087465{display:flex;align-items:center;padding:8px 0;}.go703367398{display:flex;align-items:center;margin-left:auto;padding-left:16px;margin-right:-8px;}.go3963613292{width:100%;position:relative;transform:translateX(0);top:0;right:0;bottom:0;left:0;min-width:288px;}.go1141946668{box-sizing:border-box;display:flex;max-height:100%;position:fixed;z-index:1400;height:auto;width:auto;transition:top 300ms ease 0ms,right 300ms ease 0ms,bottom 300ms ease 0ms,left 300ms ease 0ms,max-width 300ms ease 0ms;pointer-events:none;max-width:calc(100% - 40px);}.go1141946668 .notistack-CollapseWrapper{padding:6px 0px;transition:padding 300ms ease 0ms;}@media (max-width:599.95px){.go1141946668{width:100%;max-width:calc(100% - 32px);}}.go3868796639 .notistack-CollapseWrapper{padding:2px 0px;}.go3118922589{top:14px;flex-direction:column;}.go1453831412{bottom:14px;flex-direction:column-reverse;}.go4027089540{left:20px;}@media (min-width:600px){.go4027089540{align-items:flex-start;}}@media (max-width:599.95px){.go4027089540{left:16px;}}.go2989568495{right:20px;}@media (min-width:600px){.go2989568495{align-items:flex-end;}}@media (max-width:599.95px){.go2989568495{right:16px;}}.go4034260886{left:50%;transform:translateX(-50%);}@media (min-width:600px){.go4034260886{align-items:center;}}</style></head>
-<body data-gptw="">
+</head>
+<body>
 <header class="top">
     <div class="hwrap">
     <div class="brandrow">
@@ -2643,4 +2685,70 @@ renderTrivia();
 </script>
 
 
+
+<!-- ===== APP (PWA) ===== -->
+<button class="pwa-install" id="pwaInstallBtn" type="button" aria-label="Instalar la app">
+  <span class="material-symbols-outlined">install_mobile</span>Instalar app
+</button>
+<div class="pwa-sheet-bg" id="pwaIosSheet" role="dialog" aria-modal="true" aria-labelledby="pwaIosTitle">
+  <div class="pwa-sheet">
+    <h3 id="pwaIosTitle">Instalar en iPhone / iPad</h3>
+    <p>Abrí esta página en Safari y seguí estos pasos:</p>
+    <ol>
+      <li>Tocá <span class="material-symbols-outlined">ios_share</span> <b>Compartir</b> (barra inferior).</li>
+      <li>Elegí <span class="material-symbols-outlined">add_box</span> <b>Agregar a pantalla de inicio</b>.</li>
+      <li>Confirmá con <b>Agregar</b>.</li>
+    </ol>
+    <button type="button" id="pwaIosClose">Entendido</button>
+  </div>
+</div>
+<div class="pwa-toast" id="pwaUpdate" role="status">
+  Hay una versión nueva del portal <button type="button" id="pwaReload">Actualizar</button>
+</div>
+<script>
+(function(){
+  var btn = document.getElementById('pwaInstallBtn');
+  var sheet = document.getElementById('pwaIosSheet');
+  var deferred = null;
+  var standalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  var isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+  // Android / Chrome / Edge: el navegador avisa que se puede instalar
+  window.addEventListener('beforeinstallprompt', function(e){
+    e.preventDefault(); deferred = e;
+    if(!standalone) btn.classList.add('show');
+  });
+  // iPhone / iPad: no hay aviso automático, se muestran instrucciones
+  if(isIOS && !standalone) btn.classList.add('show');
+
+  btn.addEventListener('click', function(){
+    if(deferred){
+      deferred.prompt();
+      deferred.userChoice.finally(function(){ deferred = null; btn.classList.remove('show'); });
+    } else if(isIOS){
+      sheet.classList.add('show');
+    }
+  });
+  document.getElementById('pwaIosClose').addEventListener('click', function(){ sheet.classList.remove('show'); });
+  sheet.addEventListener('click', function(e){ if(e.target === sheet) sheet.classList.remove('show'); });
+  window.addEventListener('appinstalled', function(){ btn.classList.remove('show'); });
+
+  // Service worker: funcionamiento sin conexión + aviso de versión nueva
+  if('serviceWorker' in navigator){
+    window.addEventListener('load', function(){
+      navigator.serviceWorker.register('sw.js').then(function(reg){
+        reg.addEventListener('updatefound', function(){
+          var nw = reg.installing;
+          nw && nw.addEventListener('statechange', function(){
+            if(nw.state === 'installed' && navigator.serviceWorker.controller){
+              document.getElementById('pwaUpdate').classList.add('show');
+            }
+          });
+        });
+      }).catch(function(){});
+    });
+    document.getElementById('pwaReload').addEventListener('click', function(){ location.reload(); });
+  }
+})();
+</script>
 </body></html>
