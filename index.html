@@ -571,16 +571,6 @@
   /* ===== APP (PWA) ===== */
   header.top{ padding-top:env(safe-area-inset-top, 0px); }
   .feedback-fab{ bottom:calc(20px + env(safe-area-inset-bottom, 0px)); }
-  .pwa-install{
-    position:fixed; left:20px; bottom:calc(20px + env(safe-area-inset-bottom, 0px)); z-index:100;
-    display:none; align-items:center; gap:8px;
-    background:var(--navy); color:#fff; border:0; border-radius:999px;
-    padding:11px 18px 11px 14px; font:700 14px 'Plus Jakarta Sans', system-ui, sans-serif;
-    box-shadow:0 6px 18px rgba(13,49,63,.28); cursor:pointer;
-  }
-  .pwa-install.show{ display:inline-flex; }
-  .pwa-install:hover{ background:var(--navy-dark); }
-  .pwa-install .material-symbols-outlined{ font-size:20px; }
   .pwa-sheet-bg{ position:fixed; inset:0; background:rgba(11,20,35,.55); z-index:300; display:none; align-items:flex-end; justify-content:center; }
   .pwa-sheet-bg.show{ display:flex; }
   .pwa-sheet{
@@ -599,7 +589,6 @@
   }
   .pwa-toast.show{ display:flex; }
   .pwa-toast button{ background:var(--teal); color:#fff; border:0; border-radius:8px; padding:6px 10px; font:700 12.5px inherit; cursor:pointer; }
-  @media (display-mode: standalone){ .pwa-install{ display:none !important; } }
 
   /* ===== TARJETA "BAJÁ LA APP" ===== */
   .app-card{
@@ -2115,7 +2104,8 @@ function novedadCardHTML(n) {
 }
 
 function updateNovedadesBadges() {
-  const count = NOVEDADES.filter(n => n.estado === 'abierta' || n.estado === 'proxima').length;
+  // +1 por la tarjeta "Bajá la app al celular"
+  const count = NOVEDADES.filter(n => n.estado === 'abierta' || n.estado === 'proxima').length + 1;
   [document.getElementById('navBadgeNovedades'), document.getElementById('quickBadgeNovedades')].forEach(el => {
     if (!el) return;
     if (count > 0) {
@@ -2756,9 +2746,6 @@ renderTrivia();
 
 
 <!-- ===== APP (PWA) ===== -->
-<button class="pwa-install" id="pwaInstallBtn" type="button" aria-label="Instalar la app">
-  <span class="material-symbols-outlined">install_mobile</span>Instalar app
-</button>
 <div class="pwa-sheet-bg" id="pwaIosSheet" role="dialog" aria-modal="true" aria-labelledby="pwaIosTitle">
   <div class="pwa-sheet" id="pwaSheet" data-show="ios">
     <div data-os="ios">
@@ -2787,7 +2774,6 @@ renderTrivia();
 </div>
 <script>
 (function(){
-  var fab = document.getElementById('pwaInstallBtn');
   var bg = document.getElementById('pwaIosSheet');
   var sheet = document.getElementById('pwaSheet');
   var deferred = null;
@@ -2795,7 +2781,6 @@ renderTrivia();
   var isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
   function markInstalled(){
-    fab.classList.remove('show');
     document.documentElement.classList.add('pwa-installed');
     ['appCard','appCardMini'].forEach(function(id){ var el = document.getElementById(id); if(el) el.classList.add('installed'); });
   }
@@ -2807,7 +2792,7 @@ renderTrivia();
     if(deferred){
       deferred.prompt();
       deferred.userChoice.then(function(r){ if(r && r.outcome === 'accepted') markInstalled(); })
-        .finally(function(){ deferred = null; fab.classList.remove('show'); });
+        .finally(function(){ deferred = null; });
     } else {
       showSheet(isIOS ? 'ios' : 'android');
     }
@@ -2816,12 +2801,8 @@ renderTrivia();
   // Android / Chrome / Edge: el navegador avisa que se puede instalar
   window.addEventListener('beforeinstallprompt', function(e){
     e.preventDefault(); deferred = e;
-    if(!standalone) fab.classList.add('show');
   });
-  // iPhone / iPad: no hay aviso automático, se muestran instrucciones
-  if(isIOS && !standalone) fab.classList.add('show');
 
-  fab.addEventListener('click', install);
   document.addEventListener('click', function(e){ if(e.target.closest('#appCardInstall')) install(); });
   document.getElementById('pwaIosClose').addEventListener('click', function(){ bg.classList.remove('show'); });
   bg.addEventListener('click', function(e){ if(e.target === bg) bg.classList.remove('show'); });
