@@ -644,6 +644,12 @@
   .pract-acc[open] summary{border-bottom:1px solid var(--line);}
   .pract-acc-body{padding:14px 14px 4px; background:var(--paper);}
   .pract-acc-body .prohibido{margin:14px 0 10px;}
+
+  #appCard .app-est-inst{display:none;}
+  #appCard.installed .app-est-disp, #appCard.installed #appCardInstall,
+  .pwa-installed #appCard .app-est-disp, .pwa-installed #appCardInstall{display:none;}
+  #appCard.installed .app-est-inst, .pwa-installed #appCard .app-est-inst{display:inline;}
+  button.novedad-btn{border:0; cursor:pointer; font-family:inherit;}
 </style>
 </head>
 <body>
@@ -2140,28 +2146,33 @@ function updateNovedadesBadges() {
 }
 
 const APP_CARD_HTML = `
-<div class="app-card" id="appCard">
-        <div class="app-card-head">
-          <img class="app-card-icon" src="icons/icon-192.png?v=3" alt="Ícono de la app" width="56" height="56">
-          <div>
-            <span class="app-card-badge">NUEVO</span>
-            <h2>Bajá la app al celular</h2>
-          </div>
+    <div class="novedad-card" id="appCard">
+      <div class="bar" style="background:#5894A7"></div>
+      <div class="novedad-inner">
+        <div class="novedad-top">
+          <span class="novedad-tipo" style="background:#EAF3F5; color:#5894A7">Nueva funcionalidad</span>
+          <span class="novedad-fecha">📅 28 de septiembre de 2026</span>
         </div>
-        <p class="app-card-lead">El portal ahora se instala como una app: queda con su ícono en la pantalla de inicio, se abre a pantalla completa y <b>funciona sin conexión</b>.</p>
-        <div class="app-feats">
-          <div class="app-feat"><span class="msi">wifi_off</span><div><b>Sin conexión</b><span>Consultá corrientes, clasificador y protocolos aunque no haya señal.</span></div></div>
-          <div class="app-feat"><span class="msi">touch_app</span><div><b>Acceso directo</b><span>Un toque desde la pantalla de inicio, sin buscar el link.</span></div></div>
-          <div class="app-feat"><span class="msi">update</span><div><b>Siempre actualizada</b><span>Te avisa cuando hay una versión nueva.</span></div></div>
-          <div class="app-feat"><span class="msi">phone_android</span><div><b>Sin tienda de apps</b><span>Sin Play Store ni App Store. Casi no ocupa espacio.</span></div></div>
+        <div class="novedad-title">Bajá la app al celular</div>
+        <div class="novedad-desc">El portal ahora se instala como una app: queda con su ícono en la pantalla de inicio, se abre a pantalla completa y <b>funciona sin conexión</b>. Después de abrirla una vez, podés consultar corrientes, clasificador y protocolos aunque no haya señal.</div>
+        <ul class="novedad-temario">
+          <li>Funciona sin conexión</li>
+          <li>Acceso directo desde el inicio</li>
+          <li>Se actualiza sola</li>
+          <li>Sin Play Store ni App Store</li>
+        </ul>
+        <div class="novedad-meta">
+          <div>🏛️ <b>Organiza:</b> Área de Higiene y Seguridad Laboral HZT - HMH</div>
+          <div>📱 <b>Cómo instalar:</b> Android con Chrome · iPhone con Safari</div>
+          <div>📶 <b>Necesitan conexión:</b> la calificación de la app, las capacitaciones y evaluaciones, y los enlaces externos (normativa, Drive).</div>
         </div>
-        <div class="app-card-actions" id="appCardActions">
-          <button type="button" class="app-card-btn" id="appCardInstall"><span class="msi">install_mobile</span>Instalar app</button>
-          <span class="app-card-hint" id="appCardHint">Android: Chrome · iPhone: Safari</span>
+        <div class="novedad-footer">
+          <span class="novedad-estado abierta app-est-disp">🟢 Disponible</span>
+          <button type="button" class="novedad-btn" id="appCardInstall">Instalar app</button>
+          <span class="novedad-estado abierta app-est-inst">✅ Ya estás usando la app instalada</span>
         </div>
-        <div class="app-card-done" id="appCardDone"><span class="msi">check_circle</span>Ya estás usando la app instalada.</div>
-        <p class="app-card-note"><span class="msi">info</span>Necesitan conexión: la calificación de la app, las capacitaciones y evaluaciones, y los enlaces externos (normativa, Drive).</p>
       </div>
+    </div>
 `;
 
 function renderNovedades() {
