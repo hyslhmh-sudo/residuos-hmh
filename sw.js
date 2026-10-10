@@ -1,6 +1,6 @@
 /* Service worker — Portal de Residuos HZT / HMH
    Cambiá VERSION cada vez que subas un index.html nuevo para forzar la actualización. */
-const VERSION = 'residuos-v12';
+const VERSION = 'residuos-v13';
 const CORE = [
   './',
   './index.html',
