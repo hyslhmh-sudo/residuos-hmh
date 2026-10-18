@@ -2092,12 +2092,13 @@ try { CLASES_AUTO = JSON.parse(localStorage.getItem('clasesAuto') || '[]'); } ca
 function escTxt(t) { return String(t == null ? '' : t).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]); }
 function fechaDe(t) { const m = String(t || '').match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/); return m ? new Date(+m[3], +m[2] - 1, +m[1]) : null; }
 function claseANovedad(c) {
-  const id = String(c.ORIGEN || '').replace(/^AGENDA:/, ''), x = EXTRAS_CLASES[id] || {}, f = fechaDe(c.INICIO);
-  const fecha = (f ? f.toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).replace(/^./, m => m.toUpperCase()) : escTxt(c.INICIO)) +
-    (String(c.DIAS_Y_HORARIO || '').split(' · ')[1] ? ' · ' + escTxt(String(c.DIAS_Y_HORARIO).split(' · ')[1]) : '');
+  const id = String(c.ORIGEN || '').replace(/^(AGENDA|PROGRAMA):/, ''), x = EXTRAS_CLASES[id] || {}, f = fechaDe(c.INICIO), prog = /^PROGRAMA:/.test(String(c.ORIGEN || ''));
+  const partes = String(c.DIAS_Y_HORARIO || '').split(' · ');
+  const fecha = prog ? escTxt(partes.join(' · ')) + (f ? ' · desde el ' + f.toLocaleDateString('es-AR', { day: 'numeric', month: 'long' }) : '') :
+    (f ? f.toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).replace(/^./, m => m.toUpperCase()) : escTxt(c.INICIO)) + (partes[1] ? ' · ' + escTxt(partes[1]) : '');
   const links = [{ url: c.ENLACE_INSCRIPCION, label: 'Inscribirme' }].concat(x.links || []);
-  return { tipo: 'capacitacion', tipoLabel: 'Capacitación', color: '#0D313F', bg: '#E8ECEF', titulo: escTxt(c.CAPACITACION), fecha: fecha,
-    descripcion: x.descripcion || '', organiza: 'Higiene y Seguridad Laboral HZT - HMH', destinatarios: escTxt(c.DESTINATARIOS),
+  return { tipo: 'capacitacion', tipoLabel: prog ? 'Programa' : 'Capacitación', color: '#0D313F', bg: '#E8ECEF', titulo: escTxt(c.CAPACITACION), fecha: fecha,
+    descripcion: x.descripcion || (prog ? 'Una sola inscripción para todo el programa. Antes de cada encuentro te llega un recordatorio por correo.' : ''), organiza: 'Higiene y Seguridad Laboral HZT - HMH', destinatarios: escTxt(c.DESTINATARIOS),
     modalidad: escTxt(c.MODALIDAD) + (/aula/i.test(c.MODALIDAD) ? ' (60 lugares)' : ''), estado: 'abierta', links: links,
     hasta: c.CIERRE_INSCRIPCION || c.INICIO };
 }
@@ -2122,7 +2123,7 @@ function leerClasesAbiertas() {
 }
 leerClasesAbiertas().then(filas => {
   if (!filas) return;   // sin conexión: queda lo último guardado
-  CLASES_AUTO = filas.filter(c => /^AGENDA:/.test(String(c.ORIGEN || '')) && !/^no/i.test(String(c.VISIBLE || 'Sí')) && /^https?:/.test(String(c.ENLACE_INSCRIPCION || ''))).map(claseANovedad);
+  CLASES_AUTO = filas.filter(c => /^(AGENDA|PROGRAMA):/.test(String(c.ORIGEN || '')) && !/^no/i.test(String(c.VISIBLE || 'Sí')) && /^https?:/.test(String(c.ENLACE_INSCRIPCION || ''))).map(claseANovedad);
   try { localStorage.setItem('clasesAuto', JSON.stringify(CLASES_AUTO)); } catch (e) {}
   renderNovedades();
 });
