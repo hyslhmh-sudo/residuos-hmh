@@ -460,6 +460,19 @@
   .recurso-cap-card .d{font-size:13.3px; color:var(--ink); line-height:1.55; margin-bottom:10px;}
   .recurso-cap-links{display:flex; gap:10px; flex-wrap:wrap;}
   .recursos-empty{text-align:center; color:var(--muted); padding:30px 20px; font-size:13.5px;}
+  .vid-intro{font-size:13.5px; color:var(--muted); line-height:1.55; margin:0 0 14px;}
+  .vid-grid{display:grid; gap:16px; grid-template-columns:repeat(auto-fill, minmax(min(100%, 280px), 1fr));}
+  .vid-card{background:var(--card); border:1px solid var(--line); border-radius:14px; overflow:hidden; display:flex; flex-direction:column;}
+  .vid-mini{position:relative; display:block; width:100%; aspect-ratio:16/9; padding:0; border:0; background:#0D313F; cursor:pointer;}
+  .vid-mini img, .vid-mini iframe{width:100%; height:100%; object-fit:cover; display:block; border:0;}
+  .vid-play{position:absolute; inset:0; margin:auto; width:56px; height:56px; border-radius:50%; background:rgba(13,49,63,.82); color:#fff; display:grid; place-items:center; font-size:22px;}
+  .vid-txt{padding:12px 14px 14px; display:flex; flex-direction:column; gap:6px; align-items:flex-start;}
+  .vid-txt .t{font-weight:700; font-size:14.5px; color:var(--ink); line-height:1.35;}
+  .vid-txt .d{font-size:13.3px; color:var(--muted); line-height:1.5;}
+  .vid-tema{font-size:11.5px; font-weight:700; background:#EAF3F5; color:#0D313F; border-radius:999px; padding:3px 10px;}
+  .vid-cap{margin-top:4px;}
+  .vid-nota{font-size:12.3px; color:var(--muted); line-height:1.5;}
+  .vid-yt{font-size:12.5px; color:var(--navy); text-decoration:underline;}
 
   /* TRIVIA */
   .difwrap{display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:6px;}
@@ -1223,18 +1236,18 @@
           <span class="novedad-tipo" style="background:#EAF3F5; color:#5894A7">Nueva funcionalidad</span>
           <span class="novedad-fecha">📅 27 de julio de 2026</span>
         </div>
-        <div class="novedad-title">Evaluación formal con certificado disponible</div>
-        <div class="novedad-desc">¡Ya está disponible la evaluación formal de Gestión de Residuos Hospitalarios! Quienes aprueban descargan su certificado en el momento. Se puede repetir todas las veces que sea necesario, sin presión: la idea es que cada uno llegue a su ritmo.</div>
+        <div class="novedad-title">Capacitación con certificado disponible</div>
+        <div class="novedad-desc">La capacitación de Gestión de Residuos Hospitalarios con certificado se hace en línea: mirás el video (al menos el 80 %), rendís la evaluación y, si aprobás, descargás tu certificado en el momento. Se puede repetir todas las veces que sea necesario, sin presión: la idea es que cada uno llegue a su ritmo.</div>
         <div class="novedad-meta">
           <div>🏛️ <b>Organiza:</b> Área de Higiene y Seguridad Laboral HZT - HMH</div>
           
-          <div>🧩 <b>Modalidad:</b> Autogestionada, desde la sección Trivia → "Evaluación oficial"</div>
+          <div>🧩 <b>Modalidad:</b> Autoadministrada: video + evaluación</div>
           
           
         </div>
         <div class="novedad-footer">
           <span class="novedad-estado abierta">🟢 Inscripción abierta</span>
-          <a class="novedad-btn" href="https://hyslhmh-sudo.github.io/capacitaciones/?k=b7a0d394cd9a" target="_blank" rel="noopener">Ir a la evaluación</a>
+          <a class="novedad-btn" href="https://hyslhmh-sudo.github.io/capacitaciones/?av=CAP-HYS-003" target="_blank" rel="noopener">Hacer la capacitación</a>
           
         </div>
       </div>
@@ -1402,11 +1415,11 @@
           <div class="emoji">🔴</div><div class="lbl">Nivel 5</div><div class="cnt">15 preguntas · Química y compatibilidades</div>
         </div>
       </div>
-      <a class="eval-formal-card" href="https://hyslhmh-sudo.github.io/capacitaciones/?k=b7a0d394cd9a" target="_blank" rel="noopener">
+      <a class="eval-formal-card" href="https://hyslhmh-sudo.github.io/capacitaciones/?av=CAP-HYS-003" target="_blank" rel="noopener">
         <div class="eval-formal-tag">Evaluación oficial</div>
-        <div class="eval-formal-title">¿Necesitás la evaluación formal con certificado?</div>
-        <div class="eval-formal-sub">15 preguntas al azar, aprobación con 80%. Si aprobás, descargás tu certificado en el momento.</div>
-        <span class="eval-formal-cta">Ir a la evaluación oficial →</span>
+        <div class="eval-formal-title">¿Necesitás la capacitación formal con certificado?</div>
+        <div class="eval-formal-sub">Primero mirás el video de la capacitación (al menos el 80 %); después rendís 15 preguntas al azar y aprobás con 80 %. Si aprobás, descargás tu certificado en el momento.</div>
+        <span class="eval-formal-cta">Ir a la capacitación oficial →</span>
       </a></div>
     </section>
 
@@ -2066,13 +2079,13 @@ const NOVEDADES = [
     tipoLabel: 'Nueva funcionalidad',
     color: '#5894A7',
     bg: '#EAF3F5',
-    titulo: 'Evaluación formal con certificado disponible',
+    titulo: 'Capacitación con certificado disponible',
     fecha: '27 de julio de 2026',
-    descripcion: '¡Ya está disponible la evaluación formal de Gestión de Residuos Hospitalarios! Quienes aprueban descargan su certificado en el momento. Se puede repetir todas las veces que sea necesario, sin presión: la idea es que cada uno llegue a su ritmo.',
+    descripcion: 'La capacitación de Gestión de Residuos Hospitalarios con certificado se hace en línea: mirás el video (al menos el 80 %), rendís la evaluación y, si aprobás, descargás tu certificado en el momento. Se puede repetir todas las veces que sea necesario, sin presión: la idea es que cada uno llegue a su ritmo.',
     organiza: 'Área de Higiene y Seguridad Laboral HZT - HMH',
-    modalidad: 'Autogestionada, desde la sección Trivia → "Evaluación oficial"',
+    modalidad: 'Autoadministrada: video + evaluación',
     estado: 'abierta',
-    links: [{ url: 'https://hyslhmh-sudo.github.io/capacitaciones/?k=b7a0d394cd9a', label: 'Ir a la evaluación' }]
+    links: [{ url: 'https://hyslhmh-sudo.github.io/capacitaciones/?av=CAP-HYS-003', label: 'Hacer la capacitación' }]
   },
 ];
 
@@ -2238,24 +2251,61 @@ const BIBLIOGRAFIA = [
   { titulo: 'Aislamiento hospitalario, concepto y tipos (incluye aislamiento protector o inverso)', fuente: 'Revista Ocronos — Editorial Científico-Técnica', link: 'https://revistamedica.com/caracteristicas-clinicas-aislamiento-hospitalario-concepto/' },
 ];
 
-const RECURSOS_CAPACITACIONES = [
-  {
-    titulo: 'Gestión Integral de Residuos en Instituciones de Salud',
-    fecha: '22 de abril de 2026',
-    descripcion: 'Grabación del encuentro disponible. Podés seguir la capacitación completa en el siguiente video.',
-    links: [
-      { label: '▶ Ver grabación', url: 'https://www.youtube.com/watch?v=Q7lMJ8z1sgw&t=2750s' },
-    ]
-  },
-  {
-    titulo: 'Agua, ambiente y salud: Gestión segura del agua en hospitales y centros de atención primaria',
-    fecha: '7 de abril de 2026',
-    descripcion: 'Grabación del encuentro disponible. Podés seguir la capacitación completa en el siguiente video.',
-    links: [
-      { label: '▶ Ver grabación', url: 'https://www.youtube.com/watch?v=40Kea43t1wE&t=4608s' },
-    ]
-  },
+// Recursos › Capacitaciones: los mismos videos que la sección Videos del sitio (hoja VIDEOS de la planilla del sitio).
+// Con CODIGO, la tarjeta ofrece «Hacerla como capacitación» (video + evaluación o constancia, con certificado).
+const VIDEOS_RESPALDO = [
+  { TITULO: 'Gestión integral de residuos en instituciones de salud', DESCRIPCION: 'Cómo separar cada tipo de residuo, dónde va y cómo cuidarte al manipularlo.', ENLACE: 'https://www.youtube.com/watch?v=Q7lMJ8z1sgw', TEMA: 'Residuos', ORDEN: '1', CANAL: 'Red Telesalud Trelew', CODIGO: 'CAP-HYS-003' },
+  { TITULO: 'Manejo de extintores y primera respuesta a principios de incendio', DESCRIPCION: 'Qué hacer ante un principio de incendio y cómo usar un matafuego.', ENLACE: 'https://www.youtube.com/watch?v=5cbm6aCkpzc', TEMA: 'Incendio', ORDEN: '2', CANAL: 'Red Telesalud Trelew', CODIGO: 'CAP-HYS-007' },
+  { TITULO: 'Radioprotección en el ámbito hospitalario', DESCRIPCION: 'Cómo protegerte de las radiaciones ionizantes en el hospital.', ENLACE: 'https://www.youtube.com/watch?v=28RR4VL2r28', TEMA: 'Radiaciones', ORDEN: '3', CANAL: 'Red Telesalud Trelew', CODIGO: 'CAP-HYS-011' },
+  { TITULO: 'Agua, ambiente y salud', DESCRIPCION: 'Gestión segura del agua en hospitales y centros de atención primaria.', ENLACE: 'https://www.youtube.com/watch?v=40Kea43t1wE', TEMA: 'Agua', ORDEN: '4', CANAL: 'Red Telesalud Trelew', CODIGO: 'CAP-HYS-013' },
+  { TITULO: 'Bienes de la administración pública y RAEE · Encuentro 2', DESCRIPCION: 'RAEE en establecimientos de salud: identificación, riesgos y acopio.', ENLACE: 'https://www.youtube.com/watch?v=7AXpOirZyqA', TEMA: 'Bienes y RAEE', ORDEN: '5', CANAL: 'Red Telesalud Trelew', CODIGO: 'CAP-HYS-009' },
+  { TITULO: 'Bienes de la administración pública y RAEE · Encuentro 3 (cierre)', DESCRIPCION: 'Circuito integrado de los bienes y RAEE hasta su destino correspondiente, con taller integrador de cierre.', ENLACE: 'https://www.youtube.com/watch?v=oOYdSYC65YM', TEMA: 'Bienes y RAEE', ORDEN: '6', CANAL: 'Red Telesalud Trelew', CODIGO: 'CAP-HYS-009' }
 ];
+let VIDEOS_SITIO = VIDEOS_RESPALDO;
+try { const g = JSON.parse(localStorage.getItem('videosSitio') || 'null'); if (Array.isArray(g) && g.length) VIDEOS_SITIO = g; } catch (e) {}
+function idYT(u) { return (String(u || '').match(/(?:v=|youtu\.be\/|embed\/|shorts\/)([\w-]{11})/) || [])[1] || ''; }
+function codVid(v) { return /^CAP-[\w-]+$/i.test(String(v.CODIGO || '').trim()) ? String(v.CODIGO).trim().toUpperCase() : ''; }
+function videosVisibles() { return VIDEOS_SITIO.filter(v => !/^no/i.test(String(v.VISIBLE || 'Sí').trim()) && idYT(v.ENLACE)).sort((a, b) => (Number(a.ORDEN) || 99) - (Number(b.ORDEN) || 99)); }
+function videoCardHTML(v, todos) {
+  const id = idYT(v.ENLACE), cod = codVid(v), n = cod ? todos.filter(x => codVid(x) === cod).length : 0;
+  return `
+    <article class="vid-card">
+      <button class="vid-mini" data-yt="${id}" aria-label="Reproducir: ${escTxt(v.TITULO)}"><img src="https://i.ytimg.com/vi/${id}/hqdefault.jpg" alt="" loading="lazy"><span class="vid-play">▶</span></button>
+      <div class="vid-txt">
+        ${v.TEMA ? `<span class="vid-tema">${escTxt(v.TEMA)}</span>` : ''}
+        <div class="t">${escTxt(v.TITULO)}</div>
+        ${v.DESCRIPCION ? `<div class="d">${escTxt(v.DESCRIPCION)}</div>` : ''}
+        ${cod ? `<a class="novedad-btn vid-cap" href="https://hyslhmh-sudo.github.io/capacitaciones/?av=${encodeURIComponent(cod)}" target="_blank" rel="noopener">🎓 Hacerla como capacitación</a>
+        <div class="vid-nota">${n > 1 ? 'Incluye los ' + n + ' videos. ' : ''}Mirás al menos el 80 % ${n > 1 ? 'de cada video' : 'del video'} y seguís los pasos para obtener tu certificado.</div>` : ''}
+        <a class="vid-yt" href="https://www.youtube.com/watch?v=${id}" target="_blank" rel="noopener">Ver en YouTube${v.CANAL ? ' · ' + escTxt(v.CANAL) : ''}</a>
+      </div>
+    </article>`;
+}
+function leerVideosSitio() {
+  return new Promise(ok => {
+    const cb = 'cbVideos_' + Date.now(), sc = document.createElement('script');
+    const corte = setTimeout(() => { fin(); ok(null); }, 20000);
+    function fin() { clearTimeout(corte); delete window[cb]; sc.remove(); }
+    window[cb] = r => { fin();
+      if (!r || r.status === 'error' || !r.table) return ok(null);
+      const cols = r.table.cols.map(c => String(c.label || '').trim());
+      ok(r.table.rows.map(fila => { const o = {}; cols.forEach((c, j) => { const v = fila.c && fila.c[j]; o[c] = v ? (v.f != null ? v.f : v.v) : ''; }); return o; }));
+    };
+    sc.src = 'https://docs.google.com/spreadsheets/d/' + PLANILLA_SITIO + '/gviz/tq?tqx=out:json;responseHandler:' + cb + '&headers=1&sheet=VIDEOS&_=' + Date.now();
+    sc.onerror = () => { fin(); ok(null); };
+    document.head.appendChild(sc);
+  });
+}
+leerVideosSitio().then(filas => {
+  if (!filas || !filas.length) return;
+  VIDEOS_SITIO = filas.filter(v => v.TITULO && v.ENLACE);
+  try { localStorage.setItem('videosSitio', JSON.stringify(VIDEOS_SITIO)); } catch (e) {}
+  if (recursosSubtab === 'capacitaciones' && document.getElementById('recursosContent')) renderRecursosContent();
+});
+document.addEventListener('click', e => {
+  const b = e.target.closest && e.target.closest('.vid-mini'); if (!b) return;
+  b.outerHTML = '<div class="vid-mini"><iframe src="https://www.youtube-nocookie.com/embed/' + b.dataset.yt + '?autoplay=1&rel=0" title="Video" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>';
+});
 
 let recursosSubtab = 'bibliografia';
 
@@ -2463,7 +2513,9 @@ function renderRecursosContent() {
       </div>
     `;
   } else {
-    el.innerHTML = RECURSOS_CAPACITACIONES.length ? RECURSOS_CAPACITACIONES.map(recursoCapHTML).join('') : `<div class="recursos-empty">Todavía no hay material de capacitaciones anteriores disponible.</div>`;
+    const vids = videosVisibles();
+    el.innerHTML = `<p class="vid-intro">Capacitaciones grabadas de Higiene y Seguridad. Tocá un video para mirarlo acá mismo, o hacelo como capacitación autoadministrada para obtener tu certificado.</p>` +
+      (vids.length ? `<div class="vid-grid">${vids.map(v => videoCardHTML(v, vids)).join('')}</div>` : `<div class="recursos-empty">Todavía no hay videos de capacitaciones disponibles.</div>`);
   }
 }
 
@@ -2585,11 +2637,11 @@ function renderTrivia(){
           <div class="emoji">🔴</div><div class="lbl">Nivel 5</div><div class="cnt">15 preguntas · Química y compatibilidades</div>
         </div>
       </div>
-      <a class="eval-formal-card" href="https://hyslhmh-sudo.github.io/capacitaciones/?k=b7a0d394cd9a" target="_blank" rel="noopener">
+      <a class="eval-formal-card" href="https://hyslhmh-sudo.github.io/capacitaciones/?av=CAP-HYS-003" target="_blank" rel="noopener">
         <div class="eval-formal-tag">Evaluación oficial</div>
-        <div class="eval-formal-title">¿Necesitás la evaluación formal con certificado?</div>
-        <div class="eval-formal-sub">15 preguntas al azar, aprobación con 80%. Si aprobás, descargás tu certificado en el momento.</div>
-        <span class="eval-formal-cta">Ir a la evaluación oficial →</span>
+        <div class="eval-formal-title">¿Necesitás la capacitación formal con certificado?</div>
+        <div class="eval-formal-sub">Primero mirás el video de la capacitación (al menos el 80 %); después rendís 15 preguntas al azar y aprobás con 80 %. Si aprobás, descargás tu certificado en el momento.</div>
+        <span class="eval-formal-cta">Ir a la capacitación oficial →</span>
       </a>`;
     return;
   }
