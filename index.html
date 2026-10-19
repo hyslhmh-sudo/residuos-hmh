@@ -642,6 +642,12 @@
   .app-card-mini .app-card-lead{margin:12px 0 0;}
   .app-card-mini.installed{display:none;}
 
+  /* Capacitaciones con certificado: aviso de Inicio */
+  .cap-home{cursor:pointer;}
+  .cap-home .app-card-icon{display:grid; place-items:center; color:var(--navy);}
+  .cap-home .app-card-icon .msi{font-size:32px;}
+  .cap-home-actions{display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-top:4px; position:relative; z-index:1;}
+
   /* BUENAS PRÁCTICAS — desplegables */
   .pract-acc{background:var(--card); border:1px solid var(--line); border-radius:16px; margin-bottom:14px; overflow:hidden;}
   .pract-acc summary{list-style:none; display:flex; align-items:center; gap:14px; padding:16px 18px; cursor:pointer; user-select:none;}
@@ -686,6 +692,7 @@
           <button data-view="categorias">Categorías</button>
           <button data-view="clasificador">¿Dónde tiro esto?</button>
           <button data-view="practicas">Buenas prácticas</button>
+          <button data-view="capacitaciones">Capacitaciones</button>
           <button data-view="novedades" class="nav-novedades">Novedades<span class="navbadge" id="navBadgeNovedades" style="display: inline-flex;">2</span></button>
           <button data-view="recursos">Banco de Recursos</button>
           <button data-view="trivia">Trivia</button>
@@ -700,6 +707,18 @@
   <main>
     <!-- INICIO -->
     <section class="view active" id="view-inicio">
+      <div class="app-card cap-home" role="button" tabindex="0" onclick="goView('capacitaciones')" onkeydown="if(event.key==='Enter')goView('capacitaciones')" aria-label="Capacitaciones autoadministradas con certificado">
+        <div class="app-card-head">
+          <span class="app-card-icon"><span class="msi">school</span></span>
+          <div>
+            <span class="app-card-badge">NUEVO</span>
+            <h2>Capacitaciones autoadministradas con certificado</h2>
+          </div>
+        </div>
+        <p class="app-card-lead">Hacé las capacitaciones de Higiene y Seguridad cuando quieras: mirás el video (al menos el 80 %), seguís los pasos y descargás tu certificado. Residuos, extintores, radioprotección, agua y bienes y RAEE.</p>
+        <div class="cap-home-actions"><span class="app-card-btn"><span class="msi">play_circle</span>Ir a las capacitaciones</span></div>
+      </div>
+
       <div class="app-card app-card-mini" id="appCardMini" role="button" tabindex="0" onclick="goView('novedades')" onkeydown="if(event.key==='Enter')goView('novedades')" aria-label="Bajá la app al celular: ver detalles en Novedades">
         <div class="app-card-head">
           <img class="app-card-icon" src="icons/icon-192.png?v=3" alt="" width="56" height="56">
@@ -739,10 +758,16 @@
       <div class="home-nav-sub">Circuito de retiro y transporte</div>
     </button>
   
+    <button class="home-nav-card" onclick="goView(&#39;capacitaciones&#39;)">
+      <span class="home-nav-icon msi">school</span>
+      <div class="home-nav-title">Capacitaciones</div>
+      <div class="home-nav-sub">Videos con certificado</div>
+    </button>
+  
     <button class="home-nav-card" onclick="goView(&#39;novedades&#39;)">
       <span class="home-nav-icon msi">campaign</span>
       <div class="home-nav-title">Novedades<span class="navbadge" id="quickBadgeNovedades" style="display: inline-flex;">2</span></div>
-      <div class="home-nav-sub">Capacitaciones y avisos</div>
+      <div class="home-nav-sub">Clases abiertas y avisos</div>
     </button>
   
     <button class="home-nav-card" onclick="goView(&#39;recursos&#39;)">
@@ -1221,6 +1246,23 @@
     </section>
 
     <!-- NOVEDADES -->
+    <section class="view" id="view-capacitaciones">
+      <div class="hero" style="margin-bottom:20px;">
+        <div class="blob"></div>
+        <h2>Capacitaciones</h2>
+        <p>Capacitaciones grabadas de Higiene y Seguridad. Tocá un video para mirarlo acá mismo, o hacelo como capacitación autoadministrada para obtener tu certificado.</p>
+      </div>
+      <div id="capacitacionesRoot"></div>
+      <a class="drive-folder-card" style="margin-top:22px;" href="https://hyslhmh-sudo.github.io/capacitaciones/certificados.html" target="_blank" rel="noopener">
+        <div class="drive-folder-icon">📄</div>
+        <div>
+          <div class="drive-folder-title">Mis certificados</div>
+          <div class="drive-folder-sub">Consultá y descargá todos tus certificados de Higiene y Seguridad con tu documento</div>
+        </div>
+        <div class="drive-folder-arrow">↗</div>
+      </a>
+    </section>
+
     <section class="view" id="view-novedades">
       <div id="novedadesRoot">
     <div class="hero" style="margin-bottom:20px;">
@@ -1263,7 +1305,7 @@
     <div class="hero" style="margin-bottom:20px;">
       <div class="blob"></div>
       <h2>Banco de Recursos</h2>
-      <p>Bibliografía normativa vigente y material de capacitaciones ya dictadas por el Servicio de Higiene y Seguridad Laboral.</p>
+      <p>Bibliografía normativa vigente, carteles y material de consulta del Servicio de Higiene y Seguridad Laboral.</p>
     </div>
     <div class="section-label">Herramientas relacionadas</div>
     <a class="drive-folder-card" style="margin-bottom:22px;" href="https://hyslhmh-sudo.github.io/sieq-hys/" target="_blank" rel="noopener">
@@ -1276,7 +1318,6 @@
     </a>
     <div class="recursos-subtabs">
       <button class="recursos-subtab active" onclick="setRecursosSubtab(&#39;bibliografia&#39;)">📚 Bibliografía</button>
-      <button class="recursos-subtab " onclick="setRecursosSubtab(&#39;capacitaciones&#39;)">🎓 Capacitaciones</button>
       <button class="recursos-subtab " onclick="setRecursosSubtab(&#39;carteles&#39;)">🖼️ Carteles</button>
       <button class="recursos-subtab " onclick="setRecursosSubtab(&#39;compatibilidad&#39;)">⚠️ Compatibilidad Química</button>
       <button class="recursos-subtab " onclick="setRecursosSubtab(&#39;salud&#39;)">🦺 Salud del Trabajador</button>
@@ -1714,7 +1755,8 @@ const NAV_DESTINATIONS = [
   { view:'clasificador', icon:'search', title:'¿Dónde tiro esto?', sub:'Respondé preguntas y te decimos dónde va' },
   { view:'categorias', icon:'menu_book', title:'Categorías', sub:'Las 13 corrientes en detalle' },
   { view:'practicas', icon:'task_alt', title:'Buenas prácticas', sub:'Circuito de retiro y transporte' },
-  { view:'novedades', icon:'campaign', title:'Novedades', sub:'Capacitaciones y avisos', badge:true },
+  { view:'capacitaciones', icon:'school', title:'Capacitaciones', sub:'Videos con certificado' },
+  { view:'novedades', icon:'campaign', title:'Novedades', sub:'Clases abiertas y avisos', badge:true },
   { view:'recursos', icon:'folder_open', title:'Banco de Recursos', sub:'Normativa, EPP, carteles y más' },
   { view:'trivia', icon:'psychology', title:'Trivia', sub:'Poné a prueba lo que sabés' },
   { view:'contacto', icon:'mail', title:'Contacto HySL', sub:'Consultas y calificación' },
@@ -2265,7 +2307,7 @@ leerVideosSitio().then(filas => {
   if (!filas || !filas.length) return;
   VIDEOS_SITIO = filas.filter(v => v.TITULO && v.ENLACE);
   try { localStorage.setItem('videosSitio', JSON.stringify(VIDEOS_SITIO)); } catch (e) {}
-  if (recursosSubtab === 'capacitaciones' && document.getElementById('recursosContent')) renderRecursosContent();
+  renderCapacitaciones();
 });
 document.addEventListener('click', e => {
   const b = e.target.closest && e.target.closest('.vid-mini'); if (!b) return;
@@ -2303,7 +2345,7 @@ function renderRecursos() {
     <div class="hero" style="margin-bottom:20px;">
       <div class="blob"></div>
       <h2>Banco de Recursos</h2>
-      <p>Bibliografía normativa vigente y material de capacitaciones ya dictadas por el Servicio de Higiene y Seguridad Laboral.</p>
+      <p>Bibliografía normativa vigente, carteles y material de consulta del Servicio de Higiene y Seguridad Laboral.</p>
     </div>
     <div class="section-label">Herramientas relacionadas</div>
     <a class="drive-folder-card" style="margin-bottom:22px;" href="https://hyslhmh-sudo.github.io/sieq-hys/" target="_blank" rel="noopener">
@@ -2316,7 +2358,6 @@ function renderRecursos() {
     </a>
     <div class="recursos-subtabs">
       <button class="recursos-subtab ${recursosSubtab === 'bibliografia' ? 'active' : ''}" onclick="setRecursosSubtab('bibliografia')">📚 Bibliografía</button>
-      <button class="recursos-subtab ${recursosSubtab === 'capacitaciones' ? 'active' : ''}" onclick="setRecursosSubtab('capacitaciones')">🎓 Capacitaciones</button>
       <button class="recursos-subtab ${recursosSubtab === 'carteles' ? 'active' : ''}" onclick="setRecursosSubtab('carteles')">🖼️ Carteles</button>
       <button class="recursos-subtab ${recursosSubtab === 'compatibilidad' ? 'active' : ''}" onclick="setRecursosSubtab('compatibilidad')">⚠️ Compatibilidad Química</button>
       <button class="recursos-subtab ${recursosSubtab === 'salud' ? 'active' : ''}" onclick="setRecursosSubtab('salud')">🦺 Salud del Trabajador</button>
@@ -2326,7 +2367,13 @@ function renderRecursos() {
   renderRecursosContent();
 }
 
+function renderCapacitaciones() {
+  const el = document.getElementById('capacitacionesRoot'); if (!el) return;
+  const vids = videosVisibles();
+  el.innerHTML = vids.length ? `<div class="vid-grid">${vids.map(v => videoCardHTML(v, vids)).join('')}</div>` : `<div class="recursos-empty">Todavía no hay videos de capacitaciones disponibles.</div>`;
+}
 function setRecursosSubtab(tab) {
+  if (tab === 'capacitaciones') { recursosSubtab = 'bibliografia'; return goView('capacitaciones'); }   // ahora es una pestaña propia
   recursosSubtab = tab;
   renderRecursos();
 }
@@ -2478,9 +2525,7 @@ function renderRecursosContent() {
       </div>
     `;
   } else {
-    const vids = videosVisibles();
-    el.innerHTML = `<p class="vid-intro">Capacitaciones grabadas de Higiene y Seguridad. Tocá un video para mirarlo acá mismo, o hacelo como capacitación autoadministrada para obtener tu certificado.</p>` +
-      (vids.length ? `<div class="vid-grid">${vids.map(v => videoCardHTML(v, vids)).join('')}</div>` : `<div class="recursos-empty">Todavía no hay videos de capacitaciones disponibles.</div>`);
+    el.innerHTML = '';
   }
 }
 
@@ -2818,6 +2863,7 @@ renderClasificador();
 renderPracticas();
 renderNovedades();
 renderRecursos();
+renderCapacitaciones();
 renderTrivia();
 </script>
 
