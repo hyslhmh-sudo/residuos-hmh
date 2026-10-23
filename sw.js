@@ -1,6 +1,6 @@
 /* Service worker — Portal de Residuos HZT / HMH
    Cambiá VERSION cada vez que subas un index.html nuevo para forzar la actualización. */
-const VERSION = 'residuos-v23';
+const VERSION = 'residuos-v24';
 const CORE = [
   './',
   './index.html',
@@ -53,7 +53,7 @@ self.addEventListener('fetch', (event) => {
       fetch(req)
         .then((res) => {
           const copy = res.clone();
-          caches.open(VERSION).then((c) => c.put('./index.html', copy));
+          if (res.ok) caches.open(VERSION).then((c) => c.put('./index.html', copy));   // un 404 o un error no pisa la copia buena
           return res;
         })
         .catch(() => caches.match('./index.html'))
